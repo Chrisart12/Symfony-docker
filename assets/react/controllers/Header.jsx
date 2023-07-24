@@ -43,14 +43,14 @@ export default function Header() {
                     <div className="space-y-6">
 
                         <div className="mb-4 block">
-                            <Label htmlFor="project" value="Project" />
+                            <Label className="required" htmlFor="project" value="Project" />
                             <Select id="project">
                                 <option>Project</option>
                             </Select>
                         </div>
 
                         <div className="mb-4 block">
-                            <Label htmlFor="issueType" value="Issue type" />
+                            <Label className="required" htmlFor="issueType" value="Issue type" />
                             <Select id="project">
                                 <option>Bug</option>
                             </Select>
@@ -64,7 +64,7 @@ export default function Header() {
                         </div>
 
                         <div className="mb-4 block">
-                            <Label htmlFor="summary" value="Summary" />
+                            <Label className="required" htmlFor="summary" value="Summary" />
                             <TextInput id="summary" required />
                         </div>
 
@@ -76,7 +76,7 @@ export default function Header() {
                         </div>
 
                         <div className="mb-4 block">
-                            <Label htmlFor="reporter" value="Reporter" />
+                            <Label className="required" htmlFor="reporter" value="Reporter" />
                             <Select id="reporter">
                                 <option>Pentiminax</option>
                             </Select>
