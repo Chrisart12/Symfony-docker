@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
@@ -9,10 +10,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
+#[ApiResource]
 class Issue
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
