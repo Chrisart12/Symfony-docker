@@ -26,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write', 'project:list'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -41,10 +41,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'reporter', targetEntity: Issue::class, orphanRemoval: true)]
     private Collection $reportedIssues;
 
+    #[ORM\OneToMany(mappedBy: 'lead', targetEntity: Project::class)]
+    private Collection $leadedProjects;
+
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'people')]
+    private Collection $projects;
+
     public function __construct()
     {
         $this->assignedIssues = new ArrayCollection();
         $this->reportedIssues = new ArrayCollection();
+        $this->leadedProjects = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,5 +188,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getLeadedProjects(): Collection
+    {
+        return $this->leadedProjects;
+    }
+
+    public function addLeadedProject(Project $project): static
+    {
+        if (!$this->leadedProjects->contains($project)) {
+            $this->leadedProjects->add($project);
+            $project->setLead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLeadedProject(Project $project): static
+    {
+        if ($this->leadedProjects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getLead() === $this) {
+                $project->setLead(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->addPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            $project->removePerson($this);
+        }
+
+        return $this;
     }
 }

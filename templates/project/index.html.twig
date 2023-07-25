@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+    <div {{ react_component('Projects', { projects: projects|serialize('json', { 'groups': 'project:list' }) }) }}></div>
+{% endblock %}

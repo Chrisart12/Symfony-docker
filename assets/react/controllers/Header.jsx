@@ -1,8 +1,19 @@
 import React from 'react';
-import {Button, Label, Modal, Navbar, Select, TextInput} from "flowbite-react";
+import {Navbar} from "flowbite-react";
+import NavbarLink from "./NavbarLink";
+import ModalCreateIssue from "./ModalCreateIssue";
 
 export default function Header() {
     const [openModal, setOpenModal] = React.useState('');
+    const [projects, setProjects] = React.useState([]);
+
+    const handleClick = () => {
+        fetch('/api/projects')
+            .then(response => response.json())
+            .then(json => setProjects(json));
+
+        setOpenModal('default');
+    }
 
     return (
         <>
@@ -16,79 +27,16 @@ export default function Header() {
                     </div>
 
                     <div className="items-center gap-1 lg:flex">
-                        <a
-                            className="rounded-lg p-2.5 text-sm font-medium text-gray-900 hover:text-cyan-700 dark:text-gray-300 dark:hover:text-cyan-500"
-                            href="/">Your work</a>
-                        <a
-                            className="rounded-lg p-2.5 text-sm font-medium text-gray-900 hover:text-cyan-700 dark:text-gray-300 dark:hover:text-cyan-500"
-                            href="/docs/getting-started/introduction">
-                            Projects
-                        </a>
-                        <a href="/docs/getting-started/quickstart"
-                           className="rounded-lg p-2.5 text-sm font-medium text-gray-900 hover:text-cyan-700 dark:text-gray-300 dark:hover:text-cyan-500">
-                            Teams
-                        </a>
-                        <button className="rounded-lg p-2.5 text-sm font-medium text-gray-900 hover:text-cyan-700 dark:text-gray-300 dark:hover:text-cyan-500"
-                                data-modal-target="createIssueModal"
-                                onClick={() => setOpenModal('default')}>
-                            Create
-                        </button>
+                        <NavbarLink href="your-work" text="Your work" />
+                        <NavbarLink href="/projects" text="Projects" />
+                        <NavbarLink href="/people" text="Teams" />
+                        <NavbarLink href="#" onClick={handleClick}  text="Create" />
                     </div>
+
                     <div className="flex items-center gap-1"></div>
                 </div>
             </Navbar>
-            <Modal show={openModal === 'default'} onClose={() => setOpenModal('')}>
-                <Modal.Header>Create issue</Modal.Header>
-                <Modal.Body>
-                    <div className="space-y-6">
-
-                        <div className="mb-4 block">
-                            <Label className="required" htmlFor="project" value="Project" />
-                            <Select id="project">
-                                <option>Project</option>
-                            </Select>
-                        </div>
-
-                        <div className="mb-4 block">
-                            <Label className="required" htmlFor="issueType" value="Issue type" />
-                            <Select id="project">
-                                <option>Bug</option>
-                            </Select>
-                        </div>
-
-                        <div className="mb-4 block">
-                            <Label htmlFor="status" value="Status" />
-                            <Select id="status">
-                                <option>New</option>
-                            </Select>
-                        </div>
-
-                        <div className="mb-4 block">
-                            <Label className="required" htmlFor="summary" value="Summary" />
-                            <TextInput id="summary" required />
-                        </div>
-
-                        <div className="mb-4 block">
-                            <Label htmlFor="assignee" value="Assignee" />
-                            <Select id="assignee">
-                                <option>Pentiminax</option>
-                            </Select>
-                        </div>
-
-                        <div className="mb-4 block">
-                            <Label className="required" htmlFor="reporter" value="Reporter" />
-                            <Select id="reporter">
-                                <option>Pentiminax</option>
-                            </Select>
-                        </div>
-
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button color="gray" onClick={() => setOpenModal('')}>Cancel</Button>
-                    <Button onClick={() => setOpenModal('')}>Create</Button>
-                </Modal.Footer>
-            </Modal>
+            <ModalCreateIssue openModal={openModal} projects={projects} setOpenModal={setOpenModal} />
         </>
     )
 }

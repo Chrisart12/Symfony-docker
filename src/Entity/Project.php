@@ -16,20 +16,32 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['project:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['project:list'])]
     private ?string $name = null;
 
     #[ORM\Column(name: '`key`', length: 10)]
+    #[Groups(['project:list'])]
     private ?string $key = null;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Issue::class, orphanRemoval: true)]
     private Collection $issues;
 
+    #[ORM\ManyToOne(inversedBy: 'projects')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['project:list'])]
+    private ?User $lead = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
+    private Collection $people;
+
     public function __construct()
     {
         $this->issues = new ArrayCollection();
+        $this->people = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,6 +99,42 @@ class Project
                 $issue->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLead(): ?User
+    {
+        return $this->lead;
+    }
+
+    public function setLead(?User $lead): static
+    {
+        $this->lead = $lead;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getPeople(): Collection
+    {
+        return $this->people;
+    }
+
+    public function addPerson(User $person): static
+    {
+        if (!$this->people->contains($person)) {
+            $this->people->add($person);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(User $person): static
+    {
+        $this->people->removeElement($person);
 
         return $this;
     }

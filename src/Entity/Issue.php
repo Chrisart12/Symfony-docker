@@ -32,8 +32,6 @@ class Issue
     #[Groups(['issue:read'])]
     private ?string $id = null;
 
-    private ?int $key = null;
-
     #[ORM\ManyToOne(inversedBy: 'issues')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['issue:write'])]
@@ -71,7 +69,9 @@ class Issue
     #[ORM\PrePersist]
     public function setIdValue(): void
     {
-        $this->id = $this->project->getKey().'-'.$this->project->getIssues()->count() + 1;
+        if ($this->project) {
+            $this->id = $this->project->getKey().'-'.$this->project->getIssues()->count() + 1;
+        }
     }
 
     public function getId(): ?string
