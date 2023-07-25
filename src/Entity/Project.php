@@ -16,11 +16,11 @@ class Project
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['project:list'])]
+    #[Groups(['project:list', 'project:list:create:issue'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['project:list'])]
+    #[Groups(['project:list', 'project:list:create:issue'])]
     private ?string $name = null;
 
     #[ORM\Column(name: '`key`', length: 10)]

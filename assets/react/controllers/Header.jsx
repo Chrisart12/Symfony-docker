@@ -5,14 +5,17 @@ import ModalCreateIssue from "./ModalCreateIssue";
 
 export default function Header() {
     const [openModal, setOpenModal] = React.useState('');
-    const [projects, setProjects] = React.useState([]);
+    const [createIssueData, setCreateIssueData] = React.useState([]);
 
-    const handleClick = () => {
-        fetch('/api/projects')
-            .then(response => response.json())
-            .then(json => setProjects(json));
-
+    const handleClick = async () => {
+        await fetchCreateIssueData();
         setOpenModal('default');
+    }
+
+    const fetchCreateIssueData = async () => {
+        const response = await fetch('/issues/create');
+        const json = await response.json();
+        setCreateIssueData(json);
     }
 
     return (
@@ -36,7 +39,7 @@ export default function Header() {
                     <div className="flex items-center gap-1"></div>
                 </div>
             </Navbar>
-            <ModalCreateIssue openModal={openModal} projects={projects} setOpenModal={setOpenModal} />
+            <ModalCreateIssue openModal={openModal} createIssueData={createIssueData} setOpenModal={setOpenModal} />
         </>
     )
 }

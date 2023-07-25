@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Label, Modal, Select, TextInput} from "flowbite-react";
 
-export default function ModalCreateIssue({openModal, projects, setOpenModal}) {
+export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -30,7 +30,7 @@ export default function ModalCreateIssue({openModal, projects, setOpenModal}) {
                         <div className="mb-4 block">
                             <Label className="required" htmlFor="project" value="Project" />
                             <Select id="project">
-                                {projects.map((project) => (
+                                {createIssueData.projects?.map((project) => (
                                     <option key={project.id} value={project.id}>{project.name}</option>
                                 ))}
                             </Select>
@@ -39,14 +39,18 @@ export default function ModalCreateIssue({openModal, projects, setOpenModal}) {
                         <div className="mb-4 block">
                             <Label className="required" htmlFor="issueType" value="Issue type" />
                             <Select id="project">
-                                <option>Bug</option>
+                                {createIssueData.types?.map((type) => (
+                                    <option key={type.value} value={type.value}>{type.label}</option>
+                                ))}
                             </Select>
                         </div>
 
                         <div className="mb-4 block">
                             <Label htmlFor="status" value="Status" />
                             <Select id="status">
-                                <option>New</option>
+                                {createIssueData.statuses?.map((status) => (
+                                    <option key={status.value} value={status.value}>{status.label}</option>
+                                ))}
                             </Select>
                         </div>
 
