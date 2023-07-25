@@ -3,45 +3,78 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
-#[ApiResource]
+#[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(
+            normalizationContext: ['groups' => ['issue:read']],
+            denormalizationContext: ['groups' => ['issue:write']]
+        ),
+    ]
+)]
 class Issue
 {
     #[ORM\Id]
     #[ORM\Column]
-    private ?int $id = null;
+    #[Groups(['issue:read'])]
+    private ?string $id = null;
+
+    private ?int $key = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['issue:write'])]
     private ?Project $project = null;
 
+    #[ORM\Column]
+    #[Groups(['issue:read', 'issue:write'])]
     private IssueTypeEnum $type = IssueTypeEnum::BUG;
 
+    #[ORM\Column]
+    #[Groups(['issue:read', 'issue:write'])]
     private IssueStatusEnum $status = IssueStatusEnum::NEW;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?int $storyPointEstimated = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?User $assignee = null;
 
     #[ORM\ManyToOne(inversedBy: 'reportedIssues')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?User $reporter = null;
 
-    public function getId(): ?int
+    #[ORM\PrePersist]
+    public function setIdValue(): void
+    {
+        $this->id = $this->project->getKey().'-'.$this->project->getIssues()->count() + 1;
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
