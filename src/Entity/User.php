@@ -47,8 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'people')]
     private Collection $projects;
 
-    public function __construct()
+    public function __construct(string $email)
     {
+        $this->email = $email;
         $this->assignedIssues = new ArrayCollection();
         $this->reportedIssues = new ArrayCollection();
         $this->leadedProjects = new ArrayCollection();
