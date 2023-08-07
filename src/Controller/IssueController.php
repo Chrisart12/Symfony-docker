@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Issue;
 use App\Entity\User;
 use App\Enum\IssueStatusEnum;
-use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
+use App\Service\IssueService;
 use App\Service\ProjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/issues', name: 'issue_')]
 class IssueController extends AbstractController
 {
+    public function __construct(
+        private readonly IssueService $issueService
+    ) {
+    }
+
     #[Route('/', name: 'list', methods: ['GET'])]
-    public function list(IssueRepository $issueRepo)
+    public function list(IssueRepository $issueRepo): Response
     {
         return $this->render('issue/list.html.twig', [
-            'issues' => $issueRepo->findAll()
+            'issues' => $issueRepo->findAll(),
+            'issueStatuses' => json_encode($this->issueService->getIssueStatuses()),
+            'issueTypes' => json_encode($this->issueService->getIssueTypes())
         ]);
     }
 
@@ -38,27 +45,10 @@ class IssueController extends AbstractController
             'name' => $user->getEmail(),
         ];
 
-        $statuses = [];
-        $types = [];
-
-        foreach (IssueStatusEnum::cases() as $status) {
-            $statuses[] = [
-                'label' => $status->label(),
-                'value' => $status->value,
-            ];
-        }
-
-        foreach (IssueTypeEnum::cases() as $type) {
-            $types[] = [
-                'label' => $type->label(),
-                'value' => $type->value,
-            ];
-        }
-
         return $this->json([
             'projects' => $projectService->findAllNormalized(['project:list:create:issue']),
-            'statuses' => $statuses,
-            'types' => $types,
+            'statuses' => $this->issueService->getIssueStatuses(),
+            'types' => $this->issueService->getIssueTypes(),
             'reporter' => $reporter
         ]);
     }

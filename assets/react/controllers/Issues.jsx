@@ -1,19 +1,31 @@
 import React from "react";
-import {getIssueTypeLabel} from "../../functions/enum";
-import {Card, Col, Container, ListGroup, Row, Table} from "react-bootstrap";
+import {getIssueStatusLabel, getIssueTypeLabel} from "../../functions/enum";
+import {Card, Col, Container, FormSelect, ListGroup, Row, Table} from "react-bootstrap";
 
-export default function Issues({ issues }) {
+export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [issuesList, setIssuesList] = React.useState(JSON.parse(issues));
+    const [issueStatusesList, setIssueStatusesList] = React.useState(JSON.parse(issueStatuses));
+    const [issueTypesList, setIssueTypesList] = React.useState(JSON.parse(issueTypes));
     const [selectedIssue, setSelectedIssue] = React.useState(issuesList[0]);
 
     const handleClick = (issue) => {
         setSelectedIssue(issue);
     }
 
+    const handleStatusChange = (e) => {
+        setSelectedIssue({...selectedIssue, status: e.target.value});
+        setIssuesList(issuesList.map((issue) => {
+            if (issue.id === selectedIssue.id) {
+                return {...issue, status: e.target.value};
+            }
+            return issue;
+        }))
+    }
+
     return (
         <Container className="mt-5">
             <Row>
-                <Col sm={12} md={3}>
+                <Col className="mb-sm-3 mt-sm-0" sm={12} md={3}>
                     <Card>
                         <Card.Header>Backlog</Card.Header>
                         <Card.Body>
@@ -38,7 +50,14 @@ export default function Issues({ issues }) {
                     </Card>
                 </Col>
                 <Col sm={12} md={3}>
+                    <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue.status} onChange={handleStatusChange}>
+                        {issueStatusesList.map((issueStatus) => (
+                            <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
+                        ))}
+                    </FormSelect>
+
                     <Card>
+                        <Card.Header>Details</Card.Header>
                         <Card.Body>
                             <Table>
                                 <thead>
