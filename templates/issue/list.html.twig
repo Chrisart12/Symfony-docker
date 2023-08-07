@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Issue navigator{% endblock %}
+
+{% block body %}
+    <div {{ react_component('Issues', { issues: issues|serialize('json', { 'groups': 'issue:list' }) }) }}></div>
+{% endblock %}

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Navbar} from "flowbite-react";
 import NavbarLink from "./NavbarLink";
 import ModalCreateIssue from "./ModalCreateIssue";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 export default function Header() {
     const [openModal, setOpenModal] = React.useState('');
@@ -20,24 +20,29 @@ export default function Header() {
 
     return (
         <>
-            <Navbar className="sticky top-0 z-[60] bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between w-full mx-auto py-2.5 px-4">
-                <div className="mx-auto flex flex-wrap justify-between items-center w-full">
-
-                    <div className="flex items-center gap-3">
-                        <a className="flex items-center gap-3 text-2xl font-semibold text-gray-900 dark:text-white" href="#">
-                            <span>TaskSphere</span>
-                        </a>
-                    </div>
-
-                    <div className="items-center gap-1 lg:flex">
-                        <NavbarLink href="your-work" text="Your work" />
-                        <NavbarLink href="/projects" text="Projects" />
-                        <NavbarLink href="/people" text="Teams" />
-                        <NavbarLink href="#" onClick={handleClick}  text="Create" />
-                    </div>
-
-                    <div className="flex items-center gap-1"></div>
-                </div>
+            <Navbar expand="lg" className="bg-body-tertiary">
+                <Container>
+                    <Navbar.Brand href="#home">TaskSphere</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="navbar" />
+                    <Navbar.Collapse id="navbar">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Your work</Nav.Link>
+                            <Nav.Link href="#link">Projects</Nav.Link>
+                            <NavDropdown title="Teams" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Teams</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">
+                                    Another action
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="#action/3.4">
+                                    Separated link
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link href="#" onClick={handleClick}>Create</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
             </Navbar>
             <ModalCreateIssue openModal={openModal} createIssueData={createIssueData} setOpenModal={setOpenModal} />
         </>

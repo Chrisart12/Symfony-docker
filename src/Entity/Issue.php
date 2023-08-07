@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(),
-        new GetCollection(),
+        new GetCollection(normalizationContext: ['groups' => ['issue:list']]),
         new Post(
             normalizationContext: ['groups' => ['issue:read']],
             denormalizationContext: ['groups' => ['issue:write']]
@@ -29,7 +29,7 @@ class Issue
 {
     #[ORM\Id]
     #[ORM\Column]
-    #[Groups(['issue:read'])]
+    #[Groups(['issue:list', 'issue:read'])]
     private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
@@ -38,15 +38,15 @@ class Issue
     private ?Project $project = null;
 
     #[ORM\Column]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private IssueTypeEnum $type = IssueTypeEnum::BUG;
 
     #[ORM\Column]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private IssueStatusEnum $status = IssueStatusEnum::NEW;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -58,12 +58,12 @@ class Issue
     private ?int $storyPointEstimated = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?User $assignee = null;
 
     #[ORM\ManyToOne(inversedBy: 'reportedIssues')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?User $reporter = null;
 
     #[ORM\PrePersist]

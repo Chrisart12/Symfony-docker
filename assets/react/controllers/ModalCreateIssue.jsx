@@ -1,14 +1,18 @@
 import React from 'react';
-import {Button, Label, Modal, Select, TextInput} from "flowbite-react";
+import {Button, Form, FormSelect, Modal} from "react-bootstrap";
 
 export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
+    const [summary, setSummary] = React.useState('');
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         fetch('/api/issues', {
             body: JSON.stringify({
+                assignee: '/api/users/1',
                 project: '/api/projects/1',
-                summary: '',
+                reporter: '/api/users/1',
+                summary: summary,
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -28,55 +32,55 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                 <Modal.Body>
                     <div className="space-y-6">
                         <div className="mb-4 block">
-                            <Label className="required" htmlFor="project" value="Project" />
-                            <Select id="project">
+                            <Form.Label className="required" htmlFor="project">Project</Form.Label>
+                            <FormSelect id="project">
                                 {createIssueData.projects?.map((project) => (
                                     <option key={project.id} value={project.id}>{project.name}</option>
                                 ))}
-                            </Select>
+                            </FormSelect>
                         </div>
 
                         <div className="mb-4 block">
-                            <Label className="required" htmlFor="issueType" value="Issue type" />
-                            <Select id="project">
+                            <Form.Label className="required" htmlFor="issueType">Issue Type</Form.Label>
+                            <FormSelect id="issueType">
                                 {createIssueData.types?.map((type) => (
                                     <option key={type.value} value={type.value}>{type.label}</option>
                                 ))}
-                            </Select>
+                            </FormSelect>
                         </div>
 
                         <div className="mb-4 block">
-                            <Label htmlFor="status" value="Status" />
-                            <Select id="status">
+                            <Form.Label className="required" htmlFor="status">Status</Form.Label>
+                            <FormSelect id="status">
                                 {createIssueData.statuses?.map((status) => (
                                     <option key={status.value} value={status.value}>{status.label}</option>
                                 ))}
-                            </Select>
+                            </FormSelect>
                         </div>
 
-                        <div className="mb-4 block">
-                            <Label className="required" htmlFor="summary" value="Summary" />
-                            <TextInput id="summary" required />
-                        </div>
+                        <Form.Group className="mb-4 block">
+                            <Form.Label className="required" htmlFor="summary">Summary</Form.Label>
+                            <Form.Control id="summary" onChange={(e) => setSummary(e.target.value)} required />
+                        </Form.Group>
 
                         <div className="mb-4 block">
-                            <Label htmlFor="assignee" value="Assignee" />
-                            <Select id="assignee">
+                            <Form.Label htmlFor="assignee">Assignee</Form.Label>
+                            <FormSelect id="assignee">
                                 <option>Pentiminax</option>
-                            </Select>
+                            </FormSelect>
                         </div>
 
                         <div className="mb-4 block">
-                            <Label className="required" htmlFor="reporter" value="Reporter" />
-                            <Select id="reporter">
+                            <Form.Label className="required" htmlFor="reporter">Reporter</Form.Label>
+                            <FormSelect id="reporter">
                                 <option>Pentiminax</option>
-                            </Select>
+                            </FormSelect>
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button color="gray" onClick={() => setOpenModal('')}>Cancel</Button>
-                    <Button type="submit">Create</Button>
+                    <Button variant="secondary" onClick={() => setOpenModal('')}>Cancel</Button>
+                    <Button type="submit" variant="primary">Create</Button>
                 </Modal.Footer>
             </form>
         </Modal>

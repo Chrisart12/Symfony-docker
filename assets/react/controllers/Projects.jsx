@@ -1,5 +1,5 @@
 import React from "react";
-import {Table} from "flowbite-react";
+import {Table} from "react-bootstrap";
 
 export default function Projects({ projects }) {
      const [projectsList, setProjectsList] = React.useState(JSON.parse(projects));

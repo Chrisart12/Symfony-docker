@@ -6,6 +6,7 @@ use App\Entity\Issue;
 use App\Entity\User;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
+use App\Repository\IssueRepository;
 use App\Service\ProjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/issues', name: 'issue_')]
 class IssueController extends AbstractController
 {
+    #[Route('/', name: 'list', methods: ['GET'])]
+    public function list(IssueRepository $issueRepo)
+    {
+        return $this->render('issue/list.html.twig', [
+            'issues' => $issueRepo->findAll()
+        ]);
+    }
+
     #[Route('/create', name: 'create', methods: ['GET'])]
     public function create(ProjectService $projectService): Response
     {
