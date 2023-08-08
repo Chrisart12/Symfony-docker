@@ -76,7 +76,13 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                                 <>
                                     <Card.Text className="fw-bold">Attachments ({issue.attachments.length})</Card.Text>
                                     <hr />
-                                    <img alt="" className="object-fit-cover" height="128" width="128" src={issue.attachments[0].path}  />
+                                    <Stack direction="horizontal" gap={2}>
+                                        {issue.attachments.map((attachment) => (
+                                            <div key={attachment.id}>
+                                                <img alt="" className="object-fit-cover" height="128" width="128" src={attachment.path}  />
+                                            </div>
+                                        ))}
+                                    </Stack>
                                 </>
                             )}
                         </Card.Body>
