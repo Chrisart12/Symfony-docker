@@ -6,42 +6,13 @@ import {patch} from "../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "./MediaViewer";
-import CardAttachment from "./CardAttachment";
 import IssueAttachments from "./IssueAttachments";
+import ButtonAttach from "./ButtonAttach";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
     const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
     const [selectedAttachment, setSelectedAttachment] = React.useState(null);
-
-    const inputFile = useRef(null);
-
-    /**
-     * @param {Event<HTMLInputElement>} e
-     */
-    const handleChange = (e) => {
-        /** @type {FileList}*/
-        const files = e.target.files;
-
-        if (0 === files.length) {
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('attachment', files[0]);
-
-        fetch(`/issues/${issue.id}/attachments`, {
-            body: formData,
-            method: 'POST'
-        }).then(response => response.json())
-            .then(issue => {
-                setIssue({...issue});
-            });
-    }
-
-    const handleClick = () => {
-        inputFile.current.click();
-    }
 
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
@@ -78,10 +49,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                                 <div>{issue.summary}</div>
                             </Card.Title>
                             <div className="issue-buttons my-3">
-                                <Button onClick={handleClick} size="sm">
-                                    <FontAwesomeIcon icon={faPaperclip} />&nbsp;Attach
-                                </Button>
-                                <input className="d-none" type="file" ref={inputFile} onChange={handleChange} />
+                                <ButtonAttach issue={issue} setIssue={setIssue} />
                             </div>
                             <Card.Text className="fw-bold">Description</Card.Text>
                             <hr />

@@ -6,6 +6,7 @@ import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import IssueAttachments from "./IssueAttachments";
 import MediaViewer from "./MediaViewer";
+import ButtonAttach from "./ButtonAttach";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
@@ -65,17 +66,19 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         setOpenMediaViewer(true);
     }
 
+    const onCreateIssue = (e) => {
+        setIssuesList([...issuesList, e.detail]);
+    }
+
     useEffect(() => {
-        document.addEventListener('onCreateIssue', (e) => {
-           setIssuesList([...issuesList, e.detail]);
-        });
+        document.addEventListener('onCreateIssue', onCreateIssue);
 
         handleDefaultSelectedIssue();
 
+        console.log(issuesList);
+
         return () => {
-            document.removeEventListener('onCreateIssue', (e) => {
-                setIssuesList([...issuesList, e.detail]);
-            });
+            document.removeEventListener('onCreateIssue', onCreateIssue);
         }
     }, []);
 
@@ -103,8 +106,17 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                             <Card.Title className="content-editable issue-summary">
                                 <div>{selectedIssue?.summary}</div>
                             </Card.Title>
+                            <div className="issue-buttons my-3">
+                                <ButtonAttach
+                                    issue={selectedIssue}
+                                    issues={issuesList}
+                                    setIssue={setSelectedIssue}
+                                    setIssues={setIssuesList}
+                                />
+                            </div>
                             <Card.Text>Description</Card.Text>
-                                <div className="content-editable issue-description">
+                            <hr />
+                            <div className="content-editable issue-description">
                                 <p dangerouslySetInnerHTML={{__html: selectedIssue?.description ?  selectedIssue?.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
                             {selectedIssue?.attachments.length > 0 && (
