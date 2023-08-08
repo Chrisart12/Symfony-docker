@@ -12,7 +12,7 @@
     @extend .bg-light, .cursor-pointer;
 }
 
-label .required:after {
+label.required:after {
     content: '*';
     color: red;
 }
