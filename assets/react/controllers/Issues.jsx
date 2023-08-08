@@ -1,6 +1,6 @@
 import React from "react";
 import {getIssueStatusLabel, getIssueTypeLabel} from "../../functions/enum";
-import {Card, Col, Container, FormSelect, ListGroup, Row, Table} from "react-bootstrap";
+import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [issuesList, setIssuesList] = React.useState(JSON.parse(issues));
@@ -34,6 +34,28 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         })
     }
 
+    const handleTypeChange = (e) => {
+        const selectedType = e.target.value;
+
+        fetch(`/api/issues/${selectedIssue.id}`, {
+            body: JSON.stringify({
+                type: selectedType
+            }),
+            headers: {
+                'Content-Type': 'application/merge-patch+json'
+            },
+            method: 'PATCH'
+        }).then(() => {
+            setSelectedIssue({...selectedIssue, type: selectedType});
+            setIssuesList(issuesList.map((issue) => {
+                if (issue.id === selectedIssue.id) {
+                    return {...issue, type: selectedType};
+                }
+                return issue;
+            }));
+        })
+    }
+
     return (
         <Container className="mt-5">
             <Row>
@@ -43,7 +65,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                         <Card.Body>
                             <ListGroup>
                                 {issuesList.map((issue) => (
-                                    <ListGroup.Item action key={issue.id} onClick={() => handleClick(issue)}>
+                                    <ListGroup.Item action active={issue.id === selectedIssue.id} key={issue.id} onClick={() => handleClick(issue)}>
                                         <div className="fw-bold">{issue.id}</div>
                                         <div><small>{issue.summary}</small></div>
                                     </ListGroup.Item>
@@ -66,11 +88,20 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                     </Card>
                 </Col>
                 <Col sm={12} md={3}>
-                    <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue.status} onChange={handleStatusChange}>
-                        {issueStatusesList.map((issueStatus) => (
-                            <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
-                        ))}
-                    </FormSelect>
+                    <Stack direction="horizontal" gap={2}>
+                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue.type} onChange={handleTypeChange}>
+                            {issueTypesList.map((issueType) => (
+                                <option key={issueType.value} value={issueType.value}>{issueType.label}</option>
+                            ))}
+                        </FormSelect>
+
+                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue.status} onChange={handleStatusChange}>
+                            {issueStatusesList.map((issueStatus) => (
+                                <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
+                            ))}
+                        </FormSelect>
+                    </Stack>
+
 
                     <Card>
                         <Card.Header>Details</Card.Header>
