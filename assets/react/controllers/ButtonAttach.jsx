@@ -28,11 +28,11 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
                 setIssue(issue);
 
                 if (issues && setIssues) {
-                    setIssues(issues.map((issue) => {
-                        if (issue.id === issue.id) {
-                            return {...issue, issue};
+                    setIssues(issues.map((currentIssue) => {
+                        if (currentIssue.id === issue.id) {
+                            return issue;
                         }
-                        return issue;
+                        return currentIssue;
                     }));
                 }
             });
