@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {getIssueStatusLabel, getIssueTypeLabel} from "../../functions/enum";
 import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
 import {patch} from "../../functions/api";
@@ -44,6 +44,18 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
             }));
         });
     }
+
+    useEffect(() => {
+        document.addEventListener('onCreateIssue', (e) => {
+           setIssuesList([...issuesList, e.detail]);
+        });
+
+        return () => {
+            document.removeEventListener('onCreateIssue', (e) => {
+                setIssuesList([...issuesList, e.detail]);
+            });
+        }
+    }, []);
 
     return (
         <Container className="mt-5">

@@ -20,8 +20,11 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
             method: 'POST'
         })
             .then(response => response.json())
-            .then(json => {
+            .then((json) => {
                 setOpenModal('');
+                document.dispatchEvent(new CustomEvent('onCreateIssue', {
+                    detail: json
+                }));
             });
     }
 
