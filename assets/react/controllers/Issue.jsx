@@ -7,6 +7,7 @@ import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "./MediaViewer";
 import CardAttachment from "./CardAttachment";
+import IssueAttachments from "./IssueAttachments";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -88,19 +89,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                                 <p dangerouslySetInnerHTML={{__html: issue.description ?  issue.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
                             {issue.attachments.length > 0 && (
-                                <>
-                                    <Card.Text className="fw-bold">Attachments ({issue.attachments.length})</Card.Text>
-                                    <hr />
-                                    <Container className="overflow-x-auto" fluid>
-                                        <Row className="flex-row flex-nowrap mb-3">
-                                        {issue.attachments.map((attachment) => (
-                                            <Col key={attachment.id} sm={4}>
-                                                <CardAttachment attachment={attachment} showMediaViewer={showMediaViewer} />
-                                            </Col>
-                                        ))}
-                                        </Row>
-                                    </Container>
-                                </>
+                                <IssueAttachments issue={issue} showMediaViewer={showMediaViewer} />
                             )}
                         </Card.Body>
                     </Card>

@@ -4,12 +4,15 @@ import {patch} from "../../functions/api";
 import queryString from 'query-string';
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
+import IssueAttachments from "./IssueAttachments";
+import MediaViewer from "./MediaViewer";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
+    const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
     const [parsedQueryString, setParsedQueryString] = React.useState(queryString.parse(location.search));
-
     const [issuesList, setIssuesList] = React.useState(JSON.parse(issues));
-    const [selectedIssue, setSelectedIssue] = React.useState();
+    const [selectedAttachment, setSelectedAttachment] = React.useState(null);
+    const [selectedIssue, setSelectedIssue] = React.useState(null);
 
     const handleClick = (issue) => {
         history.replaceState(null, null, `?selectedIssue=${issue.id}`);
@@ -57,6 +60,11 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         });
     }
 
+    const showMediaViewer = (attachment) => {
+        setSelectedAttachment(attachment);
+        setOpenMediaViewer(true);
+    }
+
     useEffect(() => {
         document.addEventListener('onCreateIssue', (e) => {
            setIssuesList([...issuesList, e.detail]);
@@ -99,6 +107,9 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                                 <div className="content-editable issue-description">
                                 <p dangerouslySetInnerHTML={{__html: selectedIssue?.description ?  selectedIssue?.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
+                            {selectedIssue?.attachments.length > 0 && (
+                                <IssueAttachments issue={selectedIssue} showMediaViewer={showMediaViewer} />
+                            )}
                         </Card.Body>
                     </Card>
                 </Col>
@@ -113,6 +124,11 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                     <CardIssueDetails issue={selectedIssue} />
                 </Col>
             </Row>
+            <MediaViewer
+                imageSrc={selectedAttachment?.path}
+                openMediaViewer={openMediaViewer}
+                setOpenMediaViewer={setOpenMediaViewer}
+            />
         </Container>
     );
 }

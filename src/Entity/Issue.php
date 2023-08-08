@@ -71,7 +71,7 @@ class Issue
     private ?User $reporter = null;
 
     #[ORM\OneToMany(mappedBy: 'issue', targetEntity: Attachment::class, orphanRemoval: true)]
-    #[Groups(['issue:read'])]
+    #[Groups(['issue:list', 'issue:read'])]
     private Collection $attachments;
 
     public function __construct()
