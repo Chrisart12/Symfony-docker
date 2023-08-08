@@ -14,6 +14,7 @@ class Attachment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['issue:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'attachments')]

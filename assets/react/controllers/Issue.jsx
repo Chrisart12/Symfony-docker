@@ -1,13 +1,17 @@
 import React, {useRef} from "react";
-import {Button, Card, Col, Container, FormSelect, Row, Stack, Table} from "react-bootstrap";
+import {Button, Card, Col, Container, FormSelect, Image, Row, Stack, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import {patch} from "../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
+import MediaViewer from "./MediaViewer";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
+    const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
+    const [selectedAttachment, setSelectedAttachment] = React.useState(null);
+
     const inputFile = useRef(null);
 
     /**
@@ -27,7 +31,10 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         fetch(`/issues/${issue.id}/attachments`, {
             body: formData,
             method: 'POST'
-        });
+        }).then(response => response.json())
+            .then(issue => {
+                setIssue({...issue});
+            });
     }
 
     const handleClick = () => {
@@ -54,6 +61,11 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         });
     }
 
+    const showMediaViewer = (attachment) => {
+        setSelectedAttachment(attachment);
+        setOpenMediaViewer(true);
+    }
+
     return (
         <Container className="mt-5">
             <Row>
@@ -78,13 +90,23 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                                 <>
                                     <Card.Text className="fw-bold">Attachments ({issue.attachments.length})</Card.Text>
                                     <hr />
-                                    <Stack direction="horizontal" gap={2}>
+                                    <Container className="overflow-x-auto" fluid>
+                                        <Row className="flex-row flex-nowrap">
                                         {issue.attachments.map((attachment) => (
-                                            <div key={attachment.id}>
-                                                <img alt="" className="object-fit-cover" height="128" width="128" src={attachment.path}  />
-                                            </div>
+                                            <Col sm={4}>
+                                                <Card className="cursor-pointer" key={attachment.id} onClick={() => showMediaViewer(attachment)}>
+                                                    <Card.Img className="object-fit-cover" height={96} src={attachment.path} variant="top" width={96} />
+                                                    <Card.Body className="text-center p-2">
+                                                        <small>{attachment.originalName}</small>
+                                                    </Card.Body>
+                                                    <Card.Footer className="text-center">
+                                                        <small>{attachment.createdAt}</small>
+                                                    </Card.Footer>
+                                                </Card>
+                                            </Col>
                                         ))}
-                                    </Stack>
+                                        </Row>
+                                    </Container>
                                 </>
                             )}
                         </Card.Body>
@@ -100,6 +122,11 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                     <CardIssueDetails issue={issue} />
                 </Col>
             </Row>
+            <MediaViewer
+                imageSrc={selectedAttachment?.path}
+                openMediaViewer={openMediaViewer}
+                setOpenMediaViewer={setOpenMediaViewer}
+            />
         </Container>
     )
 }

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @method User getUser()
@@ -66,7 +67,12 @@ class IssueController extends AbstractController
     }
 
     #[Route('/{id}/attachments', name: 'add_attachment', methods: ['POST'])]
-    public function addAttachment(AttachmentService $attachmentService, ?Issue $issue, Request $request): Response
+    public function addAttachment(
+        AttachmentService $attachmentService,
+        ?Issue $issue,
+        Request $request,
+        NormalizerInterface $normalizer
+    ): Response
     {
         /** @var ?UploadedFile $attachmentFile */
         $attachmentFile = $request->files->get('attachment');
@@ -85,12 +91,8 @@ class IssueController extends AbstractController
         $attachmentFile->move($this->getParameter('attachments_directory'), $newFilename);
         $attachmentService->add($attachment);
 
-        return $this->json([
-            'id' => $attachment->getId(),
-            'createdAt' => $attachment->getCreatedAt(),
-            'originalName' => $attachment->getOriginalName(),
-            'path' => $attachment->getPath(),
-            'size' => $attachment->getSize(),
-        ]);
+        return $this->json($normalizer->normalize($issue, 'json', [
+            'groups' => ['issue:read']
+        ]));
     }
 }
