@@ -1,6 +1,7 @@
 import React from "react";
 import {getIssueStatusLabel, getIssueTypeLabel} from "../../functions/enum";
 import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
+import {patch} from "../../functions/api";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [issuesList, setIssuesList] = React.useState(JSON.parse(issues));
@@ -15,14 +16,8 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
 
-        fetch(`/api/issues/${selectedIssue.id}`, {
-            body: JSON.stringify({
-                status: selectedStatus
-            }),
-            headers: {
-                'Content-Type': 'application/merge-patch+json'
-            },
-            method: 'PATCH'
+        patch('issues', selectedIssue.id, {
+            status: selectedStatus
         }).then(() => {
             setSelectedIssue({...selectedIssue, status: selectedStatus});
             setIssuesList(issuesList.map((issue) => {
@@ -31,20 +26,14 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                 }
                 return issue;
             }));
-        })
+        });
     }
 
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
 
-        fetch(`/api/issues/${selectedIssue.id}`, {
-            body: JSON.stringify({
-                type: selectedType
-            }),
-            headers: {
-                'Content-Type': 'application/merge-patch+json'
-            },
-            method: 'PATCH'
+        patch('issues', selectedIssue.id, {
+            type: selectedType
         }).then(() => {
             setSelectedIssue({...selectedIssue, type: selectedType});
             setIssuesList(issuesList.map((issue) => {
@@ -53,7 +42,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                 }
                 return issue;
             }));
-        })
+        });
     }
 
     return (
