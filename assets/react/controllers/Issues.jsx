@@ -15,7 +15,6 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         history.replaceState(null, null, `?selectedIssue=${issue.id}`);
         setSelectedIssue(issue);
     }
-
     const handleDefaultSelectedIssue = () => {
         let issue = undefined;
 

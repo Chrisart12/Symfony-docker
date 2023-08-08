@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Issue;
 use App\Entity\User;
-use App\Enum\IssueStatusEnum;
-use App\Repository\IssueRepository;
 use App\Service\IssueService;
 use App\Service\ProjectService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +22,10 @@ class IssueController extends AbstractController
     }
 
     #[Route('/', name: 'list', methods: ['GET'])]
-    public function list(IssueRepository $issueRepo): Response
+    public function list(): Response
     {
         return $this->render('issue/list.html.twig', [
-            'issues' => $issueRepo->findAll(),
+            'issues' => $this->getUser()->getSelectedProject()->getIssues(),
             'issueStatuses' => json_encode($this->issueService->getIssueStatuses()),
             'issueTypes' => json_encode($this->issueService->getIssueTypes())
         ]);

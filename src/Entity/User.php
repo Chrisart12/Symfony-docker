@@ -47,6 +47,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'people')]
     private Collection $projects;
 
+    #[ORM\ManyToOne]
+    private ?Project $selectedProject = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $firstName = null;
+
     public function __construct(string $email)
     {
         $this->email = $email;
@@ -244,6 +253,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->projects->removeElement($project)) {
             $project->removePerson($this);
         }
+
+        return $this;
+    }
+
+    public function getSelectedProject(): ?Project
+    {
+        return $this->selectedProject;
+    }
+
+    public function setSelectedProject(?Project $selectedProject): static
+    {
+        $this->selectedProject = $selectedProject;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): static
+    {
+        $this->firstName = $firstName;
 
         return $this;
     }

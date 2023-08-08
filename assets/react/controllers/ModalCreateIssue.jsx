@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Form, FormSelect, Modal} from "react-bootstrap";
+import {showCreatedIssueAlert} from "../../functions/alert";
 
 export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
     const [summary, setSummary] = React.useState('');
@@ -20,10 +21,13 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
             method: 'POST'
         })
             .then(response => response.json())
-            .then((json) => {
+            .then((issue) => {
                 setOpenModal('');
+
+                showCreatedIssueAlert(issue.id);
+
                 document.dispatchEvent(new CustomEvent('onCreateIssue', {
-                    detail: json
+                    detail: issue
                 }));
             });
     }
