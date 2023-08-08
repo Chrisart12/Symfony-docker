@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             normalizationContext: ['groups' => ['issue:read']],
             denormalizationContext: ['groups' => ['issue:write']]
         ),
+        new Patch()
     ]
 )]
 class Issue
@@ -50,7 +52,7 @@ class Issue
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]

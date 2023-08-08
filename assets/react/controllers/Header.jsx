@@ -27,18 +27,8 @@ export default function Header() {
                     <Navbar.Collapse id="navbar">
                         <Nav className="me-auto">
                             <Nav.Link href="#home">Your work</Nav.Link>
-                            <Nav.Link href="#link">Projects</Nav.Link>
-                            <NavDropdown title="Teams" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Teams</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">
-                                    Separated link
-                                </NavDropdown.Item>
-                            </NavDropdown>
+                            <Nav.Link href="/projects">Projects</Nav.Link>
+                            <Nav.Link href="/issues">Issues</Nav.Link>
                             <Nav.Link href="#" onClick={handleClick}>Create</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

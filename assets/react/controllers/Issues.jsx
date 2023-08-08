@@ -13,13 +13,25 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
     }
 
     const handleStatusChange = (e) => {
-        setSelectedIssue({...selectedIssue, status: e.target.value});
-        setIssuesList(issuesList.map((issue) => {
-            if (issue.id === selectedIssue.id) {
-                return {...issue, status: e.target.value};
-            }
-            return issue;
-        }))
+        const selectedStatus = e.target.value;
+
+        fetch(`/api/issues/${selectedIssue.id}`, {
+            body: JSON.stringify({
+                status: selectedStatus
+            }),
+            headers: {
+                'Content-Type': 'application/merge-patch+json'
+            },
+            method: 'PATCH'
+        }).then(() => {
+            setSelectedIssue({...selectedIssue, status: selectedStatus});
+            setIssuesList(issuesList.map((issue) => {
+                if (issue.id === selectedIssue.id) {
+                    return {...issue, status: selectedStatus};
+                }
+                return issue;
+            }));
+        })
     }
 
     return (
@@ -32,8 +44,8 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                             <ListGroup>
                                 {issuesList.map((issue) => (
                                     <ListGroup.Item action key={issue.id} onClick={() => handleClick(issue)}>
-                                        <div>{issue.id}</div>
-                                        <div>{issue.summary}</div>
+                                        <div className="fw-bold">{issue.id}</div>
+                                        <div><small>{issue.summary}</small></div>
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
@@ -43,9 +55,13 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                 <Col sm={12} md={6}>
                     <Card>
                         <Card.Body>
-                            <Card.Title>{selectedIssue.summary}</Card.Title>
+                            <Card.Title className="content-editable issue-summary">
+                                <div>{selectedIssue.summary}</div>
+                            </Card.Title>
                             <Card.Text>Description</Card.Text>
-                            <p>{selectedIssue.description ? selectedIssue.description : <span className="text-muted">Add a description...</span>}</p>
+                                <div className="content-editable issue-description">
+                                <p dangerouslySetInnerHTML={{__html: selectedIssue.description ?  selectedIssue.description : '<span class="text-muted">Add a description...</span>'}}></p>
+                            </div>
                         </Card.Body>
                     </Card>
                 </Col>

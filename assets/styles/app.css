@@ -1,6 +1,0 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
-label.required:after {
-    content: '*';
-    color: red;
-}

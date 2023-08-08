@@ -1,29 +1,33 @@
 import React from "react";
-import {Table} from "react-bootstrap";
+import {Col, Container, Row, Table} from "react-bootstrap";
 
 export default function Projects({ projects }) {
      const [projectsList, setProjectsList] = React.useState(JSON.parse(projects));
 
     return (
-        <div className="container mx-auto mt-6">
-            <Table hoverable>
-                <Table.Head>
-                    <Table.HeadCell>Name</Table.HeadCell>
-                    <Table.HeadCell>Key</Table.HeadCell>
-                    <Table.HeadCell>Lead</Table.HeadCell>
-                </Table.Head>
-                <Table.Body className="divide-y">
-                    {projectsList.map((project) => (
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={project.id}>
-                            <Table.Cell>{project.name}</Table.Cell>
-                            <Table.Cell>{project.key}</Table.Cell>
-                            <Table.Cell>{project.lead.email}</Table.Cell>
-                        </Table.Row>
-                    ))}
-
-                </Table.Body>
-            </Table>
-        </div>
-
+        <Container className="mt-5">
+            <Row>
+                <Col>
+                    <Table bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Key</th>
+                            <th>Lead</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {projectsList.map((project) => (
+                            <tr key={project.id}>
+                                <td>{project.name}</td>
+                                <td>{project.key}</td>
+                                <td>{project.lead.email}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Row>
+        </Container>
     );
 }
