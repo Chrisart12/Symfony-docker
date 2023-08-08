@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
 import {patch} from "../../functions/api";
 import queryString from 'query-string';
+import CardIssueDetails from "./CardIssueDetails";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [parsedQueryString, setParsedQueryString] = React.useState(queryString.parse(location.search));
@@ -117,29 +118,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                         </FormSelect>
                     </Stack>
 
-                    <Card>
-                        <Card.Header>Details</Card.Header>
-                        <Card.Body>
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody className="">
-                                    <tr>
-                                        <td className="fw-bold"><small>Assignee</small></td>
-                                        <td><small>{selectedIssue?.assignee.email}</small></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="fw-bold"><small>Reporter</small></td>
-                                        <td><small>{selectedIssue?.reporter.email}</small></td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </Card.Body>
-                    </Card>
+                    <CardIssueDetails issue={selectedIssue} />
                 </Col>
             </Row>
         </Container>

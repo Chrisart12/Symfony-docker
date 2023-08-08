@@ -3,6 +3,7 @@ import {Button, Card, Col, Container, FormSelect, Row, Stack, Table} from "react
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import {patch} from "../../functions/api";
+import CardIssueDetails from "./CardIssueDetails";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -102,29 +103,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                             ))}
                         </FormSelect>
                     </Stack>
-                    <Card>
-                        <Card.Header>Details</Card.Header>
-                        <Card.Body>
-                            <Table>
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody className="">
-                                <tr>
-                                    <td className="fw-bold"><small>Assignee</small></td>
-                                    <td><small>{issue.assignee.email}</small></td>
-                                </tr>
-                                <tr>
-                                    <td className="fw-bold"><small>Reporter</small></td>
-                                    <td><small>{issue.reporter.email}</small></td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        </Card.Body>
-                    </Card>
+                    <CardIssueDetails issue={issue} />
                 </Col>
             </Row>
         </Container>
