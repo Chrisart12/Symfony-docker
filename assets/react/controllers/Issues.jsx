@@ -75,8 +75,6 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
 
         handleDefaultSelectedIssue();
 
-        console.log(issuesList);
-
         return () => {
             document.removeEventListener('onCreateIssue', onCreateIssue);
         }
@@ -106,6 +104,9 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                             <Card.Title className="content-editable issue-summary">
                                 <div>{selectedIssue?.summary}</div>
                             </Card.Title>
+
+                            <hr />
+
                             <div className="issue-buttons my-3">
                                 <ButtonAttach
                                     issue={selectedIssue}
@@ -114,11 +115,15 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                                     setIssues={setIssuesList}
                                 />
                             </div>
+
                             <Card.Text>Description</Card.Text>
+
                             <hr />
+
                             <div className="content-editable issue-description">
                                 <p dangerouslySetInnerHTML={{__html: selectedIssue?.description ?  selectedIssue?.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
+
                             {selectedIssue?.attachments.length > 0 && (
                                 <IssueAttachments issue={selectedIssue} showMediaViewer={showMediaViewer} />
                             )}
