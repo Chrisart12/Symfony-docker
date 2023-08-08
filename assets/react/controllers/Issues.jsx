@@ -3,13 +3,12 @@ import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "re
 import {patch} from "../../functions/api";
 import queryString from 'query-string';
 import CardIssueDetails from "./CardIssueDetails";
+import StackIssueStatusType from "./StackIssueStatusType";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [parsedQueryString, setParsedQueryString] = React.useState(queryString.parse(location.search));
 
     const [issuesList, setIssuesList] = React.useState(JSON.parse(issues));
-    const [issueStatusesList, setIssueStatusesList] = React.useState(JSON.parse(issueStatuses));
-    const [issueTypesList, setIssueTypesList] = React.useState(JSON.parse(issueTypes));
     const [selectedIssue, setSelectedIssue] = React.useState();
 
     const handleClick = (issue) => {
@@ -104,19 +103,12 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                     </Card>
                 </Col>
                 <Col sm={12} md={3}>
-                    <Stack direction="horizontal" gap={2}>
-                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue?.type} onChange={handleTypeChange}>
-                            {issueTypesList.map((issueType) => (
-                                <option key={issueType.value} value={issueType.value}>{issueType.label}</option>
-                            ))}
-                        </FormSelect>
-
-                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" value={selectedIssue?.status} onChange={handleStatusChange}>
-                            {issueStatusesList.map((issueStatus) => (
-                                <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
-                            ))}
-                        </FormSelect>
-                    </Stack>
+                    <StackIssueStatusType
+                        handleStatusChange={handleStatusChange}
+                        handleTypeChange={handleTypeChange}
+                        issue={selectedIssue}
+                        issueTypes={issueTypes}
+                        issueStatuses={issueStatuses}/>
 
                     <CardIssueDetails issue={selectedIssue} />
                 </Col>

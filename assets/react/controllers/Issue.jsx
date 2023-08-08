@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import {patch} from "../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
+import StackIssueStatusType from "./StackIssueStatusType";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -90,19 +91,12 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                     </Card>
                 </Col>
                 <Col sm={12} md={4}>
-                    <Stack direction="horizontal" gap={2}>
-                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" onChange={handleTypeChange} value={issue.type}>
-                            {issueTypes.map((issueType) => (
-                                <option key={issueType.value} value={issueType.value}>{issueType.label}</option>
-                            ))}
-                        </FormSelect>
-
-                        <FormSelect className="mb-3 mt-sm-3 mt-md-0" onChange={handleStatusChange} value={issue.status}>
-                            {issueStatuses.map((issueStatus) => (
-                                <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
-                            ))}
-                        </FormSelect>
-                    </Stack>
+                    <StackIssueStatusType
+                        handleStatusChange={handleStatusChange}
+                        handleTypeChange={handleTypeChange}
+                        issue={issue}
+                        issueTypes={issueTypes}
+                        issueStatuses={issueStatuses}/>
                     <CardIssueDetails issue={issue} />
                 </Col>
             </Row>
