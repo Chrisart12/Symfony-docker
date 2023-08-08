@@ -12,6 +12,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [selectedIssue, setSelectedIssue] = React.useState();
 
     const handleClick = (issue) => {
+        history.replaceState(null, null, `?selectedIssue=${issue.id}`);
         setSelectedIssue(issue);
     }
 
