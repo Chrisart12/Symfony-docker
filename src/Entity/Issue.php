@@ -10,6 +10,8 @@ use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -67,6 +69,15 @@ class Issue
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?User $reporter = null;
+
+    #[ORM\OneToMany(mappedBy: 'issue', targetEntity: Attachment::class, orphanRemoval: true)]
+    #[Groups(['issue:read'])]
+    private Collection $attachments;
+
+    public function __construct()
+    {
+        $this->attachments = new ArrayCollection();
+    }
 
     #[ORM\PrePersist]
     public function setIdValue(): void
@@ -173,6 +184,36 @@ class Issue
     public function setReporter(?User $reporter): static
     {
         $this->reporter = $reporter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Attachment>
+     */
+    public function getAttachments(): Collection
+    {
+        return $this->attachments;
+    }
+
+    public function addAttachment(Attachment $attachment): static
+    {
+        if (!$this->attachments->contains($attachment)) {
+            $this->attachments->add($attachment);
+            $attachment->setIssue($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttachment(Attachment $attachment): static
+    {
+        if ($this->attachments->removeElement($attachment)) {
+            // set the owning side to null (unless already changed)
+            if ($attachment->getIssue() === $this) {
+                $attachment->setIssue(null);
+            }
+        }
 
         return $this;
     }

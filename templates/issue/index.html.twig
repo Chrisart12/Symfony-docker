@@ -3,5 +3,5 @@
 {% block title %}{{ issue.id }}{% endblock %}
 
 {% block body %}
-
+    <div {{ react_component('Issue', { serializedIssue: issue|serialize('json', { 'groups': 'issue:read' }), issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
 {% endblock %}

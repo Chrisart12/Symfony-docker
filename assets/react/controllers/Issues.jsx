@@ -117,7 +117,6 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                         </FormSelect>
                     </Stack>
 
-
                     <Card>
                         <Card.Header>Details</Card.Header>
                         <Card.Body>
