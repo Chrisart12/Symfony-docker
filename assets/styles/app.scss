@@ -12,6 +12,10 @@
     @extend .bg-light, .cursor-pointer;
 }
 
+.dropdown-project-actions:after {
+    display: none !important;
+}
+
 label.required:after {
     content: '*';
     color: red;

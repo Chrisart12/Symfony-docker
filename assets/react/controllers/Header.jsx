@@ -28,6 +28,7 @@ export default function Header() {
                         <Nav className="me-auto">
                             <Nav.Link href="#home">Your work</Nav.Link>
                             <Nav.Link href="/projects">Projects</Nav.Link>
+                            <Nav.Link href="/teams">Teams</Nav.Link>
                             <Nav.Link href="/issues">Issues</Nav.Link>
                             <Nav.Link href="#" onClick={handleClick}>Create</Nav.Link>
                         </Nav>
