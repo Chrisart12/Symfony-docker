@@ -6,6 +6,7 @@ import {patch} from "../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "./MediaViewer";
+import CardAttachment from "./CardAttachment";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -91,18 +92,10 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                                     <Card.Text className="fw-bold">Attachments ({issue.attachments.length})</Card.Text>
                                     <hr />
                                     <Container className="overflow-x-auto" fluid>
-                                        <Row className="flex-row flex-nowrap">
+                                        <Row className="flex-row flex-nowrap mb-3">
                                         {issue.attachments.map((attachment) => (
-                                            <Col sm={4}>
-                                                <Card className="cursor-pointer" key={attachment.id} onClick={() => showMediaViewer(attachment)}>
-                                                    <Card.Img className="object-fit-cover" height={96} src={attachment.path} variant="top" width={96} />
-                                                    <Card.Body className="text-center p-2">
-                                                        <small>{attachment.originalName}</small>
-                                                    </Card.Body>
-                                                    <Card.Footer className="text-center">
-                                                        <small>{attachment.createdAt}</small>
-                                                    </Card.Footer>
-                                                </Card>
+                                            <Col key={attachment.id} sm={4}>
+                                                <CardAttachment attachment={attachment} showMediaViewer={showMediaViewer} />
                                             </Col>
                                         ))}
                                         </Row>
