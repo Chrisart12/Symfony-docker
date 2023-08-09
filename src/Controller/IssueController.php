@@ -51,7 +51,7 @@ class IssueController extends AbstractController
         ];
 
         return $this->json([
-            'projects' => $projectService->findAllNormalized(['project:list:create:issue']),
+            'projects' => $projectService->getProjectsByUserNormalized($user, ['project:list:create:issue']),
             'statuses' => $this->issueService->getIssueStatuses(),
             'types' => $this->issueService->getIssueTypes(),
             'reporter' => $reporter

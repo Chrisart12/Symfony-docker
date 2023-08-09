@@ -26,6 +26,7 @@ class ProjectEntityListener
 
         $project->setLead($user);
         $user->addProject($project);
+        $user->setSelectedProject($project);
 
         $this->em->persist($user);
     }

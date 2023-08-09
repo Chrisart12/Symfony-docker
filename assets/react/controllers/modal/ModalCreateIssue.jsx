@@ -3,6 +3,11 @@ import {Button, Form, FormSelect, Modal} from "react-bootstrap";
 import {showCreatedIssueAlert} from "../../../functions/alert";
 
 export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
+    if (0 === createIssueData.length) {
+        return;
+    }
+
+    const [project, setProject] = React.useState(createIssueData['projects'][0]['id']);
     const [summary, setSummary] = React.useState('');
 
     const handleSubmit = (e) => {
@@ -11,7 +16,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
         fetch('/api/issues', {
             body: JSON.stringify({
                 assignee: '/api/users/1',
-                project: '/api/projects/1',
+                project: `/api/projects/${project}`,
                 reporter: '/api/users/1',
                 summary: summary,
             }),
@@ -22,7 +27,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
         })
             .then(response => response.json())
             .then((issue) => {
-                setOpenModal(true);
+                setOpenModal(false);
 
                 showCreatedIssueAlert(issue.id);
 
@@ -30,6 +35,10 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                     detail: issue
                 }));
             });
+    }
+
+    const updateProjectValue = (e) => {
+        setProject(e.target.value);
     }
 
     return (
@@ -42,7 +51,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                     <div className="space-y-6">
                         <div className="mb-4 block">
                             <Form.Label className="required" htmlFor="project">Project</Form.Label>
-                            <FormSelect id="project">
+                            <FormSelect id="project" value={project} onChange={updateProjectValue}>
                                 {createIssueData.projects?.map((project) => (
                                     <option key={project.id} value={project.id}>{project.name}</option>
                                 ))}
