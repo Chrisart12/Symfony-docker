@@ -20,7 +20,7 @@ export default function ModalCreateProject({openModal, setOpenModal}) {
                         </Form.Group>
                         <Form.Group className="mb-4 block">
                             <Form.Label className="required">Key</Form.Label>
-                            <Form.Control required />
+                            <Form.Control max="6" min="2" required />
                         </Form.Group>
                     </div>
                 </Modal.Body>
