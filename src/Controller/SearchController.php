@@ -19,6 +19,10 @@ class SearchController extends AbstractController
             return $this->redirectToRoute('issue_show', ['id' => $issue->getId()]);
         }
 
-        return $this->json([]);
+        if ($referer = $request->headers->get('referer')) {
+            return $this->redirect($referer);
+        }
+
+        return $this->redirectToRoute('home_index');
     }
 }
