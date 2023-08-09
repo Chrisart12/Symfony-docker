@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
 import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
-import {patch} from "../../functions/api";
+import {patch} from "../../../functions/api";
 import queryString from 'query-string';
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import IssueAttachments from "./IssueAttachments";
-import MediaViewer from "./MediaViewer";
-import ButtonAttach from "./ButtonAttach";
+import MediaViewer from "../MediaViewer";
+import ButtonAttach from "../attachment/ButtonAttach";
 
 export default function Issues({ issues, issueStatuses, issueTypes }) {
     const [openMediaViewer, setOpenMediaViewer] = React.useState(false);

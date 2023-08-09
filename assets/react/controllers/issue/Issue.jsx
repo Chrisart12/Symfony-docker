@@ -1,13 +1,11 @@
-import React, {useRef} from "react";
-import {Button, Card, Col, Container, FormSelect, Image, Row, Stack, Table} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
-import {patch} from "../../functions/api";
+import React from "react";
+import {Card, Col, Container, Row} from "react-bootstrap";
+import {patch} from "../../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
-import MediaViewer from "./MediaViewer";
+import MediaViewer from "../MediaViewer";
 import IssueAttachments from "./IssueAttachments";
-import ButtonAttach from "./ButtonAttach";
+import ButtonAttach from "../attachment/ButtonAttach";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));

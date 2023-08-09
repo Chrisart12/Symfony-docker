@@ -1,6 +1,5 @@
 import React from 'react';
-import NavbarLink from "./NavbarLink";
-import ModalCreateIssue from "./ModalCreateIssue";
+import ModalCreateIssue from "./modal/ModalCreateIssue";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 export default function Header() {

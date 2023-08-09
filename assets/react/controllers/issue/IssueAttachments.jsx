@@ -1,5 +1,5 @@
 import {Card, Col, Container, Row} from "react-bootstrap";
-import CardAttachment from "./CardAttachment";
+import CardAttachment from "../attachment/CardAttachment";
 import React from "react";
 
 export default function IssueAttachments({issue, showMediaViewer}) {

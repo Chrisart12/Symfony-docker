@@ -3,8 +3,6 @@ import {Card, Col, Container, Dropdown, Row, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsis} from "@fortawesome/free-solid-svg-icons";
 
-
-
 export default function Projects({ projects }) {
      const [projectsList, setProjectsList] = React.useState(JSON.parse(projects));
 

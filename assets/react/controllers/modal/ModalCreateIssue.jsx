@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Form, FormSelect, Modal} from "react-bootstrap";
-import {showCreatedIssueAlert} from "../../functions/alert";
+import {showCreatedIssueAlert} from "../../../functions/alert";
 
 export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
     const [summary, setSummary] = React.useState('');
