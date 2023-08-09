@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,22 +16,33 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Patch(),
+        new Post(
+            normalizationContext: ['groups' => ['project:read']],
+            denormalizationContext: ['groups' => ['project:write']]
+        ),
+        new Delete()
+    ]
+)]
 class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['project:list', 'project:list:create:issue'])]
+    #[Groups(['project:read', 'project:list:create:issue'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['project:list', 'project:list:create:issue'])]
+    #[Groups(['project:list:create:issue', 'project:read'])]
     private ?string $name = null;
 
     #[Assert\Length(min: 2, max: 10)]
     #[ORM\Column(name: '`key`', length: 10)]
-    #[Groups(['project:list'])]
+    #[Groups(['project:read'])]
     private ?string $key = null;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Issue::class, orphanRemoval: true)]
@@ -34,7 +50,7 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['project:list'])]
+    #[Groups(['project:read'])]
     private ?User $lead = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]

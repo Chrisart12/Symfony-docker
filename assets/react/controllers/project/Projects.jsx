@@ -27,7 +27,12 @@ export default function Projects({ projects }) {
                          </div>
                      </Col>
                  </Row>
-                 <ModalCreateProject openModal={openModal} setOpenModal={setOpenModal} />
+                 <ModalCreateProject
+                     openModal={openModal}
+                     projectsList={projectsList}
+                     setOpenModal={setOpenModal}
+                     setProjectsList={setProjectsList}
+                 />
              </Container>
          )
      }
@@ -36,8 +41,8 @@ export default function Projects({ projects }) {
         <Container className="mt-5">
             <Row>
                 <Col>
-                    <Table bordered hover>
-                        <thead>
+                    <Table bordered className="text-center" hover>
+                        <thead >
                         <tr>
                             <th>Name</th>
                             <th>Key</th>
@@ -50,8 +55,8 @@ export default function Projects({ projects }) {
                             <tr className="cursor-pointer" key={project.id}>
                                 <td>{project.name}</td>
                                 <td>{project.key}</td>
-                                <td>{project.lead.email}</td>
-                                <td className="text-center">
+                                <td>{project.lead.firstName} {project.lead.lastName}</td>
+                                <td>
                                     <Dropdown>
                                         <Dropdown.Toggle className="dropdown-project-actions" variant="secondary">
                                             <FontAwesomeIcon icon={faEllipsis} size="xl" />
