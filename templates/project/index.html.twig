@@ -3,5 +3,6 @@
 {% block title %}Projects{% endblock %}
 
 {% block body %}
-    <div {{ react_component('project/Projects', { projects: projects|serialize('json', { 'groups': 'project:list' }) }) }}></div>
+    <div {{ react_component('project/Projects', { projects: projects|serialize('json', { 'groups': 'project:list' }) }) }}>
+    </div>
 {% endblock %}

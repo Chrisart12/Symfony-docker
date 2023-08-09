@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Card, Col, Container, FormSelect, ListGroup, Row, Stack, Table} from "react-bootstrap";
+import {Card, Col, Container, ListGroup, Row} from "react-bootstrap";
 import {patch} from "../../../functions/api";
 import queryString from 'query-string';
 import CardIssueDetails from "./CardIssueDetails";
@@ -79,6 +79,22 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
             document.removeEventListener('onCreateIssue', onCreateIssue);
         }
     }, []);
+
+    if (0 === issuesList.length) {
+        return (
+            <Container className="mt-5">
+                <Row>
+                    <Col>
+                        <Card>
+                            <Card.Body className="bg-light">
+                                <Card.Text className="text-center">You don't have any issues</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
 
     return (
         <Container className="mt-5">

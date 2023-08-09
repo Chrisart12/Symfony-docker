@@ -22,7 +22,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
         })
             .then(response => response.json())
             .then((issue) => {
-                setOpenModal('');
+                setOpenModal(true);
 
                 showCreatedIssueAlert(issue.id);
 
@@ -33,8 +33,10 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
     }
 
     return (
-        <Modal show={openModal === 'default'} onClose={() => setOpenModal('')}>
-            <Modal.Header>Create issue</Modal.Header>
+        <Modal show={openModal} onClose={() => setOpenModal(false)}>
+            <Modal.Header>
+                <h5>Create issue</h5>
+            </Modal.Header>
             <form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <div className="space-y-6">
@@ -86,7 +88,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setOpenModal('')}>Cancel</Button>
+                    <Button variant="secondary" onClick={() => setOpenModal(false)}>Cancel</Button>
                     <Button type="submit" variant="primary">Create</Button>
                 </Modal.Footer>
             </form>

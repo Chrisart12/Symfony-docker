@@ -4,16 +4,16 @@ import {Container, Form, Nav, Navbar} from "react-bootstrap";
 
 export default function Header() {
     const [createIssueData, setCreateIssueData] = React.useState([]);
-    const [openModal, setOpenModal] = React.useState('');
+    const [openModal, setOpenModal] = React.useState(false);
     const [query, setQuery] = React.useState('');
 
     const handleChange = (e) => {
         setQuery(e.target.value);
     }
 
-    const handleClick = async () => {
+    const openModalCreateIssue = async () => {
         await fetchCreateIssueData();
-        setOpenModal('default');
+        setOpenModal(true);
     }
 
     const fetchCreateIssueData = async () => {
@@ -34,7 +34,7 @@ export default function Header() {
                             <Nav.Link href="/projects">Projects</Nav.Link>
                             <Nav.Link href="/teams">Teams</Nav.Link>
                             <Nav.Link href="/issues">Issues</Nav.Link>
-                            <Nav.Link href="#" onClick={handleClick}>Create</Nav.Link>
+                            <Nav.Link href="#" onClick={openModalCreateIssue}>Create</Nav.Link>
                         </Nav>
                         <Form action="/search" className="d-flex" >
                             <Form.Control name="query" onChange={handleChange} placeholder="Search..." type="search" value={query} />

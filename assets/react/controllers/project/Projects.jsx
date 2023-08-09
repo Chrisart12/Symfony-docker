@@ -1,23 +1,33 @@
 import React from "react";
-import {Card, Col, Container, Dropdown, Row, Table} from "react-bootstrap";
+import {Button, Card, Col, Container, Dropdown, Row, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsis} from "@fortawesome/free-solid-svg-icons";
+import ModalCreateProject from "../modal/ModalCreateProject";
 
 export default function Projects({ projects }) {
-     const [projectsList, setProjectsList] = React.useState(JSON.parse(projects));
+    const [openModal, setOpenModal] = React.useState(false);
+    const [projectsList, setProjectsList] = React.useState(JSON.parse(projects));
 
      if (0 === projectsList.length) {
+         const showModal = () => {
+             setOpenModal(true);
+         }
+
          return (
              <Container className="mt-5">
                  <Row>
                      <Col>
                          <Card>
                              <Card.Body className="bg-light">
-                                 <Card.Text className="text-center">You don't have any projects</Card.Text>
+                                 <Card.Text className="fw-bold text-center">You currently have no projects</Card.Text>
                              </Card.Body>
                          </Card>
+                         <div className="text-center mt-3">
+                             <Button className="fw-bold" size="sm" onClick={showModal}>Create project</Button>
+                         </div>
                      </Col>
                  </Row>
+                 <ModalCreateProject openModal={openModal} setOpenModal={setOpenModal} />
              </Container>
          )
      }

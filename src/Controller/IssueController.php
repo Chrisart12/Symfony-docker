@@ -29,8 +29,10 @@ class IssueController extends AbstractController
     #[Route('/', name: 'list', methods: ['GET'])]
     public function list(): Response
     {
+        $selectedProject = $this->getUser()->getSelectedProject();
+
         return $this->render('issue/list.html.twig', [
-            'issues' => $this->getUser()->getSelectedProject()->getIssues(),
+            'issues' => $selectedProject ? $selectedProject->getIssues() : [],
             'issueStatuses' => $this->issueService->getIssueStatuses(),
             'issueTypes' => $this->issueService->getIssueTypes()
         ]);
