@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ApiResource]
@@ -23,6 +24,7 @@ class Project
     #[Groups(['project:list', 'project:list:create:issue'])]
     private ?string $name = null;
 
+    #[Assert\Length(min: 2, max: 10)]
     #[ORM\Column(name: '`key`', length: 10)]
     #[Groups(['project:list'])]
     private ?string $key = null;
