@@ -6,12 +6,16 @@ export default function ModalCreateProject({openModal, setOpenModal}) {
         setOpenModal(false);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <Modal show={openModal} onClose={closeModal}>
             <Modal.Header>
                 <h5>Create project</h5>
             </Modal.Header>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <div className="space-y-6">
                         <Form.Group className="mb-4 block">
