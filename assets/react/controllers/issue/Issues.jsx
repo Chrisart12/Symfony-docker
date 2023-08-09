@@ -142,7 +142,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                 </Col>
             </Row>
             <MediaViewer
-                imageSrc={selectedAttachment?.path}
+                attachmentPath={selectedAttachment?.path}
                 openMediaViewer={openMediaViewer}
                 setOpenMediaViewer={setOpenMediaViewer}
             />

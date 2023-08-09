@@ -1,5 +1,6 @@
 import React from "react";
 import {Card} from "react-bootstrap";
+import {isImage} from "../../../functions/image";
 
 export default function CardAttachment({ attachment, showMediaViewer }) {
 
@@ -8,8 +9,11 @@ export default function CardAttachment({ attachment, showMediaViewer }) {
     }
 
     return (
-        <Card className="cursor-pointer" key={attachment.id} onClick={() => showMediaViewer(attachment)}>
-            <Card.Img className="object-fit-cover" height={96} src={attachment.path} variant="top" width={96} />
+        <Card className="cursor-pointer h-100" key={attachment.id} onClick={() => showMediaViewer(attachment)}>
+            {isImage(attachment.originalName)
+                ? <Card.Img className="object-fit-cover" height={96} src={attachment.path} variant="top" width={96} />
+                : <></>
+            }
             <Card.Body className="text-center p-2">
                 <small>{attachment.originalName}</small>
             </Card.Body>
