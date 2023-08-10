@@ -9,9 +9,19 @@ export default function CardIssueDetails({ issue, setIssue }) {
     }
     const [options, setOptions] = useState([]);
 
-    const handleChange = (e) => {
+    const handleAssigneeChange = (e) => {
         patch('issues', issue.id, {
             'assignee': `/api/users/${e.value}`
+        })
+            .then(response => response.json())
+            .then((updatedIssue) => {
+                setIssue(updatedIssue);
+            });
+    }
+
+    const handleReporterChange = (e) => {
+        patch('issues', issue.id, {
+            'reporter': `/api/users/${e.value}`
         })
             .then(response => response.json())
             .then((updatedIssue) => {
@@ -47,16 +57,23 @@ export default function CardIssueDetails({ issue, setIssue }) {
                         <td className="fw-bold"><small>Assignee</small></td>
                         <td>
                             <Select
-                                value={{value: issue.assignee.id, label: `${issue.assignee.firstName } ${issue.assignee.lastName}`}}
-                                onChange={handleChange}
+                                onChange={handleAssigneeChange}
                                 options={options}
                                 placeholder="Assignee"
+                                value={{value: issue.assignee.id, label: `${issue.assignee.firstName } ${issue.assignee.lastName}`}}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td className="fw-bold"><small>Reporter</small></td>
-                        <td><small>{issue?.reporter.email}</small></td>
+                        <td>
+                            <Select
+                                onChange={handleReporterChange}
+                                options={options}
+                                placeholder="Reporter"
+                                value={{value: issue.reporter.id, label: `${issue.reporter.firstName } ${issue.reporter.lastName}`}}
+                            />
+                        </td>
                     </tr>
                     </tbody>
                 </Table>
