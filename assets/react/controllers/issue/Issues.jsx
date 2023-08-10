@@ -154,7 +154,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                         issueTypes={issueTypes}
                         issueStatuses={issueStatuses}/>
 
-                    <CardIssueDetails issue={selectedIssue} />
+                    <CardIssueDetails issue={selectedIssue} setIssue={setSelectedIssue} />
                 </Col>
             </Row>
             <MediaViewer

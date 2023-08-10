@@ -67,7 +67,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                         issue={issue}
                         issueTypes={issueTypes}
                         issueStatuses={issueStatuses}/>
-                    <CardIssueDetails issue={issue} />
+                    <CardIssueDetails issue={issue} setIssue={setIssue} />
                 </Col>
             </Row>
             <MediaViewer

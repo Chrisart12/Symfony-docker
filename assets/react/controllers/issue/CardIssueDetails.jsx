@@ -1,7 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import {Card, Table} from "react-bootstrap";
+import Select from "react-select";
+import {patch} from "../../../functions/api";
 
-export default function CardIssueDetails({ issue }) {
+export default function CardIssueDetails({ issue, setIssue }) {
+    if (!issue) {
+        return;
+    }
+    const [options, setOptions] = useState([]);
+
+    const handleChange = (e) => {
+        patch('issues', issue.id, {
+            'assignee': `/api/users/${e.value}`
+        })
+            .then(response => response.json())
+            .then((updatedIssue) => {
+                setIssue(updatedIssue);
+            });
+    }
+
+    React.useEffect(() => {
+        if (0 === options.length) {
+            fetch(`/api/projects/6/people`)
+                .then(response => response.json())
+                .then(json => {
+                    json['people'].forEach(person => {
+                        options.push({value: person.id, label: `${person.firstName} ${person.lastName}`});
+                    });
+                });
+        }
+    }, [options]);
+
     return (
         <Card>
             <Card.Header>Details</Card.Header>
@@ -13,10 +42,17 @@ export default function CardIssueDetails({ issue }) {
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody className="">
+                    <tbody className="align-middle">
                     <tr>
                         <td className="fw-bold"><small>Assignee</small></td>
-                        <td><small>{issue?.assignee.firstName} {issue?.assignee.lastName}</small></td>
+                        <td>
+                            <Select
+                                value={{value: issue.assignee.id, label: `${issue.assignee.firstName } ${issue.assignee.lastName}`}}
+                                onChange={handleChange}
+                                options={options}
+                                placeholder="Assignee"
+                            />
+                        </td>
                     </tr>
                     <tr>
                         <td className="fw-bold"><small>Reporter</small></td>

@@ -26,7 +26,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
             normalizationContext: ['groups' => ['issue:read']],
             denormalizationContext: ['groups' => ['issue:write']]
         ),
-        new Patch()
+        new Patch(
+            normalizationContext: ['groups' => ['issue:read']],
+        )
     ]
 )]
 class Issue

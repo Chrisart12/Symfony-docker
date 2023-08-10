@@ -55,7 +55,6 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                 setAssignee(json['people'][0]['id']);
                 setPeople(json['people']);
             });
-
     }, []);
 
     return (
