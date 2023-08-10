@@ -26,7 +26,7 @@ export default function Header() {
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="/">TaskSphere</Navbar.Brand>
+                    <Navbar.Brand className="fw-bold text-primary" href="/">TaskSphere</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbar" />
                     <Navbar.Collapse id="navbar">
                         <Nav className="me-auto">
