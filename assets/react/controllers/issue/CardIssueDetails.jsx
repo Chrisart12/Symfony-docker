@@ -43,6 +43,15 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             .then(response => response.json())
             .then((updatedIssue) => {
                 setIssue(updatedIssue);
+
+                if (issues && setIssues) {
+                    setIssues(issues.map((currentIssue) => {
+                        if (currentIssue.id === updatedIssue.id) {
+                            return updatedIssue;
+                        }
+                        return currentIssue;
+                    }));
+                }
             });
     }
 
