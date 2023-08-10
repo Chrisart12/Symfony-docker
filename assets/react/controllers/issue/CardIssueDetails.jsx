@@ -10,6 +10,10 @@ export default function CardIssueDetails({ issue, setIssue }) {
     const [options, setOptions] = useState([]);
 
     const handleAssigneeChange = (e) => {
+        if (e.value === issue.assignee.id) {
+            return;
+        }
+
         patch('issues', issue.id, {
             'assignee': `/api/users/${e.value}`
         })
@@ -20,6 +24,10 @@ export default function CardIssueDetails({ issue, setIssue }) {
     }
 
     const handleReporterChange = (e) => {
+        if (e.value === issue.reporter.id) {
+            return;
+        }
+
         patch('issues', issue.id, {
             'reporter': `/api/users/${e.value}`
         })
