@@ -19,6 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new Get(),
+        new Get(
+            uriTemplate: '/projects/{id}/people',
+            normalizationContext: ['groups' => ['project:people:read']]
+        ),
         new GetCollection(),
         new Patch(),
         new Post(
@@ -48,12 +52,13 @@ class Project
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Issue::class, orphanRemoval: true)]
     private Collection $issues;
 
-    #[ORM\ManyToOne(inversedBy: 'projects')]
+    #[ORM\ManyToOne(inversedBy: 'leadedProjects')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['project:read'])]
     private ?User $lead = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
+    #[Groups(['project:people:read'])]
     private Collection $people;
 
     public function __construct()

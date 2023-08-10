@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Form, FormSelect, Modal} from "react-bootstrap";
 import {showCreatedIssueAlert} from "../../../functions/alert";
 
 export default function ModalCreateIssue({openModal, createIssueData, setOpenModal}) {
-    if (0 === createIssueData.length) {
+    if (!openModal || (0 === createIssueData.length)) {
         return;
     }
 
+    const [people, setPeople] = React.useState([]);
     const [project, setProject] = React.useState(createIssueData['projects'][0]['id']);
     const [summary, setSummary] = React.useState('');
 
@@ -40,6 +41,15 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
     const updateProjectValue = (e) => {
         setProject(e.target.value);
     }
+
+    useEffect(() => {
+        fetch(`/api/projects/${project}/people`)
+            .then(response => response.json())
+            .then(json => {
+                setPeople(json['people']);
+            });
+
+    }, []);
 
     return (
         <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -84,7 +94,9 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
                         <div className="mb-4 block">
                             <Form.Label htmlFor="assignee">Assignee</Form.Label>
                             <FormSelect id="assignee">
-                                <option>Pentiminax</option>
+                                {people.map((person) => (
+                                    <option key={person.id} value={person.id}>{person.firstName} {person.lastName}</option>
+                                ))}
                             </FormSelect>
                         </div>
 

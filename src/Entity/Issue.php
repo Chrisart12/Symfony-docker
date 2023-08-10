@@ -61,7 +61,7 @@ class Issue
     #[Groups(['issue:read', 'issue:write'])]
     private ?int $storyPointEstimated = null;
 
-    #[ORM\ManyToOne(inversedBy: 'issues')]
+    #[ORM\ManyToOne(inversedBy: 'assignedIssues')]
     #[Groups(['issue:list', 'issue:read', 'issue:write'])]
     private ?User $assignee = null;
 
