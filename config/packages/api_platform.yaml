@@ -1,5 +1,5 @@
 api_platform:
-  title: 'INOXA API'
+  title: 'TaskSphere API'
   version: '1.0.0'
 
   enable_docs: false

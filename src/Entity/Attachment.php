@@ -14,7 +14,7 @@ class Attachment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'attachments')]
@@ -22,19 +22,19 @@ class Attachment
     private ?Issue $issue = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?string $originalName = null;
 
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?int $size = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?string $path = null;
 
     public function __construct(Issue $issue)

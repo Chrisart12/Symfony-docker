@@ -16,7 +16,7 @@ export default function CardIssueDetails({ issue }) {
                     <tbody className="">
                     <tr>
                         <td className="fw-bold"><small>Assignee</small></td>
-                        <td><small>{issue?.assignee.email}</small></td>
+                        <td><small>{issue?.assignee.firstName} {issue?.assignee.lastName}</small></td>
                     </tr>
                     <tr>
                         <td className="fw-bold"><small>Reporter</small></td>

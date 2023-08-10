@@ -7,6 +7,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
         return;
     }
 
+    const [assignee, setAssignee] = React.useState();
     const [people, setPeople] = React.useState([]);
     const [project, setProject] = React.useState(createIssueData['projects'][0]['id']);
     const [summary, setSummary] = React.useState('');
@@ -16,7 +17,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
 
         fetch('/api/issues', {
             body: JSON.stringify({
-                assignee: '/api/users/1',
+                assignee: `/api/users/${assignee}`,
                 project: `/api/projects/${project}`,
                 reporter: '/api/users/1',
                 summary: summary,
@@ -38,6 +39,11 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
             });
     }
 
+    const updateAssigneeValue = (e) => {
+        console.log(e.target.value);
+        setAssignee(e.target.value);
+    }
+
     const updateProjectValue = (e) => {
         setProject(e.target.value);
     }
@@ -46,6 +52,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
         fetch(`/api/projects/${project}/people`)
             .then(response => response.json())
             .then(json => {
+                setAssignee(json['people'][0]['id']);
                 setPeople(json['people']);
             });
 
@@ -93,7 +100,7 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
 
                         <div className="mb-4 block">
                             <Form.Label htmlFor="assignee">Assignee</Form.Label>
-                            <FormSelect id="assignee">
+                            <FormSelect id="assignee" onChange={updateAssigneeValue} value={assignee}>
                                 {people.map((person) => (
                                     <option key={person.id} value={person.id}>{person.firstName} {person.lastName}</option>
                                 ))}

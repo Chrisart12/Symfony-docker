@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(),
-        new GetCollection(normalizationContext: ['groups' => ['issue:list']]),
+        new GetCollection(normalizationContext: ['groups' => ['issue:read']]),
         new Post(
             normalizationContext: ['groups' => ['issue:read']],
             denormalizationContext: ['groups' => ['issue:write']]
@@ -33,7 +33,7 @@ class Issue
 {
     #[ORM\Id]
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
@@ -42,19 +42,19 @@ class Issue
     private ?Project $project = null;
 
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private IssueTypeEnum $type = IssueTypeEnum::BUG;
 
     #[ORM\Column]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private IssueStatusEnum $status = IssueStatusEnum::NEW;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
@@ -62,16 +62,16 @@ class Issue
     private ?int $storyPointEstimated = null;
 
     #[ORM\ManyToOne(inversedBy: 'assignedIssues')]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?User $assignee = null;
 
     #[ORM\ManyToOne(inversedBy: 'reportedIssues')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['issue:list', 'issue:read', 'issue:write'])]
+    #[Groups(['issue:read', 'issue:write'])]
     private ?User $reporter = null;
 
     #[ORM\OneToMany(mappedBy: 'issue', targetEntity: Attachment::class, orphanRemoval: true)]
-    #[Groups(['issue:list', 'issue:read'])]
+    #[Groups(['issue:read'])]
     private Collection $attachments;
 
     public function __construct()
