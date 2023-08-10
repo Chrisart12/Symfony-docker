@@ -3,7 +3,7 @@ import {Card, Table} from "react-bootstrap";
 import Select from "react-select";
 import {patch} from "../../../functions/api";
 
-export default function CardIssueDetails({ issue, setIssue }) {
+export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
     if (!issue) {
         return;
     }
@@ -20,6 +20,15 @@ export default function CardIssueDetails({ issue, setIssue }) {
             .then(response => response.json())
             .then((updatedIssue) => {
                 setIssue(updatedIssue);
+
+                if (issues && setIssues) {
+                    setIssues(issues.map((currentIssue) => {
+                        if (currentIssue.id === updatedIssue.id) {
+                            return updatedIssue;
+                        }
+                        return currentIssue;
+                    }));
+                }
             });
     }
 

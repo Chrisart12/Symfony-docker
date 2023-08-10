@@ -24,13 +24,13 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
             body: formData,
             method: 'POST'
         }).then(response => response.json())
-            .then(issue => {
-                setIssue(issue);
+            .then(updatedIssue => {
+                setIssue(updatedIssue);
 
                 if (issues && setIssues) {
                     setIssues(issues.map((currentIssue) => {
-                        if (currentIssue.id === issue.id) {
-                            return issue;
+                        if (currentIssue.id === updatedIssue.id) {
+                            return updatedIssue;
                         }
                         return currentIssue;
                     }));
