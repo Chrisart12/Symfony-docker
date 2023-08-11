@@ -63,7 +63,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                 <Col sm={12} md={8}>
                     <Card>
                         <Card.Body>
-                            <Card.Title className="content-editable issue-summary">
+                            <Card.Title className="issue-summary">
                                 <EditText className="w-100" inputClassName="w-100" name="summary" onChange={updateSummaryValue} onSave={handleSave} value={issue.summary} />
                             </Card.Title>
                             <div className="issue-buttons my-3">
@@ -71,7 +71,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                             </div>
                             <Card.Text className="fw-bold">Description</Card.Text>
                             <hr />
-                            <div className="content-editable issue-description">
+                            <div className="issue-description">
                                 <p dangerouslySetInnerHTML={{__html: issue.description ?  issue.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
                             {issue.attachments.length > 0 && (

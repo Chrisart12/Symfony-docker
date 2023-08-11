@@ -117,7 +117,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
                 <Col sm={12} md={6}>
                     <Card>
                         <Card.Body>
-                            <Card.Title className="content-editable issue-summary">
+                            <Card.Title className="issue-summary">
                                 <div>{selectedIssue?.summary}</div>
                             </Card.Title>
 
@@ -136,7 +136,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
 
                             <hr />
 
-                            <div className="content-editable issue-description">
+                            <div className="issue-description">
                                 <p dangerouslySetInnerHTML={{__html: selectedIssue?.description ?  selectedIssue?.description : '<span class="text-muted">Add a description...</span>'}}></p>
                             </div>
 
