@@ -6,6 +6,7 @@ import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "../MediaViewer";
 import IssueAttachments from "./IssueAttachments";
 import ButtonAttach from "../attachment/ButtonAttach";
+import {EditText} from "react-edit-text";
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -20,6 +21,19 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         }).then(() => {
             setIssue({...issue, status: selectedStatus});
         });
+    }
+
+    const handleSave = (e) => {
+        const body = {};
+
+        body[e.name] = e.value;
+
+        patch('issues', issue.id,body)
+            .then(response => response.json())
+            .then(() => {
+                document.title = `[${issue.id}] ${e.value} - TaskSphere`;
+
+            });
     }
 
     const handleTypeChange = (e) => {
@@ -37,6 +51,12 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         setOpenMediaViewer(true);
     }
 
+    const updateSummaryValue = (e) => {
+        const updatedSummary = e.target.value;
+
+        setIssue({...issue, summary: updatedSummary});
+    }
+
     return (
         <Container className="mt-5">
             <Row>
@@ -44,7 +64,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                     <Card>
                         <Card.Body>
                             <Card.Title className="content-editable issue-summary">
-                                <div>{issue.summary}</div>
+                                <EditText className="w-100" inputClassName="w-100" name="summary" onChange={updateSummaryValue} onSave={handleSave} value={issue.summary} />
                             </Card.Title>
                             <div className="issue-buttons my-3">
                                 <ButtonAttach issue={issue} setIssue={setIssue} />

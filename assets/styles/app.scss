@@ -1,4 +1,5 @@
 @import 'bootstrap/scss/bootstrap';
+@import 'react-edit-text/dist/index.css';
 
 .card-title {
     line-height: 1.5 !important;
@@ -6,10 +7,6 @@
 
 .cursor-pointer {
     cursor: pointer;
-}
-
-.content-editable:hover {
-    @extend .bg-light, .cursor-pointer;
 }
 
 .dropdown-project-actions:after {

@@ -7,6 +7,7 @@
         "@symfony/stimulus-bridge": "^3.2.2",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "@symfony/webpack-encore": "^4.4.0",
+        "@types/react-edit-text": "^5.0.1",
         "autoprefixer": "^10.4.14",
         "core-js": "^3.32.0",
         "react": "^18.2",
@@ -34,6 +35,7 @@
         "bootstrap": "^5.3.1",
         "query-string": "^8.1.0",
         "react-bootstrap": "^2.8.0",
+        "react-edit-text": "^5.1.1",
         "react-select": "^5.7.4",
         "sweetalert2": "^11.7.20"
     }
