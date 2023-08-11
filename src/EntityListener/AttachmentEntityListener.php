@@ -21,6 +21,11 @@ class AttachmentEntityListener
     {
         $filename = pathinfo($attachment->getPath(), PATHINFO_FILENAME);
         $extension = pathinfo($attachment->getPath(), PATHINFO_EXTENSION);
+
+        if(!file_exists($filename)) {
+            return;
+        }
+
         unlink($this->parameters->get('attachments_directory').DIRECTORY_SEPARATOR.$filename.'.'.$extension);
     }
 }
