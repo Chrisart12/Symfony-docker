@@ -1,5 +1,10 @@
 @import 'bootstrap/scss/bootstrap';
+@import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 @import 'react-edit-text/dist/index.css';
+
+a {
+    text-decoration: none;
+}
 
 .card-title {
     line-height: 1.5 !important;

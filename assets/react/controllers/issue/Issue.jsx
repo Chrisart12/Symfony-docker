@@ -7,6 +7,8 @@ import MediaViewer from "../MediaViewer";
 import IssueAttachments from "./IssueAttachments";
 import ButtonAttach from "../attachment/ButtonAttach";
 import {EditText} from "react-edit-text";
+import { Editor } from "react-draft-wysiwyg";
+
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
@@ -72,7 +74,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
                             <Card.Text className="fw-bold">Description</Card.Text>
                             <hr />
                             <div className="issue-description">
-                                <p dangerouslySetInnerHTML={{__html: issue.description ?  issue.description : '<span class="text-muted">Add a description...</span>'}}></p>
+                                <Editor toolbar={{ options: ['blockType', 'history', 'inline', 'link', 'remove', 'textAlign']}}  />
                             </div>
                             {issue.attachments.length > 0 && (
                                 <IssueAttachments issue={issue} showMediaViewer={showMediaViewer} />
