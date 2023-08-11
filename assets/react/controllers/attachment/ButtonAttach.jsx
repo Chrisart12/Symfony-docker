@@ -2,6 +2,7 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperclip} from "@fortawesome/free-solid-svg-icons";
 import React, {useRef} from "react";
+import {showCreateAttachmentAlert} from "../../../functions/alert";
 
 export default function ButtonAttach({ issue, setIssue, issues = null, setIssues = null }) {
     const inputFile = useRef(null);
@@ -37,6 +38,8 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
                         return currentIssue;
                     }));
                 }
+
+                showCreateAttachmentAlert(updatedIssue.id);
             });
     }
 

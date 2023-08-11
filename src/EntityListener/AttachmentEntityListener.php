@@ -19,13 +19,16 @@ class AttachmentEntityListener
 
     public function postRemove(Attachment $attachment, LifecycleEventArgs $event): void
     {
-        $filename = pathinfo($attachment->getPath(), PATHINFO_FILENAME);
-        $extension = pathinfo($attachment->getPath(), PATHINFO_EXTENSION);
+        $filename =
+            $this->parameters->get('attachments_directory').DIRECTORY_SEPARATOR.
+            pathinfo($attachment->getPath(), PATHINFO_FILENAME)
+            .'.'.
+            pathinfo($attachment->getPath(), PATHINFO_EXTENSION);
 
         if(!file_exists($filename)) {
             return;
         }
 
-        unlink($this->parameters->get('attachments_directory').DIRECTORY_SEPARATOR.$filename.'.'.$extension);
+        unlink($filename);
     }
 }

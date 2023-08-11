@@ -17,3 +17,15 @@ export function showCreatedIssueAlert(issueId) {
         }
     });
 }
+
+export function showCreateAttachmentAlert(issueId) {
+    Swal.fire({
+        icon: 'success',
+        position: 'bottom-start',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        title: `Successfully attached`,
+        toast: true
+    }).then(() => {});
+}
