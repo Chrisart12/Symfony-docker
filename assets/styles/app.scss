@@ -6,7 +6,18 @@ a {
     text-decoration: none;
 }
 
-.card-title {
+.button-delete-attachment  {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.card-attachment:hover > .button-delete-attachment {
+    display: block;
+}
+
+.card- title {
     line-height: 1.5 !important;
 }
 

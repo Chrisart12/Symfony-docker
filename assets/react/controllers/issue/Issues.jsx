@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Card, Col, Container, ListGroup, Row} from "react-bootstrap";
-import {patch} from "../../../functions/api";
+import {fetchPatch} from "../../../functions/api";
 import queryString from 'query-string';
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
@@ -20,7 +20,11 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         setSelectedIssue(issue);
     }
     const handleDefaultSelectedIssue = () => {
-        let issue = undefined;
+        if (selectedIssue) {
+            return;
+        }
+
+        let issue = null;
 
          if (parsedQueryString['selectedIssue']) {
              issue = issuesList.find((issue) => issue.id === parsedQueryString['selectedIssue']);
@@ -32,7 +36,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
 
-        patch('issues', selectedIssue.id, {
+        fetchPatch('issues', selectedIssue.id, {
             status: selectedStatus
         }).then(() => {
             setSelectedIssue({...selectedIssue, status: selectedStatus});
@@ -48,7 +52,7 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
 
-        patch('issues', selectedIssue.id, {
+        fetchPatch('issues', selectedIssue.id, {
             type: selectedType
         }).then(() => {
             setSelectedIssue({...selectedIssue, type: selectedType});
@@ -70,15 +74,35 @@ export default function Issues({ issues, issueStatuses, issueTypes }) {
         setIssuesList([...issuesList, e.detail]);
     }
 
-    useEffect(() => {
-        document.addEventListener('onCreateIssue', onCreateIssue);
+    const onDeleteAttachment = (e) => {
+        if (!selectedIssue) {
+            return;
+        }
 
+        selectedIssue.attachments = selectedIssue.attachments.filter((attachment) => attachment.id !== e.detail.id);
+
+        setIssuesList(issuesList.map((issue) => {
+            if (issue.id === selectedIssue.id) {
+                return selectedIssue;
+            }
+            return issue;
+        }))
+
+        setSelectedAttachment(null);
+        setOpenMediaViewer(false);
+    }
+
+    useEffect(() => {
         handleDefaultSelectedIssue();
+
+        document.addEventListener('onCreateIssue', onCreateIssue);
+        document.addEventListener('onDeleteAttachment', onDeleteAttachment);
 
         return () => {
             document.removeEventListener('onCreateIssue', onCreateIssue);
+            document.removeEventListener('onDeleteAttachment', onDeleteAttachment);
         }
-    }, []);
+    }, [selectedIssue]);
 
     if (0 === issuesList.length) {
         return (

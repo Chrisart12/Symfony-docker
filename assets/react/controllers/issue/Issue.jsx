@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Col, Container, Row} from "react-bootstrap";
-import {patch} from "../../../functions/api";
+import {fetchPatch} from "../../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "../MediaViewer";
@@ -18,7 +18,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
 
-        patch('issues', issue.id, {
+        fetchPatch('issues', issue.id, {
             status: selectedStatus
         }).then(() => {
             setIssue({...issue, status: selectedStatus});
@@ -30,7 +30,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
 
         body[e.name] = e.value;
 
-        patch('issues', issue.id,body)
+        fetchPatch('issues', issue.id,body)
             .then(response => response.json())
             .then(() => {
                 document.title = `[${issue.id}] ${e.value} - TaskSphere`;
@@ -41,7 +41,7 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
 
-        patch('issues', issue.id, {
+        fetchPatch('issues', issue.id, {
             type: selectedType
         }).then(() => {
             setIssue({...issue, type: selectedType});

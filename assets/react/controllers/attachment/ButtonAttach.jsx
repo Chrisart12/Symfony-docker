@@ -13,6 +13,8 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
         /** @type {FileList}*/
         const files = e.target.files;
 
+        console.log(files);
+
         if (0 === files.length) {
             return;
         }

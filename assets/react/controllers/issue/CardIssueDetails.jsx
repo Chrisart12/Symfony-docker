@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Card, Table} from "react-bootstrap";
 import Select from "react-select";
-import {patch} from "../../../functions/api";
+import {fetchPatch} from "../../../functions/api";
 
 export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
     if (!issue) {
@@ -14,7 +14,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             return;
         }
 
-        patch('issues', issue.id, {
+        fetchPatch('issues', issue.id, {
             'assignee': `/api/users/${e.value}`
         })
             .then(response => response.json())
@@ -37,7 +37,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             return;
         }
 
-        patch('issues', issue.id, {
+        fetchPatch('issues', issue.id, {
             'reporter': `/api/users/${e.value}`
         })
             .then(response => response.json())
