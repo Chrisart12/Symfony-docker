@@ -1,13 +1,10 @@
 import React from "react";
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {fetchPatch} from "../../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "../MediaViewer";
-import IssueAttachments from "./IssueAttachments";
-import ButtonAttach from "../attachment/ButtonAttach";
-import {EditText} from "react-edit-text";
-import { Editor } from "react-draft-wysiwyg";
+import CardIssue from "./CardIssue";
 
 
 export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
@@ -25,19 +22,6 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         });
     }
 
-    const handleSave = (e) => {
-        const body = {};
-
-        body[e.name] = e.value;
-
-        fetchPatch('issues', issue.id,body)
-            .then(response => response.json())
-            .then(() => {
-                document.title = `[${issue.id}] ${e.value} - TaskSphere`;
-
-            });
-    }
-
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
 
@@ -48,39 +32,11 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         });
     }
 
-    const showMediaViewer = (attachment) => {
-        setSelectedAttachment(attachment);
-        setOpenMediaViewer(true);
-    }
-
-    const updateSummaryValue = (e) => {
-        const updatedSummary = e.target.value;
-
-        setIssue({...issue, summary: updatedSummary});
-    }
-
     return (
         <Container className="mt-5">
             <Row>
                 <Col sm={12} md={8}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title className="issue-summary">
-                                <EditText className="w-100" inputClassName="w-100" name="summary" onChange={updateSummaryValue} onSave={handleSave} value={issue.summary} />
-                            </Card.Title>
-                            <div className="issue-buttons my-3">
-                                <ButtonAttach issue={issue} setIssue={setIssue} />
-                            </div>
-                            <Card.Text className="fw-bold">Description</Card.Text>
-                            <hr />
-                            <div className="issue-description">
-                                <Editor toolbar={{ options: ['blockType', 'history', 'inline', 'link', 'remove', 'textAlign']}}  />
-                            </div>
-                            {issue.attachments.length > 0 && (
-                                <IssueAttachments issue={issue} showMediaViewer={showMediaViewer} />
-                            )}
-                        </Card.Body>
-                    </Card>
+                        <CardIssue issue={issue} setIssue={setIssue} setSelectedAttachment={setSelectedAttachment} />
                 </Col>
                 <Col sm={12} md={4}>
                     <StackIssueStatusType
