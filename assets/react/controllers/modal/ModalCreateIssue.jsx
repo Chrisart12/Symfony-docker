@@ -40,7 +40,6 @@ export default function ModalCreateIssue({openModal, createIssueData, setOpenMod
     }
 
     const updateAssigneeValue = (e) => {
-        console.log(e.target.value);
         setAssignee(e.target.value);
     }
 

@@ -4,6 +4,7 @@ import {isImage} from "../../../functions/image";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {fetchDelete} from "../../../functions/api";
+import {showConfirmationModalDeleteIssue} from "../../../functions/alert";
 
 export default function CardAttachment({ attachment, showMediaViewer }) {
     const formatDate = (date) => {
@@ -13,12 +14,19 @@ export default function CardAttachment({ attachment, showMediaViewer }) {
     const deleteAttachment = (e) => {
         e.stopPropagation();
 
-        fetchDelete('attachments', attachment.id)
-            .then(() => {
-                document.dispatchEvent(new CustomEvent('onDeleteAttachment', {
-                    detail: attachment
-                }));
-            });
+        showConfirmationModalDeleteIssue().then(result => {
+            if (!result.isConfirmed) {
+                return;
+            }
+
+            fetchDelete('attachments', attachment.id)
+                .then(() => {
+                    document.dispatchEvent(new CustomEvent('onDeleteAttachment', {
+                        detail: attachment
+                    }));
+                });
+        });
+
     }
 
     return (
