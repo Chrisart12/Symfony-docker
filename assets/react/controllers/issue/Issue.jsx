@@ -52,23 +52,22 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
     }
 
     return (
-        <React.StrictMode>
-            <Container className="mt-5">
-                <Row>
-                    <Col sm={12} md={8}>
-                        <CardIssue issue={issue} setIssue={setIssue} />
-                    </Col>
-                    <Col sm={12} md={4}>
-                        <StackIssueStatusType
-                            handleStatusChange={handleStatusChange}
-                            handleTypeChange={handleTypeChange}
-                            issue={issue}
-                            issueTypes={issueTypes}
-                            issueStatuses={issueStatuses}/>
-                        <CardIssueDetails issue={issue} setIssue={setIssue} />
-                    </Col>
-                </Row>
-            </Container>
-        </React.StrictMode>
+        <Container className="mt-5">
+            <Row>
+                <Col sm={12} md={8}>
+                    <CardIssue issue={issue} setIssue={setIssue} />
+                </Col>
+                <Col sm={12} md={4}>
+                    <StackIssueStatusType
+                        handleStatusChange={handleStatusChange}
+                        handleTypeChange={handleTypeChange}
+                        issue={issue}
+                        issueTypes={issueTypes}
+                        issueStatuses={issueStatuses}
+                    />
+                    <CardIssueDetails issue={issue} setIssue={setIssue}/>
+                </Col>
+            </Row>
+        </Container>
     )
 }

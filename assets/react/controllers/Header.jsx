@@ -23,7 +23,7 @@ export default function Header() {
     }
 
     return (
-        <React.StrictMode>
+        <>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
                     <Navbar.Brand className="fw-bold text-primary" href="/">TaskSphere</Navbar.Brand>
@@ -43,6 +43,6 @@ export default function Header() {
                 </Container>
             </Navbar>
             <ModalCreateIssue openModal={openModal} createIssueData={createIssueData} setOpenModal={setOpenModal} />
-        </React.StrictMode>
+        </>
     )
 }

@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, Table} from "react-bootstrap";
 import Select from "react-select";
 import {fetchPatch} from "../../../functions/api";
 
 export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
-    if (!issue) {
-        return;
-    }
     const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleAssigneeChange = (e) => {
         if (e.value === issue.assignee.id) {
@@ -55,17 +53,28 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             });
     }
 
-    React.useEffect(() => {
-        if (0 === options.length) {
-            fetch(`/api/projects/6/people`)
-                .then(response => response.json())
-                .then(json => {
-                    json['people'].forEach(person => {
-                        options.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
-                    });
+    useEffect(() => {
+        fetch(`/api/projects/6/people`)
+            .then(response => response.json())
+            .then(json => {
+                const data = [];
+
+                console.log({people: data});
+
+                json['people'].forEach(person => {
+                    console.log({person: person});
+                    data.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
+                    setOptions(data);
                 });
-        }
-    }, [options]);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <>Loading...</>;
+    }
 
     return (
         <Card>
@@ -86,7 +95,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
                                 onChange={handleAssigneeChange}
                                 options={options}
                                 placeholder="Assignee"
-                                value={{value: issue.assignee.id, label: `${issue.assignee.firstName } ${issue.assignee.lastName}`}}
+                                value={options.find(option => option.value === issue.assignee.id)}
                             />
                         </td>
                     </tr>
@@ -97,7 +106,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
                                 onChange={handleReporterChange}
                                 options={options}
                                 placeholder="Reporter"
-                                value={{value: issue.reporter.id, label: `${issue.reporter.firstName } ${issue.reporter.lastName}`}}
+                                value={options.find(option => option.value === issue.reporter.id)}
                             />
                         </td>
                     </tr>
