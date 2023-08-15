@@ -9,8 +9,6 @@ import CardIssue from "./CardIssue";
 export default function Issue({ issueId, issueStatuses, issueTypes }) {
     const [issue, setIssue] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [openMediaViewer, setOpenMediaViewer] = useState(false);
-    const [selectedAttachment, setSelectedAttachment] = useState(null);
 
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
@@ -68,7 +66,7 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
             <Container className="mt-5">
                 <Row>
                     <Col sm={12} md={8}>
-                        <CardIssue issue={issue} setIssue={setIssue} setSelectedAttachment={setSelectedAttachment} />
+                        <CardIssue issue={issue} setIssue={setIssue} />
                     </Col>
                     <Col sm={12} md={4}>
                         <StackIssueStatusType
@@ -80,11 +78,6 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
                         <CardIssueDetails issue={issue} setIssue={setIssue} />
                     </Col>
                 </Row>
-                <MediaViewer
-                    attachmentPath={selectedAttachment?.path}
-                    openMediaViewer={openMediaViewer}
-                    setOpenMediaViewer={setOpenMediaViewer}
-                />
             </Container>
         </React.StrictMode>
     )

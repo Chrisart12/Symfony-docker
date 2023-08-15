@@ -59,10 +59,10 @@ class IssueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(?Issue $issue): Response
+    public function show(string $id): Response
     {
         return $this->render('issue/index.html.twig', [
-            'issue' => $issue,
+            'issueId' => $id,
             'issueStatuses' => $this->issueService->getIssueStatuses(),
             'issueTypes' => $this->issueService->getIssueTypes(),
         ]);

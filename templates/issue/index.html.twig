@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}[{{ issue.id }}] {{ issue.summary }}{% endblock %}
+{% block title %}Loading{% endblock %}
 
 {% block body %}
-    <div {{ react_component('issue/Issue', { issueId: issue.id, issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
+    <div {{ react_component('issue/Issue', { issueId: issueId, issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
 {% endblock %}
