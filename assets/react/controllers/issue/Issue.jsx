@@ -30,11 +30,6 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
         });
     }
 
-    const onDeleteAttachment = () => {
-        setSelectedAttachment(null);
-        setOpenMediaViewer(false);
-    }
-
     useEffect(() => {
         fetch(`/api/issues/${issueId}`, {
             headers: {
@@ -45,16 +40,11 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
             .then(response => response.json())
             .then((issue) => {
                 setIssue(issue);
+                document.title = `[${issue.id}] ${issue.summary} - TaskSphere`;
             })
             .finally(() => {
                 setLoading(false);
             });
-
-        document.addEventListener('onDeleteAttachment', onDeleteAttachment);
-
-        return () => {
-            document.removeEventListener('onDeleteAttachment', onDeleteAttachment);
-        }
     }, []);
 
     if (loading) {
