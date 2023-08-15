@@ -44,3 +44,17 @@ export function showConfirmationModalDeleteIssue() {
         })
     })
 }
+
+export function showShareAlert() {
+    Swal.fire({
+        icon: 'success',
+        position: 'bottom-start',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        title: 'Link copied to clipboard',
+        toast: true
+    }).then(() => {
+
+    });
+}
