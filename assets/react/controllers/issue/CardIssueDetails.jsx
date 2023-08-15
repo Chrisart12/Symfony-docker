@@ -110,7 +110,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
                     <tr>
                         <td className="fw-bold"><small>Story point estimate</small></td>
                         <td>
-                            <Form.Group className="mb-4 block">
+                            <Form.Group>
                                 <Form.Control onBlur={handleStoryPointEstimateBlur} onChange={handleStoryPointEstimateChange} min={0} required type="number" value={storyPointEstimate} />
                             </Form.Group>
                         </td>
