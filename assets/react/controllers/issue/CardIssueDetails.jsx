@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Card, Table} from "react-bootstrap";
+import {Card, Form, Table} from "react-bootstrap";
 import Select from "react-select";
 import {fetchPatch} from "../../../functions/api";
 
 export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
-    const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [options, setOptions] = useState([]);
+    const [storyPointEstimate, setStoryPointEstimate] = useState(issue.storyPointEstimate);
 
     const handleAssigneeChange = (e) => {
         if (e.value === issue.assignee.id) {
@@ -53,16 +54,23 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             });
     }
 
+    const handleStoryPointEstimateBlur = (e) => {
+        fetchPatch('issues', issue.id, {
+            'storyPointEstimate': parseInt(e.target.value)
+        });
+    }
+
+    const handleStoryPointEstimateChange = (e) => {
+        setStoryPointEstimate(e.target.value);
+    }
+
     useEffect(() => {
         fetch(`/api/projects/6/people`)
             .then(response => response.json())
             .then(json => {
                 const data = [];
 
-                console.log({people: data});
-
                 json['people'].forEach(person => {
-                    console.log({person: person});
                     data.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
                     setOptions(data);
                 });
@@ -97,6 +105,14 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
                                 placeholder="Assignee"
                                 value={options.find(option => option.value === issue.assignee.id)}
                             />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="fw-bold"><small>Story point estimate</small></td>
+                        <td>
+                            <Form.Group className="mb-4 block">
+                                <Form.Control onBlur={handleStoryPointEstimateBlur} onChange={handleStoryPointEstimateChange} min={0} required type="number" value={storyPointEstimate} />
+                            </Form.Group>
                         </td>
                     </tr>
                     <tr>

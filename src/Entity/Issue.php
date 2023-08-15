@@ -61,7 +61,7 @@ class Issue
 
     #[ORM\Column(nullable: true)]
     #[Groups(['issue:read', 'issue:write'])]
-    private ?int $storyPointEstimated = null;
+    private ?int $storyPointEstimate = null;
 
     #[ORM\ManyToOne(inversedBy: 'assignedIssues')]
     #[Groups(['issue:read', 'issue:write'])]
@@ -154,14 +154,14 @@ class Issue
         return $this;
     }
 
-    public function getStoryPointEstimated(): ?int
+    public function getStoryPointEstimate(): ?int
     {
-        return $this->storyPointEstimated;
+        return $this->storyPointEstimate;
     }
 
-    public function setStoryPointEstimated(?int $storyPointEstimated): static
+    public function setStoryPointEstimate(?int $storyPointEstimate): static
     {
-        $this->storyPointEstimated = $storyPointEstimated;
+        $this->storyPointEstimate = $storyPointEstimate;
 
         return $this;
     }

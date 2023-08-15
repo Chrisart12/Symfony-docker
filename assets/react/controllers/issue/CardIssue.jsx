@@ -24,8 +24,6 @@ export default function CardIssue({ issue, setIssue }) {
     }
 
     const showMediaViewer = (attachment) => {
-        console.log('showMediaViewer');
-
         setSelectedAttachment(attachment);
         setOpenMediaViewer(true);
     }

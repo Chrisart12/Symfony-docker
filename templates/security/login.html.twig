@@ -27,11 +27,11 @@
                         <form action="{{ path('security_login') }}" class="space-y-4 md:space-y-6" method="post">
                             <div>
                                 <label for="email" class="form-label">Your email</label>
-                                <input type="email" name="_username" id="email" class="form-field" placeholder="name@company.com" required>
+                                <input autocomplete="username" type="email" name="_username" id="email" class="form-field" placeholder="name@company.com" value="{{ last_username }}" required>
                             </div>
                             <div>
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" name="_password" id="password" placeholder="••••••••" class="form-field" required>
+                                <input autocomplete="current-password" type="password" name="_password" id="password" placeholder="••••••••" class="form-field" required>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-start">

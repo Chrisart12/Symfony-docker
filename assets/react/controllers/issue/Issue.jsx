@@ -3,32 +3,11 @@ import {Col, Container, Row} from "react-bootstrap";
 import {fetchPatch} from "../../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
-import MediaViewer from "../MediaViewer";
 import CardIssue from "./CardIssue";
 
 export default function Issue({ issueId, issueStatuses, issueTypes }) {
     const [issue, setIssue] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    const handleStatusChange = (e) => {
-        const selectedStatus = e.target.value;
-
-        fetchPatch('issues', issue.id, {
-            status: selectedStatus
-        }).then((updatedIssue) => {
-            setIssue(updatedIssue);
-        });
-    }
-
-    const handleTypeChange = (e) => {
-        const selectedType = e.target.value;
-
-        fetchPatch('issues', issue.id, {
-            type: selectedType
-        }).then((updatedIssue) => {
-            setIssue(updatedIssue);
-        });
-    }
 
     useEffect(() => {
         fetch(`/api/issues/${issueId}`, {
@@ -59,11 +38,10 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
                 </Col>
                 <Col sm={12} md={4}>
                     <StackIssueStatusType
-                        handleStatusChange={handleStatusChange}
-                        handleTypeChange={handleTypeChange}
                         issue={issue}
                         issueTypes={issueTypes}
                         issueStatuses={issueStatuses}
+                        setIssue={setIssue}
                     />
                     <CardIssueDetails issue={issue} setIssue={setIssue}/>
                 </Col>
