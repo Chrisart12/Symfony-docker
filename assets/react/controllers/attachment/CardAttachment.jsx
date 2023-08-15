@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {fetchDelete} from "../../../functions/api";
 import {showConfirmationModalDeleteIssue} from "../../../functions/alert";
 
-export default function CardAttachment({ attachment, showMediaViewer }) {
+export default function CardAttachment({ attachment, issue, setIssue, showMediaViewer }) {
     const formatDate = (date) => {
         return new Date(date).toLocaleDateString();
     }
@@ -21,9 +21,7 @@ export default function CardAttachment({ attachment, showMediaViewer }) {
 
             fetchDelete('attachments', attachment.id)
                 .then(() => {
-                    document.dispatchEvent(new CustomEvent('onDeleteAttachment', {
-                        detail: attachment
-                    }));
+                    setIssue({...issue, attachments: issue.attachments.filter((x) => x.id !== attachment.id)});
                 });
         });
 

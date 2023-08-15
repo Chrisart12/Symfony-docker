@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Col, Container, Row} from "react-bootstrap";
 import {fetchPatch} from "../../../functions/api";
 import CardIssueDetails from "./CardIssueDetails";
@@ -6,10 +6,11 @@ import StackIssueStatusType from "./StackIssueStatusType";
 import MediaViewer from "../MediaViewer";
 import CardIssue from "./CardIssue";
 
-export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
-    const [issue, setIssue] = React.useState(JSON.parse(serializedIssue));
-    const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
-    const [selectedAttachment, setSelectedAttachment] = React.useState(null);
+export default function Issue({ issueId, issueStatuses, issueTypes }) {
+    const [issue, setIssue] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [openMediaViewer, setOpenMediaViewer] = useState(false);
+    const [selectedAttachment, setSelectedAttachment] = useState(null);
 
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
@@ -31,38 +32,36 @@ export default function Issue({ serializedIssue, issueStatuses, issueTypes }) {
         });
     }
 
-    const onAddAttachment = (e) => {
-        const updatedAttachments = [...issue.attachments, e.detail];
-        console.log({updatedAttachments : updatedAttachments});
-        setIssue({ ...issue, attachments: updatedAttachments });
-    }
-
-    const onDeleteAttachment = (e) => {
+    const onDeleteAttachment = () => {
         setSelectedAttachment(null);
         setOpenMediaViewer(false);
-
-        console.log({ issue: issue });
-
-        console.log({attachmentId: e.detail.id});
-
-        issue.attachments = issue.attachments.filter((attachment) => attachment.id !== e.detail.id);
-
-        console.log({ updatedAttachments: issue.attachments });
-
-        console.log({ updatedIssue: issue });
-
-        setIssue(issue);
     }
 
     useEffect(() => {
-        document.addEventListener('onAddAttachment', onAddAttachment);
+        fetch(`/api/issues/${issueId}`, {
+            headers: {
+                'Accept': 'application/ld+json',
+                'Content-Type': 'application/ld+json'
+            }
+        })
+            .then(response => response.json())
+            .then((issue) => {
+                setIssue(issue);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+
         document.addEventListener('onDeleteAttachment', onDeleteAttachment);
 
         return () => {
-            document.removeEventListener('onAddAttachment', onAddAttachment);
             document.removeEventListener('onDeleteAttachment', onDeleteAttachment);
         }
     }, []);
+
+    if (loading) {
+        return <>Loading...</>;
+    }
 
     return (
         <React.StrictMode>

@@ -3,7 +3,7 @@ import {EditText} from "react-edit-text";
 import ButtonAttach from "../attachment/ButtonAttach";
 import {Editor} from "react-draft-wysiwyg";
 import IssueAttachments from "./IssueAttachments";
-import React, {useEffect} from "react";
+import React from "react";
 import {fetchPatch} from "../../../functions/api";
 
 export default function CardIssue({ issue, setIssue, setSelectedAttachment }) {
@@ -18,11 +18,12 @@ export default function CardIssue({ issue, setIssue, setSelectedAttachment }) {
             .then(response => response.json())
             .then(() => {
                 document.title = `[${issue.id}] ${e.value} - TaskSphere`;
-
             });
     }
 
     const showMediaViewer = (attachment) => {
+        console.log('showMediaViewer');
+
         setSelectedAttachment(attachment);
         setOpenMediaViewer(true);
     }
@@ -45,10 +46,10 @@ export default function CardIssue({ issue, setIssue, setSelectedAttachment }) {
                 <Card.Text className="fw-bold">Description</Card.Text>
                 <hr />
                 <div className="issue-description">
-                    <Editor toolbar={{ options: ['blockType', 'history', 'inline', 'link', 'remove', 'textAlign']}}  />
+                    <Editor toolbar={{ options: ['blockType', 'history', 'inline', 'link', 'remove', 'textAlign'] }}  />
                 </div>
                 {issue.attachments.length > 0 && (
-                    <IssueAttachments issue={issue} showMediaViewer={showMediaViewer} />
+                    <IssueAttachments issue={issue} setIssue={setIssue} showMediaViewer={showMediaViewer} />
                 )}
             </Card.Body>
         </Card>

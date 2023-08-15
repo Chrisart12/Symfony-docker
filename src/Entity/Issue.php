@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
-        new Get(),
+        new Get(normalizationContext: ['groups' => ['issue:read']]),
         new GetCollection(normalizationContext: ['groups' => ['issue:read']]),
         new Post(
             normalizationContext: ['groups' => ['issue:read']],

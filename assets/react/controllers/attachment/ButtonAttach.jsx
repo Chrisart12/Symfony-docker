@@ -23,12 +23,13 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
 
         fetch(`/issues/${issue.id}/attachments`, {
             body: formData,
+            headers: {
+                'Accept': 'application/json',
+            },
             method: 'POST'
         }).then(response => response.json())
             .then(updatedIssue => {
-                document.dispatchEvent(new CustomEvent('onAddAttachment', {
-                    detail: updatedIssue.attachments[updatedIssue.attachments.length - 1]
-                }));
+                setIssue(updatedIssue);
 
                 if (issues && setIssues) {
                     setIssues(issues.map((currentIssue) => {

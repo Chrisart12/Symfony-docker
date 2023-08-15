@@ -8,6 +8,7 @@ export default function MediaViewer({attachmentPath, openMediaViewer, setOpenMed
     }
 
     useEffect(() => {
+        console.log(openMediaViewer);
         if (undefined !== attachmentPath && !isImage(attachmentPath) && openMediaViewer) {
             window.open(attachmentPath, '_blank');
             setOpenMediaViewer(false);
