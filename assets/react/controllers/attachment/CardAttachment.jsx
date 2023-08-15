@@ -30,7 +30,7 @@ export default function CardAttachment({ attachment, showMediaViewer }) {
     }
 
     return (
-        <Card className="card-attachment cursor-pointer h-100" key={attachment.id} onClick={() => showMediaViewer(attachment)}>
+        <Card className="card-attachment cursor-pointer h-100" onClick={() => showMediaViewer(attachment)}>
             <FontAwesomeIcon className="button-delete-attachment" icon={faTrash} onClick={deleteAttachment} />
             {isImage(attachment.originalName)
                 ? <Card.Img className="object-fit-cover" height={96} src={attachment.path} variant="top" width={96} />

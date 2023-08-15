@@ -8,12 +8,12 @@
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "@symfony/webpack-encore": "^4.4.0",
         "@types/react-edit-text": "^5.0.1",
-        "autoprefixer": "^10.4.14",
+        "autoprefixer": "^10.4.15",
         "core-js": "^3.32.0",
         "react": "^18.2",
         "react-dom": "^18.2",
         "regenerator-runtime": "^0.14.0",
-        "sass": "^1.64.2",
+        "sass": "^1.65.1",
         "sass-loader": "^13.3.2",
         "webpack": "^5.88.2",
         "webpack-cli": "^5.1.4",
@@ -38,6 +38,6 @@
         "react-draft-wysiwyg": "^1.15.0",
         "react-edit-text": "^5.1.1",
         "react-select": "^5.7.4",
-        "sweetalert2": "^11.7.20"
+        "sweetalert2": "^11.7.23"
     }
 }

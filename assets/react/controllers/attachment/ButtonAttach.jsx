@@ -14,8 +14,6 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
         /** @type {FileList}*/
         const files = e.target.files;
 
-        console.log(files);
-
         if (0 === files.length) {
             return;
         }
@@ -28,7 +26,9 @@ export default function ButtonAttach({ issue, setIssue, issues = null, setIssues
             method: 'POST'
         }).then(response => response.json())
             .then(updatedIssue => {
-                setIssue(updatedIssue);
+                document.dispatchEvent(new CustomEvent('onAddAttachment', {
+                    detail: updatedIssue.attachments[updatedIssue.attachments.length - 1]
+                }));
 
                 if (issues && setIssues) {
                     setIssues(issues.map((currentIssue) => {

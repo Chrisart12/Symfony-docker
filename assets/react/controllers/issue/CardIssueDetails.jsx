@@ -61,7 +61,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
                 .then(response => response.json())
                 .then(json => {
                     json['people'].forEach(person => {
-                        options.push({value: person.id, label: `${person.firstName} ${person.lastName}`});
+                        options.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
                     });
                 });
         }

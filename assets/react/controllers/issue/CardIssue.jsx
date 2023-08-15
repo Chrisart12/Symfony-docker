@@ -22,14 +22,6 @@ export default function CardIssue({ issue, setIssue, setSelectedAttachment }) {
             });
     }
 
-    const onDeleteAttachment = (e) => {
-        setSelectedAttachment(null);
-        setOpenMediaViewer(false);
-
-        issue.attachments = issue.attachments.filter((attachment) => attachment.id !== e.detail.id);
-        setIssue({...issue, attachments: issue.attachments});
-    }
-
     const showMediaViewer = (attachment) => {
         setSelectedAttachment(attachment);
         setOpenMediaViewer(true);
@@ -40,14 +32,6 @@ export default function CardIssue({ issue, setIssue, setSelectedAttachment }) {
 
         setIssue({...issue, summary: updatedSummary});
     }
-
-    useEffect(() => {
-        document.addEventListener('onDeleteAttachment', onDeleteAttachment);
-
-        return () => {
-            document.removeEventListener('onDeleteAttachment', onDeleteAttachment);
-        }
-    }, []);
 
     return (
         <Card className="card-issue">
