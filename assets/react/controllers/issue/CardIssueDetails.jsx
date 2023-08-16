@@ -3,10 +3,10 @@ import {Card, Form, Table} from "react-bootstrap";
 import Select from "react-select";
 import {fetchPatch} from "../../../functions/api";
 import {updateIssuesState} from "../../../functions/issue";
+import usePeopleOptions from "../hooks/usePeopleOptions";
 
-export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
-    const [loading, setLoading] = useState(true);
-    const [options, setOptions] = useState([]);
+export default function CardIssueDetails({ issue, issues = null, projectId, setIssue, setIssues = null }) {
+    const {options, loading} = usePeopleOptions(projectId);
     const [storyPointEstimate, setStoryPointEstimate] = useState(issue.storyPointEstimate);
 
     const handleAssigneeChange = (e) => {
@@ -55,31 +55,7 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (options.length === 0) {
-                try {
-                    const response = await fetch(`/api/projects/6/people`);
-                    const json = await response.json();
-
-                    const data = json['people'].map(person => ({
-                        value: person.id,
-                        label: `${person.firstName} ${person.lastName}`
-                    }));
-
-                    setOptions(data);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                } finally {
-                    setLoading(false);
-                }
-            }
-        };
-
-        fetchData()
-            .then(() => {
-                setStoryPointEstimate(issue.storyPointEstimate);
-            });
-
+        setStoryPointEstimate(issue.storyPointEstimate);
     }, [issue]);
 
     if (loading) {

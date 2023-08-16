@@ -31,7 +31,8 @@ class IssueController extends AbstractController
     {
         return $this->render('issue/list.html.twig', [
             'issueStatuses' => $this->issueService->getIssueStatuses(),
-            'issueTypes' => $this->issueService->getIssueTypes()
+            'issueTypes' => $this->issueService->getIssueTypes(),
+            'projectId' => $this->getUser()->getSelectedProject()->getId()
         ]);
     }
 
