@@ -3,5 +3,5 @@
 {% block title %}Loading{% endblock %}
 
 {% block body %}
-    <div {{ react_component('issue/Issue', { issueId: issueId, issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
+    <div {{ react_component('issue/Issue', {{  issueId: issueId, issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
 {% endblock %}

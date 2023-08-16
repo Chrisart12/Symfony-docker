@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Card, Form, Table} from "react-bootstrap";
 import Select from "react-select";
 import {fetchPatch} from "../../../functions/api";
+import {updateIssuesState} from "../../../functions/issue";
 
 export default function CardIssueDetails({ issue, issues = null, setIssue, setIssues = null }) {
     const [loading, setLoading] = useState(true);
@@ -14,20 +15,12 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
         }
 
         fetchPatch('issues', issue.id, {
-            'assignee': `/api/users/${e.value}`
+            assignee: `/api/users/${e.value}`
         })
             .then(response => response.json())
             .then((updatedIssue) => {
-                setIssue(updatedIssue);
-
-                if (issues && setIssues) {
-                    setIssues(issues.map((currentIssue) => {
-                        if (currentIssue.id === updatedIssue.id) {
-                            return updatedIssue;
-                        }
-                        return currentIssue;
-                    }));
-                }
+                setIssue({ ...issue, assignee: updatedIssue.assignee });
+                updateIssuesState(issues, setIssues, updatedIssue);
             });
     }
 
@@ -37,27 +30,24 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
         }
 
         fetchPatch('issues', issue.id, {
-            'reporter': `/api/users/${e.value}`
+            reporter: `/api/users/${e.value}`
         })
             .then(response => response.json())
             .then((updatedIssue) => {
-                setIssue(updatedIssue);
-
-                if (issues && setIssues) {
-                    setIssues(issues.map((currentIssue) => {
-                        if (currentIssue.id === updatedIssue.id) {
-                            return updatedIssue;
-                        }
-                        return currentIssue;
-                    }));
-                }
+                setIssue({ ...issue, reporter: updatedIssue.reporter });
+                updateIssuesState(issues, setIssues, updatedIssue);
             });
     }
 
     const handleStoryPointEstimateBlur = (e) => {
         fetchPatch('issues', issue.id, {
             'storyPointEstimate': parseInt(e.target.value)
-        });
+        })
+            .then(response => response.json())
+            .then(updatedIssue => {
+                setIssue({ ...issue, storyPointEstimate: updatedIssue.storyPointEstimate });
+                updateIssuesState(issues, setIssues, updatedIssue);
+            });
     }
 
     const handleStoryPointEstimateChange = (e) => {
@@ -65,20 +55,24 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
     }
 
     useEffect(() => {
-        fetch(`/api/projects/6/people`)
-            .then(response => response.json())
-            .then(json => {
-                const data = [];
+        if (0 === options.length) {
+            fetch(`/api/projects/6/people`)
+                .then(response => response.json())
+                .then(json => {
+                    const data = [];
 
-                json['people'].forEach(person => {
-                    data.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
-                    setOptions(data);
+                    json['people'].forEach(person => {
+                        data.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
+                        setOptions(data);
+                    });
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+        }
+
+        setStoryPointEstimate(issue.storyPointEstimate);
+    }, [issue]);
 
     if (loading) {
         return <>Loading...</>;

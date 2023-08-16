@@ -3,5 +3,5 @@
 {% block title %}Issue navigator{% endblock %}
 
 {% block body %}
-    <div {{ react_component('issue/Issues', { issues: issues|serialize('json', { 'groups': 'issue:read' }), issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
+    <div {{ react_component('issue/Issues', { issueStatuses: issueStatuses, issueTypes: issueTypes }) }}></div>
 {% endblock %}
