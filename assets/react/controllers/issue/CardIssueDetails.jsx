@@ -75,9 +75,11 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
             }
         };
 
-        fetchData();
+        fetchData()
+            .then(() => {
+                setStoryPointEstimate(issue.storyPointEstimate);
+            });
 
-        setStoryPointEstimate(issue.storyPointEstimate);
     }, [issue]);
 
     if (loading) {
