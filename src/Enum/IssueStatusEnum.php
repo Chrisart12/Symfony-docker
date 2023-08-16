@@ -4,11 +4,11 @@ namespace App\Enum;
 
 enum IssueStatusEnum: int
 {
-    case NEW = 1;
-    case READY = 2;
-    case IN_DEVELOPMENT = 3;
-    case IN_REVIEW = 4;
-    case RESOLVED = 5;
+    case NEW = 0;
+    case READY = 1;
+    case IN_DEVELOPMENT = 2;
+    case IN_REVIEW = 3;
+    case RESOLVED = 4;
 
     public function label(): string
     {
@@ -18,6 +18,17 @@ enum IssueStatusEnum: int
             self::IN_DEVELOPMENT => 'In development',
             self::IN_REVIEW => 'In review',
             self::RESOLVED => 'Resolved',
+        };
+    }
+
+    public function workflow(): string
+    {
+        return match ($this) {
+            self::NEW => 'new',
+            self::READY => 'ready',
+            self::IN_DEVELOPMENT => 'in_development',
+            self::IN_REVIEW => 'in_review',
+            self::RESOLVED => 'resolved',
         };
     }
 }

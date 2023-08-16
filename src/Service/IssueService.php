@@ -6,11 +6,13 @@ use App\Entity\Issue;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 class IssueService
 {
     public function __construct(
-        private readonly IssueRepository $issueRepo
+        private readonly IssueRepository $issueRepo,
+        private readonly WorkflowInterface $issueStatusesWorkflow
     )
     {
     }

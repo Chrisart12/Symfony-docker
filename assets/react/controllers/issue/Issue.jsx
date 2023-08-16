@@ -7,7 +7,7 @@ import {faShareFromSquare, faEye} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {showShareAlert} from "../../../functions/alert";
 
-export default function Issue({ issueId, issueStatuses, issueTypes }) {
+export default function Issue({ issueId, issueStatuses, issueTypes, projectId }) {
     const [issue, setIssue] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -56,7 +56,7 @@ export default function Issue({ issueId, issueStatuses, issueTypes }) {
                         issueStatuses={issueStatuses}
                         setIssue={setIssue}
                     />
-                    <CardIssueDetails issue={issue} setIssue={setIssue}/>
+                    <CardIssueDetails issue={issue} setIssue={setIssue} projectId={projectId} />
                 </Col>
             </Row>
         </Container>

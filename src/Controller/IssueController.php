@@ -63,6 +63,7 @@ class IssueController extends AbstractController
             'issueId' => $id,
             'issueStatuses' => $this->issueService->getIssueStatuses(),
             'issueTypes' => $this->issueService->getIssueTypes(),
+            'projectId' => $this->getUser()->getSelectedProject()->getId()
         ]);
     }
 

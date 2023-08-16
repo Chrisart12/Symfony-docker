@@ -130,6 +130,20 @@ class Issue
         return $this;
     }
 
+    public function getStatusMarking(): array
+    {
+        return [$this->status->workflow() => $this->status->workflow()];
+    }
+
+    public function setStatusMarking(array $statusMarking): self
+    {
+        $value = array_values($statusMarking)[0];
+
+        $this->status = IssueStatusEnum::from($value);
+
+        return $this;
+    }
+
     public function getSummary(): ?string
     {
         return $this->summary;

@@ -1,0 +1,31 @@
+framework:
+    workflows:
+        issue_statuses:
+            audit_trail:
+                enabled: true
+            initial_marking: new
+            marking_store:
+                type: 'method'
+                property: 'statusMarking'
+            places:
+                - new
+                - ready
+                - in_development
+                - in_review
+                - resolved
+            supports:
+                - App\Entity\Issue
+            transitions:
+                to_ready:
+                    from: new
+                    to: ready
+                to_in_development:
+                    from: ready
+                    to: in_development
+                to_in_review:
+                    from: in_development
+                    to: in_review
+                to_resolved:
+                    from: in_review
+                    to: resolved
+            type: 'workflow'
