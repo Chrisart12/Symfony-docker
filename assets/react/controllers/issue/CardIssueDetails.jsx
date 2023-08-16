@@ -55,21 +55,27 @@ export default function CardIssueDetails({ issue, issues = null, setIssue, setIs
     }
 
     useEffect(() => {
-        if (0 === options.length) {
-            fetch(`/api/projects/6/people`)
-                .then(response => response.json())
-                .then(json => {
-                    const data = [];
+        const fetchData = async () => {
+            if (options.length === 0) {
+                try {
+                    const response = await fetch(`/api/projects/6/people`);
+                    const json = await response.json();
 
-                    json['people'].forEach(person => {
-                        data.push({ value: person.id, label: `${person.firstName} ${person.lastName}` });
-                        setOptions(data);
-                    });
-                })
-                .finally(() => {
+                    const data = json['people'].map(person => ({
+                        value: person.id,
+                        label: `${person.firstName} ${person.lastName}`
+                    }));
+
+                    setOptions(data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                } finally {
                     setLoading(false);
-                });
-        }
+                }
+            }
+        };
+
+        fetchData();
 
         setStoryPointEstimate(issue.storyPointEstimate);
     }, [issue]);
