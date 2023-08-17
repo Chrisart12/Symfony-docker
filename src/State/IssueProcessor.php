@@ -23,10 +23,23 @@ class IssueProcessor implements ProcessorInterface
             return;
         }
 
-        if ($this->issueStatusesStateMachine->can($context['previous_data'], $data->getStatus()->workflowTransition())) {
+        /** @var Issue $previousIssue */
+        $previousData = $context['previous_data'];
+
+        if (!$this->isStatusUpdated($data, $previousData) || $this->canUpdateStatus($data, $previousData)) {
             $this->persistProcessor->process($data, $operation, $uriVariables, $context);
         }
 
         return $data;
+    }
+
+    private function canUpdateStatus(Issue $issue, Issue $previousIssue): bool
+    {
+        return $this->issueStatusesStateMachine->can($issue, $previousIssue->getStatus()->workflowTransition());
+    }
+
+    private function isStatusUpdated(Issue $issue, Issue $previousIssue): bool
+    {
+        return $issue->getStatus() !== $previousIssue->getStatus();
     }
 }
