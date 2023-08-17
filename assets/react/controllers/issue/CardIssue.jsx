@@ -37,6 +37,7 @@ export default function CardIssue({ issue, setIssue }) {
     return (
         <>
             <Card className="card-issue">
+                <Card.Header>{issue.id}</Card.Header>
                 <Card.Body>
                     <Card.Title className="issue-summary">
                         <EditText className="w-100" inputClassName="w-100" name="summary" onChange={updateSummaryValue} onSave={handleSave} value={issue.summary} />
