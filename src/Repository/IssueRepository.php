@@ -20,4 +20,20 @@ class IssueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Issue::class);
     }
+
+    public function findByQuery(string $query): array
+    {
+        $qb = $this
+            ->createQueryBuilder('i');
+
+        $qb
+            ->select('i.id', 'i.summary')
+            ->where($qb->expr()->like('i.id', ':query'))
+            ->orWhere($qb->expr()->like('i.summary', ':query'))
+            ->setParameter('query', '%'.$query .'%');
+
+        return $qb
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Service\IssueService;
+use App\Service\SearchService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,18 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     #[Route('/search', 'search_index', methods: ['GET'])]
-    public function index(Request $request, IssueService $issueService): Response
+    public function index(Request $request, SearchService $searchService): Response
     {
         $query = $request->query->get('query');
 
-        if ($issue = $issueService->findOneById($query)) {
-            return $this->redirectToRoute('issue_show', ['id' => $issue->getId()]);
-        }
-
-        if ($referer = $request->headers->get('referer')) {
-            return $this->redirect($referer);
-        }
-
-        return $this->redirectToRoute('home_index');
+        return $this->json($searchService->search($query));
     }
 }

@@ -26,4 +26,9 @@ class UserService
 
         return $user;
     }
+
+    public function findByQuery(string $query): array
+    {
+        return $this->userRepo->findByQuery($query);
+    }
 }

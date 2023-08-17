@@ -22,6 +22,11 @@ class IssueService
         return $this->issueRepo->findOneBy(['id' => $id]);
     }
 
+    public function findByQuery(string $query): array
+    {
+        return $this->issueRepo->findByQuery($query);
+    }
+
     public function getEnableStatuses(string $id): array
     {
         $issue = $this->findOneById($id);

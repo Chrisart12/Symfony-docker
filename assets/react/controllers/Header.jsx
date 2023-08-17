@@ -1,15 +1,14 @@
 import React from 'react';
 import ModalCreateIssue from "./modal/ModalCreateIssue";
 import {Container, Form, Nav, Navbar} from "react-bootstrap";
+import Select from "react-select";
 
 export default function Header() {
     const [createIssueData, setCreateIssueData] = React.useState([]);
     const [openModal, setOpenModal] = React.useState(false);
-    const [query, setQuery] = React.useState('');
+    const [options, setOptions] = React.useState([]);
 
-    const handleChange = (e) => {
-        setQuery(e.target.value);
-    }
+    let timeout;
 
     const openModalCreateIssue = async () => {
         await fetchCreateIssueData();
@@ -20,6 +19,26 @@ export default function Header() {
         const response = await fetch('/issues/create');
         const json = await response.json();
         setCreateIssueData(json);
+    }
+
+    const handleChange = (e) => {
+        window.location.href = e.value;
+    }
+
+    const handleInputChange = (inputValue) => {
+        if ('' === inputValue) {
+            return;
+        }
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            fetch(`/search?query=${inputValue}`)
+                .then((response) => response.json())
+                .then(json => {
+                    setOptions(json);
+                });
+        }, 350);
     }
 
     return (
@@ -36,9 +55,15 @@ export default function Header() {
                             <Nav.Link href="/issues">Issues</Nav.Link>
                             <Nav.Link href="#" onClick={openModalCreateIssue}>Create</Nav.Link>
                         </Nav>
-                        <Form action="/search" className="d-flex" >
-                            <Form.Control name="query" onChange={handleChange} placeholder="Search..." type="search" value={query} />
-                        </Form>
+                        <div className="d-flex" >
+                            <Select
+                                options={options}
+                                onChange={handleChange}
+                                onInputChange={handleInputChange}
+                                placeholder="Search..."
+                                styles={{control: (base) => ({ ...base, width: '300px' })}}
+                            />
+                        </div>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
