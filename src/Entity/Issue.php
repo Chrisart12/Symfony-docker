@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
+use App\State\IssueProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -28,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ),
         new Patch(
             normalizationContext: ['groups' => ['issue:read']],
+            processor: IssueProcessor::class
         )
     ]
 )]
@@ -130,16 +132,14 @@ class Issue
         return $this;
     }
 
-    public function getStatusMarking(): array
+    public function getStatusMarking(): string
     {
-        return [$this->status->workflow() => $this->status->workflow()];
+        return $this->status->workflowLabel();
     }
 
-    public function setStatusMarking(array $statusMarking): self
+    public function setStatusMarking(string $statusMarking): self
     {
-        $value = array_values($statusMarking)[0];
-
-        $this->status = IssueStatusEnum::from($value);
+        $this->status = IssueStatusEnum::fromWorkflowLabel($statusMarking);
 
         return $this;
     }

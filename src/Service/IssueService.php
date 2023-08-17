@@ -12,7 +12,7 @@ class IssueService
 {
     public function __construct(
         private readonly IssueRepository $issueRepo,
-        private readonly WorkflowInterface $issueStatusesWorkflow
+        private readonly WorkflowInterface $issueStatusesStateMachine
     )
     {
     }
@@ -22,19 +22,50 @@ class IssueService
         return $this->issueRepo->findOneBy(['id' => $id]);
     }
 
-    public function getIssueStatuses(): array
+    public function getIssueStatuses(string $id): array
     {
-        $statuses = [];
+        $issue = $this->findOneById($id);
 
-        foreach (IssueStatusEnum::cases() as $status) {
-            $statuses[] = [
-                'label' => $status->label(),
-                'value' => $status->value,
-            ];
+        $statuses[] = [
+            'label' => $issue->getStatus()->label(),
+            'value' => $issue->getStatus()->value
+        ];
+
+        $enabledTransitions = $this->issueStatusesStateMachine->getEnabledTransitions($issue);
+
+        foreach ($enabledTransitions as $transition) {
+            $tos = $transition->getTos();
+
+            if (!isset($tos[0])) {
+                continue;
+            }
+
+            if ($status = IssueStatusEnum::fromWorkflowLabel($tos[0])) {
+                $statuses[] = [
+                    'label' => $status->label(),
+                    'value' => $status->value,
+                ];
+            }
         }
+
+        usort($statuses, fn ($a, $b) => $a['value'] > $b['value']);
 
         return $statuses;
     }
+
+//    public function getIssueStatuses(): array
+//    {
+//        $statuses = [];
+//
+//        foreach (IssueStatusEnum::cases() as $status) {
+//            $statuses[] = [
+//                'label' => $status->label(),
+//                'value' => $status->value,
+//            ];
+//        }
+//
+//        return $statuses;
+//    }
 
     public function getIssueTypes(): array
     {

@@ -4,11 +4,22 @@ namespace App\Enum;
 
 enum IssueStatusEnum: int
 {
-    case NEW = 0;
-    case READY = 1;
-    case IN_DEVELOPMENT = 2;
-    case IN_REVIEW = 3;
-    case RESOLVED = 4;
+    case NEW = 1;
+    case READY = 2;
+    case IN_DEVELOPMENT = 3;
+    case IN_REVIEW = 4;
+    case RESOLVED = 5;
+
+    public static function fromWorkflowLabel(string $workflowLabel): IssueStatusEnum
+    {
+        return match ($workflowLabel) {
+            'new' => self::NEW,
+            'ready' => self::READY,
+            'in_development' => self::IN_DEVELOPMENT,
+            'in_review' => self::IN_REVIEW,
+            'resolved' => self::RESOLVED,
+        };
+    }
 
     public function label(): string
     {
@@ -21,7 +32,7 @@ enum IssueStatusEnum: int
         };
     }
 
-    public function workflow(): string
+    public function workflowLabel(): string
     {
         return match ($this) {
             self::NEW => 'new',
@@ -29,6 +40,17 @@ enum IssueStatusEnum: int
             self::IN_DEVELOPMENT => 'in_development',
             self::IN_REVIEW => 'in_review',
             self::RESOLVED => 'resolved',
+        };
+    }
+
+    public function workflowTransition(): string
+    {
+        return match ($this) {
+            self::NEW => 'to_new',
+            self::READY => 'to_ready',
+            self::IN_DEVELOPMENT => 'to_in_development',
+            self::IN_REVIEW => 'to_in_review',
+            self::RESOLVED => 'to_resolved',
         };
     }
 }
