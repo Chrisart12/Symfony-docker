@@ -8,7 +8,7 @@ import IssueAttachments from "./IssueAttachments";
 import MediaViewer from "../MediaViewer";
 import ButtonAttach from "../attachment/ButtonAttach";
 
-export default function Issues({ issueStatuses, issueTypes, projectId }) {
+export default function Issues({ issueTypes, projectId }) {
     const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
     const [parsedQueryString, setParsedQueryString] = React.useState(queryString.parse(location.search));
     const [issues, setIssues] = React.useState([]);
@@ -192,7 +192,6 @@ export default function Issues({ issueStatuses, issueTypes, projectId }) {
                         handleTypeChange={handleTypeChange}
                         issue={selectedIssue}
                         issueTypes={issueTypes}
-                        issueStatuses={issueStatuses}
                     />
 
                     <CardIssueDetails

@@ -3,5 +3,5 @@
 {% block title %}Issue navigator{% endblock %}
 
 {% block body %}
-    <div {{ react_component('issue/Issues', { issueStatuses: issueStatuses, issueTypes: issueTypes, projectId: projectId }) }}></div>
+    <div {{ react_component('issue/Issues', { issueTypes: issueTypes, projectId: projectId }) }}></div>
 {% endblock %}

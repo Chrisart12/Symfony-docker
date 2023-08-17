@@ -53,7 +53,6 @@ export default function Issue({ issueId, issueStatuses, issueTypes, projectId })
                     <StackIssueStatusType
                         issue={issue}
                         issueTypes={issueTypes}
-                        issueStatuses={issueStatuses}
                         setIssue={setIssue}
                     />
                     <CardIssueDetails issue={issue} setIssue={setIssue} projectId={projectId} />

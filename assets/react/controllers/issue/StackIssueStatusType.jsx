@@ -1,8 +1,24 @@
 import {FormSelect, Stack} from "react-bootstrap";
-import React from "react";
+import React, {useEffect} from "react";
 import {fetchPatch} from "../../../functions/api";
 
-export default function StackIssueStatusType({issue, issueStatuses, issueTypes, setIssue}) {
+export default function StackIssueStatusType({issue, issueTypes, setIssue}) {
+    const [enabledStatuses, setEnabledStatuses] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+
+    useEffect(() => {
+        getEnabledStatuses();
+        setLoading(false);
+    }, []);
+
+    const getEnabledStatuses = () => {
+        fetch(`/issues/${issue.id}/enabled-statuses`)
+            .then(response => response.json())
+            .then(enabledStatuses => {
+                setEnabledStatuses(enabledStatuses);
+            });
+    }
+
     const handleStatusChange = (e) => {
         const selectedStatus = e.target.value;
 
@@ -10,6 +26,7 @@ export default function StackIssueStatusType({issue, issueStatuses, issueTypes, 
             status: selectedStatus
         }).then(() => {
             setIssue({...issue, status: selectedStatus});
+            getEnabledStatuses();
         });
     }
 
@@ -23,6 +40,10 @@ export default function StackIssueStatusType({issue, issueStatuses, issueTypes, 
         });
     }
 
+    if (loading) {
+        return <>Loading...</>;
+    }
+
     return (
         <Stack className="stack-issue-status-type" direction="horizontal" gap={2}>
             <FormSelect className="mb-3 mt-sm-3 mt-md-0" onChange={handleTypeChange} value={issue?.type}>
@@ -32,8 +53,8 @@ export default function StackIssueStatusType({issue, issueStatuses, issueTypes, 
             </FormSelect>
 
             <FormSelect className="mb-3 mt-sm-3 mt-md-0" onChange={handleStatusChange} value={issue?.status}>
-                {issueStatuses.map((issueStatus) => (
-                    <option key={issueStatus.value} value={issueStatus.value}>{issueStatus.label}</option>
+                {enabledStatuses.map((status) => (
+                    <option key={status.value} value={status.value}>{status.label}</option>
                 ))}
             </FormSelect>
         </Stack>
