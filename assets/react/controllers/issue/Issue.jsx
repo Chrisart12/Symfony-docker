@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Col, Container, Row, Stack} from "react-bootstrap";
+import {Card, Col, Container, Placeholder, Row, Stack} from "react-bootstrap";
 import CardIssueDetails from "./CardIssueDetails";
 import StackIssueStatusType from "./StackIssueStatusType";
 import CardIssue from "./CardIssue";
@@ -29,7 +29,27 @@ export default function Issue({ issueId, issueStatuses, issueTypes, projectId })
     }, []);
 
     if (loading) {
-        return <>Loading...</>;
+        return (
+            <Container className="mt-5">
+                <Row>
+                    <Col sm={12} md={8}>
+                        <Card>
+                            <Placeholder animation="glow" as={Card.Header}>
+                                <Placeholder xs={12}  />
+                            </Placeholder>
+                            <Card.Body>
+                                <Placeholder animation="glow" as={Card.Title}>
+                                    <Placeholder xs={12}  />
+                                </Placeholder>
+                                <Placeholder animation="glow" as={Card.Text}>
+                                    <Placeholder xs={12}  />
+                                </Placeholder>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        );
     }
 
     const handleShare = () => {
