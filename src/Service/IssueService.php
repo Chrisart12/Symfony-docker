@@ -58,19 +58,19 @@ class IssueService
         return $statuses;
     }
 
-//    public function getIssueStatuses(): array
-//    {
-//        $statuses = [];
-//
-//        foreach (IssueStatusEnum::cases() as $status) {
-//            $statuses[] = [
-//                'label' => $status->label(),
-//                'value' => $status->value,
-//            ];
-//        }
-//
-//        return $statuses;
-//    }
+    public function getStatuses(): array
+    {
+        $statuses = [];
+
+        foreach (IssueStatusEnum::cases() as $status) {
+            $statuses[] = [
+                'label' => $status->label(),
+                'value' => $status->value,
+            ];
+        }
+
+        return $statuses;
+    }
 
     public function getIssueTypes(): array
     {

@@ -49,7 +49,7 @@ class IssueController extends AbstractController
 
         return $this->json([
             'projects' => $projectService->getProjectsByUserNormalized($user, ['project:list:create:issue']),
-            'statuses' => $this->issueService->getEnableStatuses(),
+            'statuses' => $this->issueService->getStatuses(),
             'types' => $this->issueService->getIssueTypes(),
             'reporter' => $reporter
         ]);
@@ -96,7 +96,7 @@ class IssueController extends AbstractController
         ]));
     }
 
-    #[Route('/{id}/enabled-statuses', name: 'get_statuses')]
+    #[Route('/{id}/enabled-statuses', name: 'get_enabled_statuses')]
     public function getEnabledStatuses(Issue $issue): Response
     {
         return $this->json($this->issueService->getEnableStatuses($issue->getId()));

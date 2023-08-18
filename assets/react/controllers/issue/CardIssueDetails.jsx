@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Form, Table} from "react-bootstrap";
+import {Card, Form, Placeholder, Table} from "react-bootstrap";
 import Select from "react-select";
 import {fetchPatch} from "../../../functions/api";
 import {updateIssuesState} from "../../../functions/issue";
@@ -59,7 +59,18 @@ export default function CardIssueDetails({ issue, issues = null, projectId, setI
     }, [issue]);
 
     if (loading) {
-        return <>Loading...</>;
+        return (
+            <Card>
+                <Card.Header>Details</Card.Header>
+                <Card.Body>
+                    <Placeholder as={Card.Text} animation="glow">
+                        <Placeholder className="mb-3" size="lg" xs={12}  />
+                        <Placeholder className="mb-3" size="lg" xs={12} />
+                        <Placeholder size="lg" xs={12} />
+                    </Placeholder>
+                </Card.Body>
+            </Card>
+        )
     }
 
     return (
