@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import {visit} from "@hotwired/turbo";
 
 export function showCreateAttachmentAlert() {
     Swal.fire({
@@ -25,7 +26,7 @@ export function showCreatedIssueAlert(issueId) {
         toast: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `/issues/${issueId}`;
+            visit(`/issues/${issueId}`);
         }
     });
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ModalCreateIssue from "./modal/ModalCreateIssue";
 import {Container, Form, Nav, Navbar} from "react-bootstrap";
 import Select from "react-select";
+import {visit} from "@hotwired/turbo";
 
 export default function Header() {
     const [createIssueData, setCreateIssueData] = React.useState([]);
@@ -22,7 +23,7 @@ export default function Header() {
     }
 
     const handleChange = (e) => {
-        window.location.href = e.value;
+        visit(e.value);
     }
 
     const handleInputChange = (inputValue) => {
