@@ -58,7 +58,7 @@ export default function YourWork() {
                         <Card.Body>
                             <ListGroup variant="flush">
                                 {user.reportedIssues.map(issue => (
-                                    <ListGroup.Item action key={issue.id}>[{issue.id}] - {issue.summary}</ListGroup.Item>
+                                    <ListGroup.Item action href={`/issues/${issue.id}`} key={issue.id}>[{issue.id}] - {issue.summary}</ListGroup.Item>
                                 ))}
                             </ListGroup>
                         </Card.Body>
