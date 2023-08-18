@@ -35,9 +35,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class Issue
 {
-    #[ORM\Id]
-    #[ORM\Column]
-    #[Groups(['issue:read'])]
+    #[ORM\Id, ORM\Column]
+    #[Groups(['user:read', 'issue:read'])]
     private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
@@ -46,7 +45,7 @@ class Issue
     private ?Project $project = null;
 
     #[ORM\Column]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['user:read', 'issue:read', 'issue:write'])]
     private IssueTypeEnum $type = IssueTypeEnum::BUG;
 
     #[ORM\Column]
@@ -54,7 +53,7 @@ class Issue
     private IssueStatusEnum $status = IssueStatusEnum::NEW;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:read', 'issue:write'])]
+    #[Groups(['user:read', 'issue:read', 'issue:write'])]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

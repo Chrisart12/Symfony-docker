@@ -34,9 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Project
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     #[Groups(['project:read', 'project:list:create:issue'])]
     private ?int $id = null;
 

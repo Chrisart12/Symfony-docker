@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     operations: [
-        new Get()
+        new Get(normalizationContext: ['groups' => ['user:read']]),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,12 +24,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['issue:read', 'project:people:read'])]
+    #[Groups(['issue:read', 'project:people:read', 'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['issue:read', 'issue:write', 'project:read'])]
+    #[Groups(['issue:read', 'issue:write', 'project:read', 'user:read'])]
     private ?string $email;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['issue:read', 'project:people:read', 'project:read', 'user:read'])]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['issue:read', 'project:people:read', 'project:read', 'user:read'])]
+    private ?string $lastName = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -37,9 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'assignee', targetEntity: Issue::class)]
+    #[Groups(['user:read'])]
     private Collection $assignedIssues;
 
     #[ORM\OneToMany(mappedBy: 'reporter', targetEntity: Issue::class, orphanRemoval: true)]
+    #[Groups(['user:read'])]
     private Collection $reportedIssues;
 
     #[ORM\OneToMany(mappedBy: 'lead', targetEntity: Project::class)]
@@ -51,13 +62,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne]
     private ?Project $selectedProject = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['issue:read', 'project:people:read', 'project:read'])]
-    private ?string $lastName = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['issue:read', 'project:people:read', 'project:read'])]
-    private ?string $firstName = null;
 
     public function __construct(string $email)
     {
