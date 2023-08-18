@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
+use App\State\UserProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +17,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: ['groups' => ['user:read']]),
+        new Get(
+            uriTemplate: '/users/me',
+            normalizationContext: ['groups' => ['user:read']],
+            name: 'me',
+            provider: UserProvider::class
+        ),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -57,6 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $leadedProjects;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'people')]
+    #[Groups(['user:read'])]
     private Collection $projects;
 
     #[ORM\ManyToOne]

@@ -35,16 +35,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Project
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
-    #[Groups(['project:read', 'project:list:create:issue'])]
+    #[Groups(['project:read', 'project:list:create:issue', 'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['project:list:create:issue', 'project:read'])]
+    #[Groups(['project:list:create:issue', 'project:read', 'user:read'])]
     private ?string $name = null;
 
     #[Assert\Length(min: 2, max: 10)]
     #[ORM\Column(name: '`key`', length: 10)]
-    #[Groups(['project:read'])]
+    #[Groups(['project:read', 'user:read'])]
     private ?string $key = null;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Issue::class, orphanRemoval: true)]
