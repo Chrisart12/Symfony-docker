@@ -4,18 +4,18 @@
         "@babel/preset-env": "^7.22.10",
         "@babel/preset-react": "^7.22.5",
         "@hotwired/stimulus": "^3.2.2",
-        "@hotwired/turbo": "^7.0.1",
+        "@hotwired/turbo": "^7.3.0",
         "@symfony/stimulus-bridge": "^3.2.2",
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^4.4.0",
         "@types/react-edit-text": "^5.0.1",
         "autoprefixer": "^10.4.15",
-        "core-js": "^3.32.0",
+        "core-js": "^3.32.1",
         "react": "^18.2",
         "react-dom": "^18.2",
         "regenerator-runtime": "^0.14.0",
-        "sass": "^1.65.1",
+        "sass": "^1.66.1",
         "sass-loader": "^13.3.2",
         "webpack": "^5.88.2",
         "webpack-cli": "^5.1.4",
@@ -40,6 +40,6 @@
         "react-draft-wysiwyg": "^1.15.0",
         "react-edit-text": "^5.1.1",
         "react-select": "^5.7.4",
-        "sweetalert2": "^11.7.23"
+        "sweetalert2": "^11.7.27"
     }
 }
