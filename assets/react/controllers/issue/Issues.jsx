@@ -191,7 +191,10 @@ export default function Issues({ issueTypes, projectId }) {
                         handleStatusChange={handleStatusChange}
                         handleTypeChange={handleTypeChange}
                         issue={selectedIssue}
+                        issues={issues}
                         issueTypes={issueTypes}
+                        setIssue={setSelectedIssue}
+                        setIssues={setIssues}
                     />
 
                     <CardIssueDetails

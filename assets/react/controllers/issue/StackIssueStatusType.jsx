@@ -1,8 +1,9 @@
 import {FormSelect, Stack} from "react-bootstrap";
 import React, {useEffect} from "react";
 import {fetchPatch} from "../../../functions/api";
+import {updateIssuesState} from "../../../functions/issue";
 
-export default function StackIssueStatusType({issue, issueTypes, setIssue}) {
+export default function StackIssueStatusType({issue, issues = null, issueTypes, setIssue, setIssues}) {
     const [enabledStatuses, setEnabledStatuses] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
 
@@ -35,8 +36,9 @@ export default function StackIssueStatusType({issue, issueTypes, setIssue}) {
 
         fetchPatch('issues', issue.id, {
             type: selectedType
-        }).then(() => {
+        }).then((updatedIssue) => {
             setIssue({...issue, type: selectedType});
+            updateIssuesState(issues, setIssues, updatedIssue);
         });
     }
 
