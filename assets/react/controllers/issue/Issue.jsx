@@ -30,25 +30,21 @@ export default function Issue({ id, issueTypes, projectId, size="sm" }) {
 
     if (loading) {
         return (
-            <Container className="mt-5">
-                <Row>
-                    <Col sm={12} md={8}>
-                        <Card>
-                            <Placeholder animation="glow" as={Card.Header}>
-                                <Placeholder xs={12}  />
-                            </Placeholder>
-                            <Card.Body>
-                                <Placeholder animation="glow" as={Card.Title}>
-                                    <Placeholder xs={12}  />
-                                </Placeholder>
-                                <Placeholder animation="glow" as={Card.Text}>
-                                    <Placeholder xs={12}  />
-                                </Placeholder>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+            <Col sm={12} md={"sm" === size ? 6 : 8}>
+                <Card>
+                    <Placeholder animation="glow" as={Card.Header}>
+                        <Placeholder xs={12}  />
+                    </Placeholder>
+                    <Card.Body>
+                        <Placeholder animation="glow" as={Card.Title}>
+                            <Placeholder xs={12}  />
+                        </Placeholder>
+                        <Placeholder animation="glow" as={Card.Text}>
+                            <Placeholder xs={12}  />
+                        </Placeholder>
+                    </Card.Body>
+                </Card>
+            </Col>
         );
     }
 
