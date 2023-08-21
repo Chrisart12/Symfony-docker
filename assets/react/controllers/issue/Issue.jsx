@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
 import {Card, Col, Container, Placeholder, Row, Stack} from "react-bootstrap";
-import CardIssueDetails from "./CardIssueDetails";
-import StackIssueStatusType from "./StackIssueStatusType";
 import CardIssue from "./CardIssue";
-import {faShareFromSquare, faEye} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
+import StackIssueStatusType from "./StackIssueStatusType";
+import CardIssueDetails from "./CardIssueDetails";
+import React, {useEffect, useState} from "react";
 import {showShareAlert} from "../../../functions/alert";
 
-export default function Issue({ issueId, issueStatuses, issueTypes, projectId }) {
+export default function Issue({ id, issueTypes, projectId, size="sm" }) {
     const [issue, setIssue] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`/api/issues/${issueId}`, {
+        fetch(`/api/issues/${id}`, {
             headers: {
                 'Accept': 'application/ld+json',
                 'Content-Type': 'application/ld+json'
@@ -60,24 +60,22 @@ export default function Issue({ issueId, issueStatuses, issueTypes, projectId })
     }
 
     return (
-        <Container className="mt-5">
-            <Row>
-                <Col sm={12} md={8}>
-                    <CardIssue issue={issue} setIssue={setIssue} />
-                </Col>
-                <Col sm={12} md={4}>
-                    <Stack direction="horizontal" gap={3} className="justify-content-end mb-3">
-                        <FontAwesomeIcon icon={faEye} size="lg" title="Watch" />
-                        <FontAwesomeIcon className="cursor-pointer" icon={faShareFromSquare} onClick={handleShare} size="lg" title="Share" />
-                    </Stack>
-                    <StackIssueStatusType
-                        issue={issue}
-                        issueTypes={issueTypes}
-                        setIssue={setIssue}
-                    />
-                    <CardIssueDetails issue={issue} setIssue={setIssue} projectId={projectId} />
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Col sm={12} md={"sm" === size ? 6 : 8}>
+                <CardIssue issue={issue} setIssue={setIssue} />
+            </Col>
+            <Col sm={12} md={"sm" === size ? 3 : 4}>
+                <Stack direction="horizontal" gap={3} className="justify-content-end mb-3">
+                    <FontAwesomeIcon icon={faEye} size="lg" title="Watch" />
+                    <FontAwesomeIcon className="cursor-pointer" icon={faShareFromSquare} onClick={handleShare} size="lg" title="Share" />
+                </Stack>
+                <StackIssueStatusType
+                    issue={issue}
+                    issueTypes={issueTypes}
+                    setIssue={setIssue}
+                />
+                <CardIssueDetails issue={issue} setIssue={setIssue} projectId={projectId} />
+            </Col>
+        </>
     )
 }

@@ -7,6 +7,7 @@ import StackIssueStatusType from "./StackIssueStatusType";
 import IssueAttachments from "./IssueAttachments";
 import MediaViewer from "../MediaViewer";
 import ButtonAttach from "../attachment/ButtonAttach";
+import Issue from "./Issue";
 
 export default function Issues({ issueTypes, projectId }) {
     const [openMediaViewer, setOpenMediaViewer] = React.useState(false);
@@ -154,57 +155,11 @@ export default function Issues({ issueTypes, projectId }) {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col sm={12} md={6}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title className="issue-summary">
-                                <div>{selectedIssue?.summary}</div>
-                            </Card.Title>
-
-                            <hr />
-
-                            <div className="issue-buttons my-3">
-                                <ButtonAttach
-                                    issue={selectedIssue}
-                                    issues={issues}
-                                    setIssue={setSelectedIssue}
-                                    setIssues={setIssues}
-                                />
-                            </div>
-
-                            <Card.Text>Description</Card.Text>
-
-                            <hr />
-
-                            <div className="issue-description">
-                                <p dangerouslySetInnerHTML={{__html: selectedIssue?.description ?  selectedIssue?.description : '<span class="text-muted">Add a description...</span>'}}></p>
-                            </div>
-
-                            {selectedIssue?.attachments.length > 0 && (
-                                <IssueAttachments issue={selectedIssue} showMediaViewer={showMediaViewer} />
-                            )}
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col sm={12} md={3}>
-                    <StackIssueStatusType
-                        handleStatusChange={handleStatusChange}
-                        handleTypeChange={handleTypeChange}
-                        issue={selectedIssue}
-                        issues={issues}
-                        issueTypes={issueTypes}
-                        setIssue={setSelectedIssue}
-                        setIssues={setIssues}
-                    />
-
-                    <CardIssueDetails
-                        issue={selectedIssue}
-                        issues={issues}
-                        projectId={projectId}
-                        setIssue={setSelectedIssue}
-                        setIssues={setIssues}
-                    />
-                </Col>
+                <Issue
+                    id={selectedIssue.id}
+                    issueTypes={issueTypes}
+                    projectId={projectId}
+                />
             </Row>
             <MediaViewer
                 attachmentPath={selectedAttachment?.path}
