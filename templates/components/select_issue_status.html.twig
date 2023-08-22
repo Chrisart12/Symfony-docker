@@ -1,0 +1,16 @@
+<div {{ attributes }}>
+    <select aria-label="Issue Status"
+            class="form-select mb-3 mt-sm-3 mt-md-0"
+            data-action="live#action"
+            data-action-name="updateStatus"
+            data-model="status"
+    >
+        {% for status in statuses %}
+            {% if issue.status == status.value %}
+                <option value="{{ status.value }}" selected>{{ status.label }}</option>
+            {% else %}
+                <option value="{{ status.value }}">{{ status.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>

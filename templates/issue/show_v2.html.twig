@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ issue.summary }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                {{ component('Issue', {
+                    issue: issue
+                }) }}
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="stack-issue-status-type hstack gap-2">
+                    {{ component('SelectIssueType', {
+                        issue: issue,
+                        types: types,
+                        type: issue.type
+                    }) }}
+                    {{ component('SelectIssueStatus', {
+                        issue: issue,
+                        statuses: statuses,
+                        status: issue.status
+                    }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

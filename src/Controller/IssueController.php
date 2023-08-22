@@ -30,7 +30,7 @@ class IssueController extends AbstractController
     public function list(): Response
     {
         return $this->render('issue/list.html.twig', [
-            'issueTypes' => $this->issueService->getIssueTypes(),
+            'issueTypes' => $this->issueService->getTypes(),
             'projectId' => $this->getUser()->getSelectedProject()->getId()
         ]);
     }
@@ -50,7 +50,7 @@ class IssueController extends AbstractController
         return $this->json([
             'projects' => $projectService->getProjectsByUserNormalized($user, ['project:list:create:issue']),
             'statuses' => $this->issueService->getStatuses(),
-            'types' => $this->issueService->getIssueTypes(),
+            'types' => $this->issueService->getTypes(),
             'reporter' => $reporter
         ]);
     }
@@ -61,8 +61,18 @@ class IssueController extends AbstractController
         return $this->render('issue/index.html.twig', [
             'issueId' => $id,
             'issueStatuses' => $this->issueService->getEnableStatuses($id),
-            'issueTypes' => $this->issueService->getIssueTypes(),
+            'issueTypes' => $this->issueService->getTypes(),
             'projectId' => $this->getUser()->getSelectedProject()->getId()
+        ]);
+    }
+
+    #[Route('/v2/{id}', name: 'show_v2', methods: ['GET'])]
+    public function showV2(Issue $issue): Response
+    {
+        return $this->render('issue/show_v2.html.twig', [
+            'issue' => $issue,
+            'statuses' => $this->issueService->getEnableStatuses($issue->getId()),
+            'types' => $this->issueService->getTypes()
         ]);
     }
 

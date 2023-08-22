@@ -72,7 +72,7 @@ class IssueService
         return $statuses;
     }
 
-    public function getIssueTypes(): array
+    public function getTypes(): array
     {
         $types = [];
 

@@ -1,0 +1,29 @@
+<div {{ attributes }}>
+    <div class="card">
+        <div class="card-header">{{ issue.id }}</div>
+        <div class="card-body">
+            <div class="card-title">
+                {% if isEditingSummary %}
+                    <div class="input-group">
+                        <input aria-label="Issue Summary" type="text" class="form-control" data-model="issue.summary">
+                        <button
+                                class="btn btn-outline-secondary"
+                                data-action="live#action"
+                                data-action-name="saveSummary"
+                                type="button">
+                            Valider
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="d-inline flex">
+                        <span class="h5">{{ issue.summary }}</span>
+                        <button class="btn btn-primary btn-sm" data-action="live#action" data-action-name="activateEditingSummary">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

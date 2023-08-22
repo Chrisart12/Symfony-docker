@@ -1,0 +1,16 @@
+<div {{ attributes }}>
+    <select aria-label="Issue Type"
+            class="form-select mb-3 mt-sm-3 mt-md-0"
+            data-action="live#action"
+            data-action-name="updateType"
+            data-model="type"
+    >
+        {% for type in types %}
+            {% if issue.type == type.value %}
+                <option value="{{ type.value }}" selected>{{ type.label }}</option>
+            {% else %}
+                <option value="{{ type.value }}">{{ type.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
