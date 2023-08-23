@@ -4,7 +4,6 @@ namespace App\Twig;
 
 use App\Entity\Issue as IssueEntity;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
