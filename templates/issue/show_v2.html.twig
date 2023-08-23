@@ -41,9 +41,10 @@
                                         <small>Assignee</small>
                                     </td>
                                     <td>
-                                        {{ component('SelectIssueAssignee', {
+                                        {{ component('SelectAssignee', {
                                             assignee: issue.assignee,
-                                            issue: issue
+                                            issue: issue,
+                                            people: people
                                         }) }}
                                     </td>
                                 </tr>
@@ -54,6 +55,18 @@
                                     <td>
                                         {{ component('InputStoryPointEstimate', {
                                             issue: issue
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <small>Reporter</small>
+                                    </td>
+                                    <td>
+                                        {{ component('SelectReporter', {
+                                            issue: issue,
+                                            people: people,
+                                            reporter: issue.reporter
                                         }) }}
                                     </td>
                                 </tr>

@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Service\AttachmentService;
 use App\Service\IssueService;
 use App\Service\ProjectService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,10 +68,11 @@ class IssueController extends AbstractController
     }
 
     #[Route('/v2/{id}', name: 'show_v2', methods: ['GET'])]
-    public function showV2(Issue $issue): Response
+    public function showV2(Issue $issue, UserService $userService): Response
     {
         return $this->render('issue/show_v2.html.twig', [
             'issue' => $issue,
+            'people' => $userService->findByProject($issue->getProject()),
             'statuses' => $this->issueService->getEnableStatuses($issue->getId()),
             'types' => $this->issueService->getTypes()
         ]);

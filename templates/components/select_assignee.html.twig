@@ -5,11 +5,11 @@
             data-action-name="updateAssignee"
             data-model="assignee"
     >
-        {% for assignee in assignees %}
-            {% if issue.assignee.id == assignee.value %}
-                <option value="{{ assignee.value }}" selected>{{ assignee.label }}</option>
+        {% for person in people %}
+            {% if issue.assignee.id == person.value %}
+                <option value="{{ person.value }}" selected>{{ person.label }}</option>
             {% else %}
-                <option value="{{ assignee.value }}">{{ assignee.label }}</option>
+                <option value="{{ person.value }}">{{ person.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
