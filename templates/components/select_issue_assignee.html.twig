@@ -1,0 +1,16 @@
+<div {{ attributes }}>
+    <select aria-label="Issue Assignee"
+            class="form-select"
+            data-action="live#action"
+            data-action-name="updateAssignee"
+            data-model="assignee"
+    >
+        {% for assignee in assignees %}
+            {% if issue.assignee.id == assignee.value %}
+                <option value="{{ assignee.value }}" selected>{{ assignee.label }}</option>
+            {% else %}
+                <option value="{{ assignee.value }}">{{ assignee.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>

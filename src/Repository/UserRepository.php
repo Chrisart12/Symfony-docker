@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
-* @implements PasswordUpgraderInterface<User>
+ * @implements PasswordUpgraderInterface<User>
  *
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
@@ -58,7 +59,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->where($qb->expr()->like('u.email', ':query'))
             ->orWhere($qb->expr()->like('u.firstName', ':query'))
             ->orWhere($qb->expr()->like('u.lastName', ':query'))
-            ->setParameter('query', '%'.$query .'%');
+            ->setParameter('query', '%' . $query . '%');
+
+        return $qb
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function findByProject(Project $project): array
+    {
+        $qb = $this
+            ->createQueryBuilder('u');
+
+        $qb
+            ->select('u.id AS value', "CONCAT(u.firstName, ' ', u.lastName) AS label")
+            ->where(':projectId MEMBER OF u.projects')
+            ->setParameter('projectId', $project->getId());
 
         return $qb
             ->getQuery()

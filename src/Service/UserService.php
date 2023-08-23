@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Model\SignupModel;
 use App\Repository\UserRepository;
@@ -30,5 +31,10 @@ class UserService
     public function findByQuery(string $query): array
     {
         return $this->userRepo->findByQuery($query);
+    }
+
+    public function findByProject(Project $project)
+    {
+        return $this->userRepo->findByProject($project);
     }
 }
