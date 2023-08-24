@@ -1,5 +1,6 @@
-<div {{ attributes }}>
-    <div class="card">
+<div {{ attributes.defaults(stimulus_controller('issue')) }}>
+
+<div class="card">
         <div class="card-header">{{ issue.id }}</div>
         <div class="card-body">
             <div class="card-title">
@@ -17,12 +18,15 @@
                 {% else %}
                     <div class="d-inline flex">
                         <span class="h5">{{ issue.summary }}</span>
-                        <button class="btn btn-primary btn-sm" data-action="live#action" data-action-name="activateEditingSummary">
+                        <button class="btn" data-action="live#action" data-action-name="activateEditingSummary">
                             <i class="fas fa-edit"></i>
                         </button>
                     </div>
-
                 {% endif %}
+            </div>
+            <div class="issue-buttons my-3">
+                <button class="btn btn-sm btn-primary" {{ stimulus_action('issue', 'addAttachment') }}>Attach</button>
+                <input id="inputAttachment" class="d-none" type="file">
             </div>
         </div>
     </div>

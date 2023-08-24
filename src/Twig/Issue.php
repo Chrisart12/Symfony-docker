@@ -3,8 +3,6 @@
 namespace App\Twig;
 
 use App\Entity\Issue as IssueEntity;
-use App\Enum\IssueStatusEnum;
-use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
