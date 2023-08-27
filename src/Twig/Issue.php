@@ -2,8 +2,11 @@
 
 namespace App\Twig;
 
+use App\Entity\Attachment;
 use App\Entity\Issue as IssueEntity;
+use App\Service\AttachmentService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -17,6 +20,10 @@ class Issue
     use DefaultActionTrait;
     use ValidatableComponentTrait;
 
+    /** @var Attachment[]  */
+    #[LiveProp]
+    public array $attachments;
+
     #[LiveProp(writable: ['summary'])]
     #[Assert\Valid]
     public IssueEntity $issue;
@@ -28,6 +35,14 @@ class Issue
     public function activateEditingSummary(): void
     {
         $this->isEditingSummary = true;
+    }
+
+    #[LiveAction]
+    public function addAttachment(AttachmentService $attachmentService, Request $request): void
+    {
+        $args = json_decode($request->getContent(), true)['args'];
+
+        $this->attachments[] = new Attachment($this->issue, $args);
     }
 
     #[LiveAction]

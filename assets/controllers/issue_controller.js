@@ -22,13 +22,17 @@ export class IssueController extends Controller {
             formData.append('attachment', files[0]);
 
 
-            await fetch(`/issues/${this.component.getData('issue')}/attachments`, {
+            const response = await fetch(`/issues/${this.component.getData('issue')}/attachments`, {
                 body: formData,
                 headers: {
                     'Accept': 'application/json',
                 },
                 method: 'POST'
-            })
+            });
+
+            const attachment = await response.json();
+
+            await this.component.action('addAttachment', attachment);
         });
     }
 

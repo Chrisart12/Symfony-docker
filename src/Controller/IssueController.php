@@ -103,7 +103,7 @@ class IssueController extends AbstractController
         $attachmentFile->move($this->getParameter('attachments_directory'), $newFilename);
         $attachmentService->add($attachment);
 
-        return $this->json($normalizer->normalize($issue, 'json', [
+        return $this->json($normalizer->normalize($attachment, 'json', [
             'groups' => ['issue:read']
         ]));
     }

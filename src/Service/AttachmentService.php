@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Attachment;
+use App\Entity\Issue;
 use App\Repository\AttachmentRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;

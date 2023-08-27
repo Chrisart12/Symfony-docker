@@ -24,10 +24,32 @@
                     </div>
                 {% endif %}
             </div>
+
             <div class="issue-buttons my-3">
-                <button class="btn btn-sm btn-primary" {{ stimulus_action('issue', 'addAttachment') }}>Attach</button>
+                <button class="btn btn-sm btn-primary" {{ stimulus_action('issue', 'addAttachment') }}>
+                    <i class="fas fa-paperclip"></i>&nbsp;Attach
+                </button>
                 <input id="inputAttachment" class="d-none" type="file">
             </div>
+
+            <div class="issue-attachments">
+                <p class="card-text fw-bold">Attachments</p>
+                <hr>
+                <div class="overflow-x-auto container-fluid">
+                    <div class="flex-row flex-nowrap mb-3 row">
+                        {% for attachment in attachments %}
+                            <div class="col-sm-4">
+                                <div class="card-attachment cursor-pointer h-100 card">
+                                    <img alt="{{ attachment.originalName }}" class="card-img-top object-fit-cover" height="96" src="{{ attachment.path }}" width="96">
+                                    <div class="text-center p-2 card-body"><small>{{ attachment.originalName }}</small></div>
+                                    <div class="text-center card-footer"><small>{{ attachment.createdAt|date('d/m/Y') }}</small></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

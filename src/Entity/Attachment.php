@@ -15,33 +15,47 @@ class Attachment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['issue:read'])]
+    #[Groups(['attachment:read', 'issue:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'attachments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Issue $issue = null;
+    private ?Issue $issue;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:read'])]
+    #[Groups(['attachment:read', 'issue:read'])]
     private ?string $originalName = null;
 
     #[ORM\Column]
-    #[Groups(['issue:read'])]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[Groups(['attachment:read', 'issue:read'])]
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column]
-    #[Groups(['issue:read'])]
+    #[Groups(['attachment:read', 'issue:read'])]
     private ?int $size = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['issue:read'])]
+    #[Groups(['attachment:read', 'issue:read'])]
     private ?string $path = null;
 
-    public function __construct(Issue $issue)
+    public function __construct(Issue $issue, array $args = [])
     {
         $this->issue = $issue;
         $this->createdAt = new \DateTimeImmutable();
+
+        if ([] !== $args) {
+            $this->setId($args['id']);
+            $this->setOriginalName($args['originalName']);
+            $this->setSize($args['size']);
+            $this->setPath($args['path']);
+        }
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId(): ?int
