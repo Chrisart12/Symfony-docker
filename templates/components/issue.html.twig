@@ -26,10 +26,15 @@
             </div>
 
             <div class="issue-buttons my-3">
-                <button class="btn btn-sm btn-primary" {{ stimulus_action('issue', 'openFileDialog') }}>
-                    <i class="fas fa-paperclip"></i>&nbsp;Attach
-                </button>
-                <input id="inputAttachment" class="d-none" type="file">
+                <div class="input-group">
+                    <input type="file" name="attachment" class="form-control">
+                    <button class="btn btn-outline-primary"
+                            data-action="live#action"
+                            data-action-name="files(attachment)|addAttachment"
+                            type="button">
+                        <i class="fas fa-paperclip"></i>&nbsp;Attach
+                    </button>
+                </div>
             </div>
 
             <div class="issue-attachments">

@@ -40,9 +40,13 @@ class Issue
     #[LiveAction]
     public function addAttachment(AttachmentService $attachmentService, Request $request): void
     {
-        $args = json_decode($request->getContent(), true)['args'];
+        $attachment = $attachmentService->handleUploadedFile($this->issue, $request);
 
-        $this->attachments[] = new Attachment($this->issue, $args);
+        if (null === $attachment) {
+            return;
+        }
+
+        $this->attachments[] = $attachment;
     }
 
     #[LiveAction]
