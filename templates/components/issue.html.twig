@@ -3,14 +3,14 @@
 <div class="card">
         <div class="card-header">{{ issue.id }}</div>
         <div class="card-body">
+
             <div class="card-title">
                 {% if isEditingSummary %}
                     <div class="input-group">
                         <input aria-label="Issue Summary" type="text" class="form-control" data-model="issue.summary">
                         <button
-                                class="btn btn-outline-secondary"
-                                data-action="live#action"
-                                data-action-name="saveSummary"
+                                class="btn btn-outline-primary"
+                                {{ live_action('saveSummary') }}
                                 type="button">
                             Valider
                         </button>
@@ -18,7 +18,7 @@
                 {% else %}
                     <div class="d-inline flex">
                         <span class="h5">{{ issue.summary }}</span>
-                        <button class="btn" data-action="live#action" data-action-name="activateEditingSummary">
+                        <button class="btn" {{ live_action('activateEditingSummary') }}>
                             <i class="fas fa-edit"></i>
                         </button>
                     </div>
@@ -29,8 +29,7 @@
                 <div class="input-group">
                     <input class="form-control" id="inputAttachment" name="attachment" type="file">
                     <button class="btn btn-outline-primary"
-                            data-action="live#action"
-                            data-action-name="files(attachment)|addAttachment"
+                            {{ live_action('files(attachment)|addAttachment') }}
                             disabled
                             id="buttonAttach"
                             type="button"
@@ -40,17 +39,36 @@
                 </div>
             </div>
 
+            <p class="fw-bold card-text">Description</p>
+
+            <hr>
+
+            <div class="issue-description">
+
+            </div>
+
+
             <div class="issue-attachments">
                 <p class="card-text fw-bold">Attachments</p>
+
                 <hr>
+
                 <div class="overflow-x-auto container-fluid">
                     <div class="flex-row flex-nowrap mb-3 row">
                         {% for attachment in attachments %}
                             <div class="col-sm-4">
                                 <div class="card-attachment cursor-pointer h-100 card">
-                                    <img alt="{{ attachment.originalName }}" class="card-img-top object-fit-cover" height="96" src="{{ attachment.path }}" width="96">
-                                    <div class="text-center p-2 card-body"><small>{{ attachment.originalName }}</small></div>
-                                    <div class="text-center card-footer"><small>{{ attachment.createdAt|date('d/m/Y') }}</small></div>
+
+                                    {% if asset(attachment.path)|is_image %}
+                                        <img alt="{{ attachment.originalName }}" class="card-img-top object-fit-cover" height="96" src="{{ attachment.path }}" width="96">
+                                    {% endif %}
+
+                                    <div class="text-center p-2 card-body">
+                                        <small>{{ attachment.originalName }}</small>
+                                    </div>
+                                    <div class="text-center card-footer">
+                                        <small>{{ attachment.createdAt|date('d/m/Y') }}</small>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}

@@ -29,7 +29,16 @@ class Issue
     public IssueEntity $issue;
 
     #[LiveProp]
+    public bool $isEditingDescription = false;
+
+    #[LiveProp]
     public bool $isEditingSummary = false;
+
+    #[LiveAction]
+    public function activateEditingDescription(): void
+    {
+        $this->isEditingSummary = true;
+    }
 
     #[LiveAction]
     public function activateEditingSummary(): void
