@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
@@ -56,6 +57,26 @@ class Issue
         }
 
         $this->attachments[] = $attachment;
+    }
+
+    #[LiveAction]
+    public function deleteAttachment(#[LiveArg] int $attachmentId, EntityManagerInterface $em): void
+    {
+        $attachmentToDelete = null;
+        $updatedAttachments = [];
+
+        foreach ($this->attachments as $attachment) {
+            if ($attachment->getId() === $attachmentId) {
+                $attachmentToDelete = $attachment;
+            } else {
+                $updatedAttachments[] = $attachment;
+            }
+        }
+
+        $this->attachments = $updatedAttachments;
+        $this->issue->removeAttachment($attachmentToDelete);
+
+        $em->flush();
     }
 
     #[LiveAction]

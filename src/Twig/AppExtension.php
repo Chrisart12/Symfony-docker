@@ -36,15 +36,25 @@ class AppExtension extends AbstractExtension
     {
         $path = $this->parameters->get('kernel.project_dir').'/public/'.$filename;
 
+        if (!file_exists($path)) {
+            return false;
+        }
+
         $mimeType = (new MimeTypes())->guessMimeType($path);
 
         return str_starts_with($mimeType, 'image/');
     }
 
-    public function renderLiveAction(string $actionName, bool $prevent = false, ?int $debounce = null): string
+    public function renderLiveAction(string $actionName, array $args = [], bool $prevent = false, ?int $debounce = null): string
     {
         $attributes[] = 'data-action=live#action';
-        $attributes[] = sprintf('data-action-name=%s', $actionName);
+
+
+        if ([] === $args) {
+            $attributes[] = sprintf('data-action-name=%s', $actionName);
+        } else {
+            $attributes[] = sprintf('data-action-name=%s(attachmentId=%s)', $actionName, $args['attachmentId']);
+        }
 
         return rtrim(
             implode(' ', $attributes)

@@ -59,6 +59,15 @@
                             <div class="col-sm-4">
                                 <div class="card-attachment cursor-pointer h-100 card">
 
+                                    <button
+                                            class="btn btn-sm button-delete-attachment text-dark"
+                                            href="#"
+                                            {{ live_action('deleteAttachment', { attachmentId: attachment.id }) }}
+                                            title="Supprimer"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
                                     {% if asset(attachment.path)|is_image %}
                                         <img alt="{{ attachment.originalName }}" class="card-img-top object-fit-cover" height="96" src="{{ attachment.path }}" width="96">
                                     {% endif %}
