@@ -27,11 +27,14 @@
 
             <div class="issue-buttons my-3">
                 <div class="input-group">
-                    <input type="file" name="attachment" class="form-control">
+                    <input class="form-control" id="inputAttachment" name="attachment" type="file">
                     <button class="btn btn-outline-primary"
                             data-action="live#action"
                             data-action-name="files(attachment)|addAttachment"
-                            type="button">
+                            disabled
+                            id="buttonAttach"
+                            type="button"
+                    >
                         <i class="fas fa-paperclip"></i>&nbsp;Attach
                     </button>
                 </div>
