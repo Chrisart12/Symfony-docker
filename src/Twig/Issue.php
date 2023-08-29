@@ -25,7 +25,7 @@ class Issue
     #[LiveProp]
     public array $attachments;
 
-    #[LiveProp(writable: ['summary'])]
+    #[LiveProp(writable: ['description', 'summary'])]
     #[Assert\Valid]
     public IssueEntity $issue;
 
@@ -38,7 +38,7 @@ class Issue
     #[LiveAction]
     public function activateEditingDescription(): void
     {
-        $this->isEditingSummary = true;
+        $this->isEditingDescription = true;
     }
 
     #[LiveAction]
@@ -60,6 +60,12 @@ class Issue
     }
 
     #[LiveAction]
+    public function deactivateEditingDescription(): void
+    {
+        $this->isEditingDescription = false;
+    }
+
+    #[LiveAction]
     public function deleteAttachment(#[LiveArg] int $attachmentId, EntityManagerInterface $em): void
     {
         $attachmentToDelete = null;
@@ -75,6 +81,16 @@ class Issue
 
         $this->attachments = $updatedAttachments;
         $this->issue->removeAttachment($attachmentToDelete);
+
+        $em->flush();
+    }
+
+    #[LiveAction]
+    public function saveDescription(EntityManagerInterface $em): void
+    {
+        $this->validate();
+
+        $this->isEditingDescription = false;
 
         $em->flush();
     }

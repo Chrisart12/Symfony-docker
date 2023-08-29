@@ -75,3 +75,7 @@ label.required:after {
     align-items: center;
     justify-content: center;
 }
+
+.issue-description > .card-text:hover {
+    @extend .bg-light, .cursor-pointer ;
+}

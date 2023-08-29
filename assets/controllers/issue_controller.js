@@ -3,7 +3,13 @@ import { getComponent } from '@symfony/ux-live-component';
 
 export class IssueController extends Controller {
     /** @type {HTMLButtonElement} */
+    buttonActivateEditingDescription;
+
+    /** @type {HTMLButtonElement} */
     buttonAttach;
+
+    /** @type {HTMLInputElement} */
+    divIssueDescription;
 
     /** @type {HTMLInputElement} */
     inputAttachment;
@@ -17,8 +23,14 @@ export class IssueController extends Controller {
 
     async initialize() {
         this.component = await getComponent(this.element);
+        this.buttonActivateEditingDescription = document.querySelector('#buttonActivateEditingDescription');
         this.buttonAttach = document.querySelector('#buttonAttach');
+        this.divIssueDescription = document.querySelector('#issueDescription');
         this.inputAttachment = document.querySelector('#inputAttachment');
+
+        this.divIssueDescription.addEventListener('click',  () => {
+            this.buttonActivateEditingDescription.click();
+        });
 
         this.inputAttachment.addEventListener('change', async (e) => {
             await this.updateButtonAttachDisabledState(e);
