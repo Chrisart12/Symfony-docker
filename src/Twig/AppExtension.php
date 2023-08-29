@@ -53,7 +53,13 @@ class AppExtension extends AbstractExtension
         if ([] === $args) {
             $attributes[] = sprintf('data-action-name=%s', $actionName);
         } else {
-            $attributes[] = sprintf('data-action-name=%s(attachmentId=%s)', $actionName, $args['attachmentId']);
+            $actionName = sprintf('data-action-name=%s', $actionName);
+
+            foreach ($args as $key => $value) {
+                $actionName .= sprintf('(%s=%s)', $key, $this->escapeAsHtmlAttr($value));
+            }
+
+            $attributes[] = $actionName;
         }
 
         return rtrim(
