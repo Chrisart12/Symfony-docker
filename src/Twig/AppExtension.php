@@ -68,9 +68,6 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @throws RuntimeError
-     */
     private function escapeAsHtmlAttr(mixed $value): string
     {
         return twig_escape_filter($this->env, $value, 'html_attr');
