@@ -3,16 +3,20 @@ import { getComponent } from '@symfony/ux-live-component';
 
 export class IssueController extends Controller {
     /** @type {HTMLButtonElement} */
-    buttonActivateEditingDescription;
+    buttonActivateEditingDescription = document.querySelector('#buttonActivateEditingDescription');
 
     /** @type {HTMLButtonElement} */
-    buttonAttach;
+    buttonAttach = document.querySelector('#buttonAttach');
 
     /** @type {HTMLInputElement} */
-    divIssueDescription;
+    divIssueDescription = document.querySelector('#issueDescription');
 
     /** @type {HTMLInputElement} */
-    inputAttachment;
+    inputAttachment = document.querySelector('#inputAttachment')
+
+    activateEditingDescription() {
+        this.buttonActivateEditingDescription.click();
+    }
 
     async updateButtonAttachDisabledState(e) {
         /** @type {FileList} */
@@ -23,14 +27,8 @@ export class IssueController extends Controller {
 
     async initialize() {
         this.component = await getComponent(this.element);
-        this.buttonActivateEditingDescription = document.querySelector('#buttonActivateEditingDescription');
-        this.buttonAttach = document.querySelector('#buttonAttach');
-        this.divIssueDescription = document.querySelector('#issueDescription');
-        this.inputAttachment = document.querySelector('#inputAttachment');
 
-        this.divIssueDescription.addEventListener('click',  () => {
-            this.buttonActivateEditingDescription.click();
-        });
+        this.divIssueDescription.addEventListener('click', this.activateEditingDescription.bind(this));
 
         this.inputAttachment.addEventListener('change', async (e) => {
             await this.updateButtonAttachDisabledState(e);
