@@ -5,6 +5,7 @@ namespace App\Twig;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mime\MimeTypes;
 use Twig\Environment;
+use Twig\Error\RuntimeError;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -67,8 +68,11 @@ class AppExtension extends AbstractExtension
         );
     }
 
+    /**
+     * @throws RuntimeError
+     */
     private function escapeAsHtmlAttr(mixed $value): string
     {
-        return (string) twig_escape_filter($this->env, $value, 'html_attr');
+        return twig_escape_filter($this->env, $value, 'html_attr');
     }
 }
