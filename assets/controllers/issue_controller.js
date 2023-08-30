@@ -9,6 +9,9 @@ export class IssueController extends Controller {
     buttonAttach = document.querySelector('#buttonAttach');
 
     /** @type {HTMLInputElement} */
+    divIssueDescription = document.querySelector('#issueDescription');
+
+    /** @type {HTMLInputElement} */
     inputAttachment = document.querySelector('#inputAttachment')
 
     activateEditingDescription() {
