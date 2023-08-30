@@ -57,20 +57,9 @@ class IssueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(string $id): Response
-    {
-        return $this->render('issue/index.html.twig', [
-            'issueId' => $id,
-            'issueStatuses' => $this->issueService->getEnableStatuses($id),
-            'issueTypes' => $this->issueService->getTypes(),
-            'projectId' => $this->getUser()->getSelectedProject()->getId()
-        ]);
-    }
-
-    #[Route('/v2/{id}', name: 'show_v2', methods: ['GET'])]
     public function showV2(Issue $issue, UserService $userService): Response
     {
-        return $this->render('issue/show_v2.html.twig', [
+        return $this->render('issue/show.html.twig', [
             'issue' => $issue,
             'people' => $userService->findByProject($issue->getProject()),
             'statuses' => $this->issueService->getEnableStatuses($issue->getId()),

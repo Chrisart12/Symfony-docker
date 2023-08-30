@@ -1,7 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Loading{% endblock %}
-
-{% block body %}
-    <div {{ react_component('pages/PageIssue', {  id: issueId, issueTypes: issueTypes, projectId: projectId }) }}></div>
-{% endblock %}
