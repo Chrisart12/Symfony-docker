@@ -36,6 +36,25 @@ class IssueController extends AbstractController
         ]);
     }
 
+    #[Route('/v2', name: 'list_v2', methods: ['GET'])]
+    public function listV2(): Response
+    {
+        $issues = [];
+
+        foreach ($this->getUser()->getSelectedProject()->getIssues() as $issue) {
+            $issues[] = [
+                'id' => $issue->getId(),
+                'summary' => $issue->getSummary(),
+            ];
+        }
+
+        return $this->render('issue/list_v2.html.twig', [
+            'issues' => $issues,
+            'issueTypes' => $this->issueService->getTypes(),
+            'projectId' => $this->getUser()->getSelectedProject()->getId()
+        ]);
+    }
+
     #[Route('/create', name: 'create', methods: ['GET'])]
     public function create(ProjectService $projectService): Response
     {

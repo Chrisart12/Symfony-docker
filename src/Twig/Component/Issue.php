@@ -5,12 +5,14 @@ namespace App\Twig\Component;
 use App\Entity\Attachment;
 use App\Entity\Issue as IssueEntity;
 use App\Service\AttachmentService;
+use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -111,5 +113,15 @@ class Issue
         $this->isEditingSummary = false;
 
         $em->flush();
+    }
+
+    #[LiveListener('setSelectedIssue')]
+    public function setSelectedIssue(#[LiveArg] string $issueId, IssueService $issueService): void
+    {
+        $issue = $issueService->findOneById($issueId);
+
+        $this->issue = $issue;
+
+        $this->attachments = $issue->getAttachments()->toArray();
     }
 }
