@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig;
+namespace App\Twig\Component;
 
 use App\Entity\Issue as IssueEntity;
 use App\Entity\User;
@@ -12,8 +12,8 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 
-#[AsLiveComponent(template: 'components/select_assignee.html.twig')]
-class SelectAssignee
+#[AsLiveComponent(template: 'components/select_reporter.html.twig')]
+class SelectReporter
 {
     use DefaultActionTrait;
     use ValidatableComponentTrait;
@@ -23,17 +23,17 @@ class SelectAssignee
     public IssueEntity $issue;
 
     #[LiveProp]
-    public array $people;
+    public array $people = [];
 
     #[LiveProp(writable: true)]
-    public ?User $assignee;
+    public ?User $reporter;
 
     #[LiveAction]
-    public function updateAssignee(EntityManagerInterface $em): void
+    public function updateReporter(EntityManagerInterface $em): void
     {
         $this->validate();
 
-        $this->issue->setAssignee($this->assignee);
+        $this->issue->setReporter($this->reporter);
 
         $em->flush();
     }

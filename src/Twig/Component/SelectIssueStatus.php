@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twig;
+namespace App\Twig\Component;
 
 use App\Entity\Issue as IssueEntity;
 use App\Enum\IssueStatusEnum;

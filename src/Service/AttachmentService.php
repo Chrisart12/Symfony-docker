@@ -26,10 +26,7 @@ class AttachmentService
 
     public function generateNewFilename(UploadedFile $file): string
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFileName = $this->slugger->slug($originalFilename);
-
-        return $safeFileName.'-'.uniqid().'.'.$file->guessExtension();
+        return uniqid(more_entropy: true) . '.' . $file->guessExtension();
     }
 
     public function handleUploadedFile(Issue $issue, Request $request): ?Attachment
@@ -45,7 +42,7 @@ class AttachmentService
 
         $attachment = new Attachment($issue);
         $attachment->setOriginalName($attachmentFile->getClientOriginalName());
-        $attachment->setPath($this->parameters->get('absolute_attachments_directory').DIRECTORY_SEPARATOR.$newFilename);
+        $attachment->setPath($this->parameters->get('absolute_attachments_directory') . DIRECTORY_SEPARATOR . $newFilename);
         $attachment->setSize($attachmentFile->getSize());
 
         $attachmentFile->move($this->parameters->get('attachments_directory'), $newFilename);
