@@ -53,7 +53,7 @@
                         <button class="btn btn-sm btn-outline-secondary" {{ live_action('deactivateEditingDescription') }}>Annuler</button>
                     </div>
                 {% else %}
-                    <div id="issueDescription" class="card-text" title="Cliquer pour modifier">
+                    <div id="issueDescription" class="card-text" style="min-height: 100px;" title="Cliquer pour modifier">
                         <p>{{ issue.description }}</p>
                     </div>
                     <button class="d-none" id="buttonActivateEditingDescription" {{ live_action('activateEditingDescription') }}></button>

@@ -9,13 +9,10 @@ export class IssueController extends Controller {
     buttonAttach = document.querySelector('#buttonAttach');
 
     /** @type {HTMLInputElement} */
-    divIssueDescription = document.querySelector('#issueDescription');
-
-    /** @type {HTMLInputElement} */
     inputAttachment = document.querySelector('#inputAttachment')
 
     activateEditingDescription() {
-        this.buttonActivateEditingDescription.click();
+        document.querySelector('#buttonActivateEditingDescription').click();
     }
 
     async updateButtonAttachDisabledState(e) {
@@ -27,6 +24,14 @@ export class IssueController extends Controller {
 
     async initialize() {
         this.component = await getComponent(this.element);
+
+        this.component.on('render:finished', (component) => {
+            const divIssueDescription = component.element.querySelector('#issueDescription');
+
+            if (null !== divIssueDescription) {
+                divIssueDescription.addEventListener('click', this.activateEditingDescription.bind(this));
+            }
+        });
 
         this.divIssueDescription.addEventListener('click', this.activateEditingDescription.bind(this));
 
