@@ -79,3 +79,7 @@ label.required:after {
 .issue-description > .card-text:hover {
     @extend .bg-light, .cursor-pointer ;
 }
+
+.issue-image:hover {
+    opacity: 0.5;
+}

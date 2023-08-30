@@ -94,6 +94,10 @@ class Issue
     {
         $this->validate();
 
+        $description = nl2br(htmlentities($this->issue->getDescription(), ENT_QUOTES, 'UTF-8'));
+
+        $this->issue->setDescription($description);
+
         $this->isEditingDescription = false;
 
         $em->flush();
