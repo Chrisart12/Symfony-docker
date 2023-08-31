@@ -116,9 +116,9 @@ class Issue
     }
 
     #[LiveListener('setSelectedIssue')]
-    public function setSelectedIssue(#[LiveArg] string $issueId, IssueService $issueService): void
+    public function setSelectedIssue(#[LiveArg] string $id, IssueService $issueService): void
     {
-        $issue = $issueService->findOneById($issueId);
+        $issue = $issueService->findOneById($id);
 
         $this->issue = $issue;
 
