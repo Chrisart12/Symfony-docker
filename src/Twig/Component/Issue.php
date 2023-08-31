@@ -120,8 +120,11 @@ class Issue
     {
         $issue = $issueService->findOneById($id);
 
+        $this->attachments = $issue->getAttachments()->toArray();
         $this->issue = $issue;
 
-        $this->attachments = $issue->getAttachments()->toArray();
+        $this->emit('setType', [
+            'type' => $issue->getType()
+        ]);
     }
 }

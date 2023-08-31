@@ -9,8 +9,8 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent(template: 'components/issue_navigator.html.twig')]
-class IssueNavigator
+#[AsLiveComponent(template: 'components/backlog.html.twig')]
+class Backlog
 {
     use ComponentToolsTrait;
     use DefaultActionTrait;

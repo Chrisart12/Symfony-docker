@@ -4,10 +4,13 @@ namespace App\Twig\Component;
 
 use App\Entity\Issue as IssueEntity;
 use App\Enum\IssueTypeEnum;
+use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
@@ -27,6 +30,12 @@ class SelectIssueType
 
     #[LiveProp(writable: true)]
     public IssueTypeEnum $type;
+
+    #[LiveListener('setType')]
+    public function setType(#[LiveArg] IssueTypeEnum $type): void
+    {
+        $this->type = $type;
+    }
 
     #[LiveAction]
     public function updateType(EntityManagerInterface $em): void
