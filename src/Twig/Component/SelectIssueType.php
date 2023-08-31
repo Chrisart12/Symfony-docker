@@ -4,7 +4,6 @@ namespace App\Twig\Component;
 
 use App\Entity\Issue as IssueEntity;
 use App\Enum\IssueTypeEnum;
-use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -21,11 +20,11 @@ class SelectIssueType
     use DefaultActionTrait;
     use ValidatableComponentTrait;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp()]
     #[Assert\Valid]
     public IssueEntity $issue;
 
-    #[LiveProp]
+    #[LiveProp()]
     public array $types = [];
 
     #[LiveProp(writable: true)]

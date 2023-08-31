@@ -26,10 +26,10 @@ class Issue
     use ValidatableComponentTrait;
 
     /** @var Attachment[]  */
-    #[LiveProp]
+    #[LiveProp(updateFromParent: true)]
     public array $attachments;
 
-    #[LiveProp(writable: ['description', 'summary'])]
+    #[LiveProp(writable: true)]
     #[Assert\Valid]
     public IssueEntity $issue;
 

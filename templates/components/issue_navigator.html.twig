@@ -1,0 +1,103 @@
+<div class="row" {{ attributes }}>
+    <div class="col-md-3 col-sm-12 mb-sm-3 mt-sm-0">
+        <div class="card">
+            <div class="card-header">Backlog</div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for issue in issues %}
+                        <button class="list-group-item list-group-item-action" {{ live_action('setSelectedIssue', { id: issue.id }) }}>
+                            <span class="fw-bold">{{ issue.id }}</span>
+                            <br>
+                            <span class="small">{{ issue.summary }}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+        {{ component('Issue', {
+            attachments: selectedIssue.attachments.toArray,
+            issue: selectedIssue,
+            'data-live-id': 'issue-' ~ selectedIssue.id
+        }) }}
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                {{ component('SelectIssueType', {
+                    issue: selectedIssue,
+                    types: types,
+                    type: selectedIssue.type,
+                    'data-live-id': 'select-issue-type-' ~ selectedIssue.id
+                }) }}
+            </div>
+            <div class="col-md-6 col-sm-12">
+                {{ component('SelectIssueStatus', {
+                    issue: selectedIssue,
+                    statuses: statuses,
+                    status: selectedIssue.status,
+                    'data-live-id': 'select-issue-status-' ~ selectedIssue.id
+                }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">Details</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                            <tr>
+                                <td class="fw-bold">
+                                    <small>Assignee</small>
+                                </td>
+                                <td>
+                                    {{ component('SelectAssignee', {
+                                        assignee: selectedIssue.assignee,
+                                        issue: selectedIssue,
+                                        people: people,
+                                        'data-live-id': 'select-assignee-' ~ selectedIssue.id
+                                    }) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">
+                                    <small>Story point estimate</small>
+                                </td>
+                                <td>
+                                    {{ component('InputStoryPointEstimate', {
+                                        issue: selectedIssue,
+                                        'data-live-id': 'input-story-point-estimate' ~ selectedIssue.id
+                                    }) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">
+                                    <small>Reporter</small>
+                                </td>
+                                <td>
+                                    {{ component('SelectReporter', {
+                                        issue: selectedIssue,
+                                        people: people,
+                                        reporter: selectedIssue.reporter,
+                                        'data-live-id': 'select-reporter' ~ selectedIssue.id
+                                    }) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

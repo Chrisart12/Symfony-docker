@@ -37,7 +37,7 @@ class IssueController extends AbstractController
     }
 
     #[Route('/v2', name: 'list_v2', methods: ['GET'])]
-    public function listV2(): Response
+    public function listV2(UserService $userService): Response
     {
         $issues = [];
 
@@ -50,6 +50,8 @@ class IssueController extends AbstractController
 
         return $this->render('issue/list_v2.html.twig', [
             'issues' => $issues,
+            'people' => $userService->findByProject($this->getUser()->getSelectedProject()),
+            'statuses' => $this->issueService->getStatuses(),
             'types' => $this->issueService->getTypes(),
             'projectId' => $this->getUser()->getSelectedProject()->getId()
         ]);
