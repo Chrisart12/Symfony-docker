@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Attachment;
 use App\Entity\Issue;
 use App\Entity\User;
+use App\Form\Type\IssueType;
 use App\Service\AttachmentService;
 use App\Service\IssueService;
 use App\Service\ProjectService;
@@ -49,22 +50,16 @@ class IssueController extends AbstractController
     }
 
     #[Route('/create', name: 'create', methods: ['GET'])]
-    public function create(ProjectService $projectService): Response
+    public function create(): Response
     {
-        if (!$user = $this->getUser()) {
+        if (!$this->getUser()) {
             return $this->json([]);
         }
 
-        $reporter = [
-            'id' => $user->getId(),
-            'name' => $user->getEmail(),
-        ];
+        $form = $this->createForm(IssueType::class, new Issue());
 
-        return $this->json([
-            'projects' => $projectService->getProjectsByUserNormalized($user, ['project:list:create:issue']),
-            'statuses' => $this->issueService->getStatuses(),
-            'types' => $this->issueService->getTypes(),
-            'reporter' => $reporter
+        return $this->render('issue/create.html.twig', [
+            'form' => $form
         ]);
     }
 
