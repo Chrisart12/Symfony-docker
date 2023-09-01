@@ -118,6 +118,10 @@ class Issue
     #[LiveListener('setSelectedIssue')]
     public function setSelectedIssue(#[LiveArg] string $id, IssueService $issueService): void
     {
+        if ($id === $this->issue->getId()) {
+            return;
+        }
+
         $issue = $issueService->findOneById($id);
 
         $this->attachments = $issue->getAttachments()->toArray();

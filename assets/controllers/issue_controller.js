@@ -11,9 +11,6 @@ export class IssueController extends Controller {
     /** @type {HTMLInputElement} */
     divIssueDescription = document.querySelector('#issueDescription');
 
-    /** @type {HTMLInputElement} */
-    inputAttachment = document.querySelector('#inputAttachment')
-
     activateEditingDescription() {
         document.querySelector('#buttonActivateEditingDescription').click();
     }
@@ -38,7 +35,7 @@ export class IssueController extends Controller {
 
         this.divIssueDescription.addEventListener('click', this.activateEditingDescription.bind(this));
 
-        this.inputAttachment.addEventListener('change', async (e) => {
+        document.querySelector('#inputAttachment').addEventListener('change', async (e) => {
             await this.updateButtonAttachDisabledState(e);
         });
     }

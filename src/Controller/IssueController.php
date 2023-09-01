@@ -27,17 +27,8 @@ class IssueController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'list', methods: ['GET'])]
-    public function list(): Response
-    {
-        return $this->render('issue/list.html.twig', [
-            'issueTypes' => $this->issueService->getTypes(),
-            'projectId' => $this->getUser()->getSelectedProject()->getId()
-        ]);
-    }
-
-    #[Route('/v2', name: 'list_v2', methods: ['GET'])]
-    public function listV2(UserService $userService): Response
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(UserService $userService): Response
     {
         $issues = [];
 
@@ -48,7 +39,7 @@ class IssueController extends AbstractController
             ];
         }
 
-        return $this->render('issue/list_v2.html.twig', [
+        return $this->render('issue/index.html.twig', [
             'issues' => $issues,
             'people' => $userService->findByProject($this->getUser()->getSelectedProject()),
             'statuses' => $this->issueService->getStatuses(),
@@ -78,8 +69,12 @@ class IssueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function showV2(Issue $issue, UserService $userService): Response
+    public function showV2(?Issue $issue, UserService $userService): Response
     {
+        if (!$issue) {
+            return $this->render('issue/not_found.html.twig');
+        }
+
         return $this->render('issue/show.html.twig', [
             'issue' => $issue,
             'people' => $userService->findByProject($issue->getProject()),

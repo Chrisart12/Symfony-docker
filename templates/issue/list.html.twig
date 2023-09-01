@@ -1,7 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Issue navigator{% endblock %}
-
-{% block body %}
-    <div {{ react_component('issue/Issues', { issueTypes: issueTypes, projectId: projectId }) }}></div>
-{% endblock %}

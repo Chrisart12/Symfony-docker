@@ -1,0 +1,15 @@
+<nav class="bg-body-tertiary navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a href="{{ path('home_index') }}" class="fw-bold text-primary navbar-brand">TaskSphere</a>
+        <button aria-controls="navbar" type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+        <div class="navbar-collapse collapse" id="navbar">
+            <div class="me-auto navbar-nav">
+                <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
+                <a class="nav-link" href="{{ path('project_index') }}">Projects</a>
+                <a class="nav-link" href="{{ path('home_your_work') }}">Teams</a>
+                <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
+            </div>
+        </div>
+        <div class="d-flex"></div>
+    </div>
+</nav>

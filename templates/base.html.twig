@@ -13,7 +13,7 @@
         {% endblock %}
     </head>
     <body>
-        <div {{ react_component('Header') }}></div>
+        {% include 'navbar.html.twig' %}
         {% block body %}{% endblock %}
     </body>
 </html>
