@@ -126,9 +126,5 @@ class Issue
 
         $this->attachments = $issue->getAttachments()->toArray();
         $this->issue = $issue;
-
-        $this->emit('setType', [
-            'type' => $issue->getType()
-        ]);
     }
 }

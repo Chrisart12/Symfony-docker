@@ -30,12 +30,6 @@ class SelectIssueType
     #[LiveProp(writable: true)]
     public IssueTypeEnum $type;
 
-    #[LiveListener('setType')]
-    public function setType(#[LiveArg] IssueTypeEnum $type): void
-    {
-        $this->type = $type;
-    }
-
     #[LiveAction]
     public function updateType(EntityManagerInterface $em): void
     {
