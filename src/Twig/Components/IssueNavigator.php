@@ -44,4 +44,14 @@ class IssueNavigator
     {
         $this->issues[] = $issue;
     }
+
+    #[LiveListener('issue:summary:updated')]
+    public function onIssueSummaryUpdated(#[LiveArg] array $issue): void
+    {
+        foreach ($this->issues as $key => $value) {
+            if ($value['id'] === $issue['id']) {
+                $this->issues[$key] = $issue;
+            }
+        }
+    }
 }

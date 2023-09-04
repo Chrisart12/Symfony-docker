@@ -113,6 +113,13 @@ class Issue
         $this->isEditingSummary = false;
 
         $em->flush();
+
+        $this->emit('issue:summary:updated', [
+            'issue' => [
+                'id' => $this->issue->getId(),
+                'summary' => $this->issue->getSummary()
+            ]
+        ]);
     }
 
     #[LiveListener('setSelectedIssue')]
