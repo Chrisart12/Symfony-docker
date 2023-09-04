@@ -29,7 +29,7 @@ class Issue
     #[LiveProp(updateFromParent: true)]
     public array $attachments;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: ['description', 'summary'])]
     #[Assert\Valid]
     public IssueEntity $issue;
 
