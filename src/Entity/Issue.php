@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -46,14 +47,15 @@ class Issue
 
     #[ORM\Column]
     #[Groups(['user:read', 'issue:read', 'issue:write'])]
-    private IssueTypeEnum $type = IssueTypeEnum::BUG;
+    private ?IssueTypeEnum $type = IssueTypeEnum::BUG;
 
     #[ORM\Column]
     #[Groups(['issue:read', 'issue:write'])]
-    private IssueStatusEnum $status = IssueStatusEnum::NEW;
+    private ?IssueStatusEnum $status = IssueStatusEnum::NEW;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'issue:read', 'issue:write'])]
+    #[Assert\NotBlank]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -66,11 +68,13 @@ class Issue
 
     #[ORM\ManyToOne(inversedBy: 'assignedIssues')]
     #[Groups(['issue:read', 'issue:write'])]
+    #[Assert\NotNull]
     private ?User $assignee = null;
 
     #[ORM\ManyToOne(inversedBy: 'reportedIssues')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['issue:read', 'issue:write'])]
+    #[Assert\NotNull]
     private ?User $reporter = null;
 
     #[ORM\OneToMany(mappedBy: 'issue', targetEntity: Attachment::class, orphanRemoval: true)]
@@ -112,7 +116,7 @@ class Issue
         return $this->type;
     }
 
-    public function setType(IssueTypeEnum $type): self
+    public function setType(?IssueTypeEnum $type): self
     {
         $this->type = $type;
 
@@ -124,7 +128,7 @@ class Issue
         return $this->status;
     }
 
-    public function setStatus(IssueStatusEnum $status): self
+    public function setStatus(?IssueStatusEnum $status): self
     {
         $this->status = $status;
 

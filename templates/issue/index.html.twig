@@ -2,16 +2,18 @@
 
 {% block title %}Issue navigator{% endblock %}
 
-{% set selectedIssue = app.user.selectedProject.issues.first %}
+{% set selectedIssue = app.user.selectedProject.issues.first  ?: null %}
 
 {% block body %}
-    <div class="container mt-5">
-        {{ component('IssueNavigator', {
-            issues: issues,
-            people: people,
-            selectedIssue: selectedIssue,
-            statuses: statuses,
-            types: types
-        }) }}
-    </div>
+    {% if selectedIssue is not null %}
+        <div class="container mt-5">
+            {{ component('IssueNavigator', {
+                issues: issues,
+                people: people,
+                selectedIssue: selectedIssue,
+                statuses: statuses,
+                types: types
+            }) }}
+        </div>
+    {% endif %}
 {% endblock %}

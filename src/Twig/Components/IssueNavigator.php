@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Twig\Component;
+namespace App\Twig\Components;
 
 use App\Entity\Issue as IssueEntity;
 use App\Service\IssueService;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -22,7 +23,7 @@ class IssueNavigator
     public array $people;
 
     #[LiveProp(writable: true)]
-    public IssueEntity $selectedIssue;
+    public ?IssueEntity $selectedIssue = null;
 
     #[LiveProp]
     public array $statuses;
@@ -36,5 +37,11 @@ class IssueNavigator
         $issue = $issueService->findOneById($id);
 
         $this->selectedIssue = $issue;
+    }
+
+    #[LiveListener('issue:created')]
+    public function onIssueCreated(#[LiveArg] array $issue): void
+    {
+        $this->issues[] = $issue;
     }
 }

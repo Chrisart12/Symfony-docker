@@ -2,6 +2,13 @@ import {Controller} from '@hotwired/stimulus';
 import {Modal} from 'bootstrap';
 
 export class NavbarController extends Controller {
+    /** @type {Modal|null} **/
+    modal = null;
+
+    connect() {
+        document.addEventListener('modal:close', () => this.modal.hide());
+    }
+
     initialize() {
         this.element.querySelector('#anchorCreateIssue').addEventListener('click', async(e) => {
             e.preventDefault();
@@ -10,9 +17,9 @@ export class NavbarController extends Controller {
 
             document.querySelector('#modals').innerHTML = await response.text();
 
-            const modal = new Modal(document.querySelector('#modalCreateIssue'));
+            this.modal = new Modal(document.querySelector('#modalCreateIssue'));
 
-            modal.show();
-        })
+            this.modal.show();
+        });
     }
 }

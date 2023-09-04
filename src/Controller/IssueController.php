@@ -56,10 +56,8 @@ class IssueController extends AbstractController
             return $this->json([]);
         }
 
-        $form = $this->createForm(IssueType::class, new Issue());
-
         return $this->render('issue/create.html.twig', [
-            'form' => $form
+            'issue' => new Issue()
         ]);
     }
 

@@ -11,6 +11,7 @@ use App\Service\ProjectService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +28,7 @@ class IssueType extends AbstractType
     {
         $builder
             ->add('project', EntityType::class, [
-                'class' => Project::class
+                'class' => Project::class,
             ])
             ->add('type', EnumType::class, [
                 'choice_label' => fn (IssueTypeEnum $type) => $type->label(),
@@ -41,9 +42,13 @@ class IssueType extends AbstractType
             ->add('summary', TextType::class)
             ->add('assignee', EntityType::class, [
                 'class' => User::class,
+                'placeholder' => 'Choose an assignee',
             ])
             ->add('reporter', EntityType::class, [
                 'class' => User::class,
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Create'
             ])
         ;
     }
