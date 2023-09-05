@@ -16,6 +16,8 @@
         {% include 'navbar.html.twig' %}
         {% block body %}{% endblock %}
 
-        <div id="modals"></div>
+        <div id="modals">
+            {% include 'modals/_modal_create_project.html.twig' %}
+        </div>
     </body>
 </html>

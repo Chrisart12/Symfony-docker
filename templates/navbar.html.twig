@@ -6,7 +6,17 @@
             <div class="navbar-collapse collapse" id="navbar">
                 <div class="me-auto navbar-nav">
                     <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
-                    <a class="nav-link" href="{{ path('project_index') }}">Projects</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Projects
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('project_index') }}">View all projects</a></li>
+                            <li>
+                                <a class="dropdown-item" data-bs-target="#modalCreateProject" data-bs-toggle="modal" href="#">Create project</a>
+                            </li>
+                        </ul>
+                    </li>
                     <a class="nav-link" href="{{ path('home_your_work') }}">Teams</a>
                     <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
                     <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>

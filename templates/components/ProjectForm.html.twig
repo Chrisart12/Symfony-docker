@@ -1,0 +1,18 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'novalidate': true,
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save'
+        }
+    }) }}
+        <div class="modal-body">
+            {{ form_row(form.name) }}
+            {{ form_row(form.key) }}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            {{ form_widget(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+</div>
