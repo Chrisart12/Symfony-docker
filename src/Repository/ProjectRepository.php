@@ -23,7 +23,12 @@ class ProjectRepository extends ServiceEntityRepository
 
     public function remove(Project $project): void
     {
+        foreach ($project->getPeople() as $person) {
+            $person->setSelectedProject(null);
+        }
+
         $this->getEntityManager()->remove($project);
+
         $this->getEntityManager()->flush();
     }
 }

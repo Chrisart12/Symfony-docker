@@ -19,10 +19,6 @@ class ProjectService
 
     public function remove(Project $project): void
     {
-        foreach ($project->getPeople() as $person) {
-            $person->setSelectedProject(null);
-        }
-
         $this->projectRepo->remove($project);
     }
 }
