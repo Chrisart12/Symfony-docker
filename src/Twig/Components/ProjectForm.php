@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\ComponentWithFormTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
@@ -17,6 +18,7 @@ use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 #[AsLiveComponent]
 class ProjectForm extends AbstractController
 {
+    use ComponentToolsTrait;
     use ComponentWithFormTrait;
     use DefaultActionTrait;
     use ValidatableComponentTrait;
@@ -46,7 +48,8 @@ class ProjectForm extends AbstractController
         $project->setLead($this->getUser());
 
         $em->persist($project);
-
         $em->flush();
+
+        $this->dispatchBrowserEvent('project:modal:close');
     }
 }

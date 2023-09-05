@@ -20,4 +20,10 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+
+    public function remove(Project $project): void
+    {
+        $this->getEntityManager()->remove($project);
+        $this->getEntityManager()->flush();
+    }
 }

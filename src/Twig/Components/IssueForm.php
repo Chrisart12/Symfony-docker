@@ -51,7 +51,7 @@ class IssueForm extends AbstractController
         $em->persist($issue);
         $em->flush();
 
-        $this->dispatchBrowserEvent('modal:close');
+        $this->dispatchBrowserEvent('issue:modal:close');
         $this->emit('issue:created', [
             'issue' => [
                 'id' => $issue->getId(),

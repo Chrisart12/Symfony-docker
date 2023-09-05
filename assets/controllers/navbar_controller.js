@@ -6,7 +6,7 @@ export class NavbarController extends Controller {
     modal = null;
 
     connect() {
-        document.addEventListener('modal:close', () => this.modal.hide());
+        document.addEventListener('issue:modal:close', () => this.modal.hide());
     }
 
     initialize() {

@@ -1,5 +1,6 @@
 import { startStimulusApp } from '@symfony/stimulus-bridge';
 import { IssueController } from "./controllers/issue_controller";
+import { ModalCreateProjectController } from "./controllers/modal_create_project_controller";
 import { NavbarController } from "./controllers/navbar_controller";
 
 export const app = startStimulusApp(require.context(
@@ -9,4 +10,5 @@ export const app = startStimulusApp(require.context(
 ));
 
 app.register('issue', IssueController);
+app.register('modal-create-project', ModalCreateProjectController);
 app.register('navbar', NavbarController);

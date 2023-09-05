@@ -2,29 +2,27 @@
 
 namespace App\Service;
 
-use App\Entity\User;
+use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ProjectService
 {
     public function __construct(
         private readonly ProjectRepository $projectRepo,
-        private readonly NormalizerInterface $serializer
     ) {
     }
 
-    public function findAllNormalized(array $groups): array
+    public function findOneById(int $id): ?Project
     {
-        return $this->serializer->normalize($this->projectRepo->findAll(), 'json', [
-            'groups' => $groups
-        ]);
+        return $this->projectRepo->find($id);
     }
 
-    public function getProjectsByUserNormalized(User $user, array $groups): array
+    public function remove(Project $project): void
     {
-        return $this->serializer->normalize($user->getProjects(), 'json', [
-            'groups' => $groups
-        ]);
+        foreach ($project->getPeople() as $person) {
+            $person->setSelectedProject(null);
+        }
+
+        $this->projectRepo->remove($project);
     }
 }
