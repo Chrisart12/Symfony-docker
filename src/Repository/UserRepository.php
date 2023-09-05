@@ -66,8 +66,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getArrayResult();
     }
 
-    public function findByProject(Project $project): array
+    public function findByProject(?Project $project): array
     {
+        if (null === $project) {
+            return [];
+        }
+
         $qb = $this
             ->createQueryBuilder('u');
 

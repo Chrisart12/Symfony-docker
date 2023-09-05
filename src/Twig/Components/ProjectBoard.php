@@ -2,8 +2,6 @@
 
 namespace App\Twig\Components;
 
-use App\Entity\Issue;
-use App\Enum\IssueStatusEnum;
 use App\Service\IssueService;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;

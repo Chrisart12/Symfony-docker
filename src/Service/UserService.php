@@ -33,7 +33,7 @@ class UserService
         return $this->userRepo->findByQuery($query);
     }
 
-    public function findByProject(Project $project)
+    public function findByProject(?Project $project)
     {
         return $this->userRepo->findByProject($project);
     }

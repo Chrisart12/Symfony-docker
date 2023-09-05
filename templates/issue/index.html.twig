@@ -2,7 +2,7 @@
 
 {% block title %}Issue navigator{% endblock %}
 
-{% set selectedIssue = app.user.selectedProject.issues.first  ?: null %}
+{% set selectedIssue = app.user.selectedProject  ? app.user.selectedProject.issues.first : null %}
 
 {% block body %}
     {% if selectedIssue is not null %}

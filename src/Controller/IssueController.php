@@ -2,20 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Attachment;
 use App\Entity\Issue;
 use App\Entity\User;
-use App\Form\Type\IssueType;
-use App\Service\AttachmentService;
 use App\Service\IssueService;
 use App\Service\ProjectService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @method User getUser()
@@ -29,23 +23,17 @@ class IssueController extends AbstractController
     }
 
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(UserService $userService): Response
+    public function index(ProjectService $projectService, UserService $userService): Response
     {
-        $issues = [];
+        $selectedProject = $this->getUser()->getSelectedProject();
 
-        foreach ($this->getUser()->getSelectedProject()->getIssues() as $issue) {
-            $issues[] = [
-                'id' => $issue->getId(),
-                'summary' => $issue->getSummary(),
-            ];
-        }
+        $issues = $projectService->getIssuesByProject($selectedProject);
 
         return $this->render('issue/index.html.twig', [
             'issues' => $issues,
-            'people' => $userService->findByProject($this->getUser()->getSelectedProject()),
+            'people' => $userService->findByProject($selectedProject),
             'statuses' => $this->issueService->getStatuses(),
             'types' => $this->issueService->getTypes(),
-            'projectId' => $this->getUser()->getSelectedProject()->getId()
         ]);
     }
 
