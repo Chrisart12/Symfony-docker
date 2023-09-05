@@ -2,10 +2,14 @@
     <nav class="bg-body-tertiary navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a href="{{ path('home_index') }}" class="fw-bold text-primary navbar-brand">TaskSphere</a>
-            <button aria-controls="navbar" type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed"><span class="navbar-toggler-icon"></span></button>
+            <button aria-controls="navbar" type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="navbar-collapse collapse" id="navbar">
-                <div class="me-auto navbar-nav">
-                    <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
+                <ul class="me-auto navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Projects
@@ -17,10 +21,21 @@
                             </li>
                         </ul>
                     </li>
-                    <a class="nav-link" href="{{ path('home_your_work') }}">Teams</a>
-                    <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
-                    <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>
-                </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Teams
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Invite people</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>
+                    </li>
+                </ul>
             </div>
             <div class="d-flex"></div>
         </div>
