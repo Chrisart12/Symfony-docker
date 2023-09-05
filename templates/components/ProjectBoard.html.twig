@@ -1,0 +1,50 @@
+<div {{ attributes }} class="row">
+    <div class="col-md-4 col-sm-12 ">
+        <div  class="card">
+            <div class="card-header fw-bold text-center">TO DO</div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for issue in nonStartedIssues %}
+                        <button class="list-group-item list-group-item-action">
+                            <span class="fw-bold">{{ issue.id }}</span>
+                            <br>
+                            <span class="small">{{ issue.summary }}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <div  class="card">
+            <div class="card-header fw-bold text-center">IN PROGRESS</div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for issue in inProgressIssues %}
+                        <button class="list-group-item list-group-item-action">
+                            <span class="fw-bold">{{ issue.id }}</span>
+                            <br>
+                            <span class="small">{{ issue.summary }}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <div  class="card">
+            <div class="card-header fw-bold text-center">DONE</div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for issue in resolvedIssues %}
+                        <button class="list-group-item list-group-item-action">
+                            <span class="fw-bold">{{ issue.id }}</span>
+                            <br>
+                            <span class="small">{{ issue.summary }}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,26 +1,36 @@
-<table {{ attributes}} class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Key</th>
-            <th>Lead</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for project in projects %}
+<div {{ attributes}} >
+    {% if projects|length == 0 %}
+        <div class="mt-5 text-center">
+            <h5 class="fw-bold">You currently have no projects</h5>
+            <p>Let's create your first project in TaskSphere</p>
+            <button class="btn btn-primary" data-bs-target="#modalCreateProject" data-bs-toggle="modal">Create project</button>
+        </div>
+    {% else %}
+        <table class="table table-bordered table-striped">
+            <thead>
             <tr>
-                <td>{{ project.name }}</td>
-                <td>{{ project.key }}</td>
-                <td>{{ project.lead }}</td>
-                <td>
-                    <button class="btn btn-sm btn-danger"
-                            {{ live_action('deleteProject', { id: project.id }) }}
-                            title="Supprimer">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
+                <th>Name</th>
+                <th>Key</th>
+                <th>Lead</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.key }}</td>
+                        <td>{{ project.lead }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger"
+                                    {{ live_action('deleteProject', { id: project.id }) }}
+                                    title="Supprimer">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

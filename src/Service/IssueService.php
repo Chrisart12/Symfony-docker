@@ -3,15 +3,18 @@
 namespace App\Service;
 
 use App\Entity\Issue;
+use App\Entity\User;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Workflow\WorkflowInterface;
 
 class IssueService
 {
     public function __construct(
         private readonly IssueRepository $issueRepo,
+        private readonly Security $security,
         private readonly WorkflowInterface $issueStatusesStateMachine
     )
     {
@@ -56,6 +59,72 @@ class IssueService
         usort($statuses, fn ($a, $b) => $a['value'] > $b['value']);
 
         return $statuses;
+    }
+
+    public function getInProgressIssues(): array
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        $issues = [];
+
+        $issuesCollection = $user
+            ->getSelectedProject()
+            ->getIssues()
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::IN_DEVELOPMENT || $issue->getStatus() === IssueStatusEnum::IN_REVIEW);
+
+        foreach ($issuesCollection as $issue) {
+            $issues[] = [
+                'id' => $issue->getId(),
+                'summary' => $issue->getSummary(),
+            ];
+        }
+
+        return $issues;
+    }
+
+    public function getNonStartedIssues(): array
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        $issues = [];
+
+        $issuesCollection = $user
+            ->getSelectedProject()
+            ->getIssues()
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::NEW || $issue->getStatus() === IssueStatusEnum::READY);
+
+        foreach ($issuesCollection as $issue) {
+            $issues[] = [
+                'id' => $issue->getId(),
+                'summary' => $issue->getSummary(),
+            ];
+        }
+
+        return $issues;
+    }
+
+    public function getResolvedIssues(): array
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        $issues = [];
+
+        $issuesCollection = $user
+            ->getSelectedProject()
+            ->getIssues()
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::RESOLVED);
+
+        foreach ($issuesCollection as $issue) {
+            $issues[] = [
+                'id' => $issue->getId(),
+                'summary' => $issue->getSummary(),
+            ];
+        }
+
+        return $issues;
     }
 
     public function getStatuses(): array

@@ -7,6 +7,7 @@ use App\Form\Type\ProjectType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -36,7 +37,7 @@ class ProjectForm extends AbstractController
     }
 
     #[LiveAction]
-    public function save(EntityManagerInterface $em): void
+    public function save(EntityManagerInterface $em): Response
     {
         $this->validate();
 
@@ -51,5 +52,9 @@ class ProjectForm extends AbstractController
         $em->flush();
 
         $this->dispatchBrowserEvent('project:modal:close');
+
+        return $this->redirectToRoute('project_show', [
+            'key' => $project->getKey(),
+        ]);
     }
 }
