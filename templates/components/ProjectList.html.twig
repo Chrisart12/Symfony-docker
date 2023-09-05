@@ -21,10 +21,11 @@
                         <td>{{ project.name }}</td>
                         <td>{{ project.key }}</td>
                         <td>{{ project.lead }}</td>
-                        <td>
+                        <td class="text-center">
                             <button class="btn btn-sm btn-danger"
                                     {{ live_action('deleteProject', { id: project.id }) }}
-                                    title="Supprimer">
+                                    title="Supprimer"
+                            >
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>
