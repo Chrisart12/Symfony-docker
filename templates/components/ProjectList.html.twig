@@ -1,0 +1,18 @@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Key</th>
+            <th>Lead</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.name }}</td>
+                <td>{{ project.key }}</td>
+                <td>{{ project.lead }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -3,5 +3,13 @@
 {% block title %}Projects{% endblock %}
 
 {% block body %}
-    <div {{ react_component('project/Projects', { projects: projects|serialize('json', { 'groups': 'project:read' }) }) }}></div>
+    <div class="container mt-5">
+        <div class="col">
+            <div class="row">
+                {{ component('ProjectList', {
+                    projects: app.user.projects.toArray
+                }) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
