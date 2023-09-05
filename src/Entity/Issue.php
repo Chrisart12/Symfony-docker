@@ -55,6 +55,7 @@ class Issue
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'issue:read', 'issue:write'])]
+    #[Assert\Length(min: 3, max: 255)]
     #[Assert\NotBlank]
     private ?string $summary = null;
 
