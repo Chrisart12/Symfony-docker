@@ -2,18 +2,29 @@
 
 {% block title %}Issue navigator{% endblock %}
 
-{% set selectedIssue = app.user.selectedProject  ? app.user.selectedProject.issues.first : null %}
+{% set selectedProject = app.user.selectedProject %}
 
 {% block body %}
-    {% if selectedIssue is not null %}
-        <div class="container mt-5">
+    <div class="container mt-5">
+        {% if selectedProject == null %}
+        {% elseif selectedProject.issues|length == 0 %}
+            <div class="row">
+                <div class="col">
+                    <div class="mt-5 text-center">
+                        <h5 class="fw-bold">You currently have no issues</h5>
+                        <p>Let's create your first issue in TaskSphere</p>
+                        <button class="btn btn-primary">Create issue</button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
             {{ component('IssueNavigator', {
                 issues: issues,
                 people: people,
-                selectedIssue: selectedIssue,
+                selectedIssue: selectedProject.issues.first,
                 statuses: statuses,
                 types: types
             }) }}
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
