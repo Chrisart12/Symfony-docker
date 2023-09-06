@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
-use App\State\IssueProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -30,7 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Patch(
             normalizationContext: ['groups' => ['issue:read']],
-            processor: IssueProcessor::class
         )
     ]
 )]
