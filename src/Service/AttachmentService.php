@@ -8,14 +8,12 @@ use App\Repository\AttachmentRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AttachmentService
 {
     public function __construct(
         private readonly AttachmentRepository $attachmentRepo,
         private readonly ParameterBagInterface $parameters,
-        private readonly SluggerInterface $slugger
     ) {
     }
 
