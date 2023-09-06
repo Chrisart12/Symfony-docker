@@ -2,11 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Repository\IssueRepository;
@@ -19,19 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource(
-    operations: [
-        new Get(normalizationContext: ['groups' => ['issue:read']]),
-        new GetCollection(normalizationContext: ['groups' => ['issue:read']]),
-        new Post(
-            normalizationContext: ['groups' => ['issue:read']],
-            denormalizationContext: ['groups' => ['issue:write']]
-        ),
-        new Patch(
-            normalizationContext: ['groups' => ['issue:read']],
-        )
-    ]
-)]
 class Issue
 {
     #[ORM\Id, ORM\Column]
