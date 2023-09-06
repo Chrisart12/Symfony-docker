@@ -8,7 +8,10 @@ use App\Entity\User;
 use App\Enum\IssueStatusEnum;
 use App\Enum\IssueTypeEnum;
 use App\Service\ProjectService;
+use App\Service\UserService;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,13 +22,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class IssueType extends AbstractType
 {
     public function __construct(
-        private readonly ProjectService $projectService
+        private readonly UserService $userService,
+        private readonly Security $security
     )
     {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $usersByProjectQueryBuilder = $this->userService->getUsersByProjectQueryBuilder($this->security->getUser()->getSelectedProject());
+
         $builder
             ->add('project', EntityType::class, [
                 'class' => Project::class,
@@ -43,9 +49,11 @@ class IssueType extends AbstractType
             ->add('assignee', EntityType::class, [
                 'class' => User::class,
                 'placeholder' => 'Choose an assignee',
+                'query_builder' => $usersByProjectQueryBuilder
             ])
             ->add('reporter', EntityType::class, [
                 'class' => User::class,
+                'query_builder' => $usersByProjectQueryBuilder
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Create'

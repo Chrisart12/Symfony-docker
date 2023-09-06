@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Project;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -83,5 +84,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb
             ->getQuery()
             ->getArrayResult();
+    }
+
+    public function getUsersByProjectQueryBuilder(Project $project): QueryBuilder
+    {
+        return $this
+            ->createQueryBuilder('u')
+            ->innerJoin('u.projects', 'projects')
+            ->where(':projectId MEMBER OF u.projects')
+            ->setParameter('projectId', $project->getId());
     }
 }

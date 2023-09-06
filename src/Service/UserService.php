@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\Model\SignupModel;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
@@ -38,6 +39,11 @@ class UserService
     public function findByProject(?Project $project)
     {
         return $this->userRepo->findByProject($project);
+    }
+
+    public function getUsersByProjectQueryBuilder(Project $project): QueryBuilder
+    {
+        return $this->userRepo->getUsersByProjectQueryBuilder($project);
     }
 
     public function setSelectedProject(User $user, Project $project): void

@@ -3,9 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Project;
-use App\Entity\User;
 use App\Repository\ProjectRepository;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class ProjectService
 {
