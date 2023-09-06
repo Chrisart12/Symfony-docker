@@ -12,7 +12,7 @@
                 <th class="w-50">Name</th>
                 <th class="w-25">Key</th>
                 <th class="w-25">Lead</th>
-                <th>Actions</th>
+                <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -21,7 +21,10 @@
                         <td>{{ project.name }}</td>
                         <td>{{ project.key }}</td>
                         <td>{{ project.lead }}</td>
-                        <td class="text-center">
+                        <td class="hstack gap-3 text-center">
+                            <a class="btn btn-sm btn-primary" title="Voir" href="{{ path('project_show', { key: project.key }) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
                             <button class="btn btn-sm btn-danger"
                                     {{ live_action('deleteProject', { id: project.id }) }}
                                     title="Supprimer"
