@@ -93,7 +93,7 @@ class IssueService
         $issuesCollection = $user
             ->getSelectedProject()
             ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::NEW || $issue->getStatus() === IssueStatusEnum::READY);
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::NEW);
 
         foreach ($issuesCollection as $issue) {
             $issues[] = [
