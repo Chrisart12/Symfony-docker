@@ -50,7 +50,7 @@ class IssueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function showV2(?Issue $issue, UserService $userService): Response
+    public function show(?Issue $issue, UserService $userService): Response
     {
         if (!$issue) {
             return $this->render('issue/not_found.html.twig');

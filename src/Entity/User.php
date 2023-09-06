@@ -210,11 +210,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->firstName.' '.$this->lastName;
-    }
-
     /**
      * @return Collection<int, Project>
      */
@@ -306,5 +301,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->firstName = $firstName;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        if (null === $this->firstName && null === $this->lastName) {
+            return $this->email;
+        }
+
+        return $this->firstName.' '.$this->lastName;
     }
 }
