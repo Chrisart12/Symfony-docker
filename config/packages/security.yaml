@@ -15,9 +15,16 @@ security:
                 check_path: security_login
                 enable_csrf: true
                 login_path: security_login
+
             lazy: true
+
             provider: app_user_provider
+
             switch_user: true
+
+            logout:
+                path: security_logout
+                target: /
 
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }

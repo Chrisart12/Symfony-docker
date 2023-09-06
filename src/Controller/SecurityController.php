@@ -23,8 +23,14 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    #[Route('/logout', name: 'security_logout', methods: ['GET'])]
+    public function logout()
+    {
+
+    }
+
     #[Route('/signup', name: 'security_signup', methods: ['GET', 'POST'])]
-    public function index(Request $request, UserService $userService): Response
+    public function signup(Request $request, UserService $userService): Response
     {
         $form = $this->createForm(SignupType::class);
 
