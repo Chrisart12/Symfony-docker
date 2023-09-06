@@ -25,7 +25,13 @@ class IssueController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(ProjectService $projectService, UserService $userService): Response
     {
-        $selectedProject = $this->getUser()->getSelectedProject();
+        $user = $this->getUser();
+
+        if (0 === $user->getProjects()->count()) {
+            return $this->redirectToRoute('project_index');
+        }
+
+        $selectedProject = $user->getSelectedProject();
 
         $issues = $projectService->getIssuesByProject($selectedProject);
 
