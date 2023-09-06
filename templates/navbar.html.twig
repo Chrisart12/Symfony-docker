@@ -15,6 +15,12 @@
                             Projects
                         </a>
                         <ul class="dropdown-menu">
+                            {% if app.user.selectedProject is not null %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('project_show', { key: app.user.selectedProject.key }) }}">{{ app.user.selectedProject }}</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{{ path('project_index') }}">View all projects</a></li>
                             <li>
                                 <a class="dropdown-item" data-bs-target="#modalCreateProject" data-bs-toggle="modal" href="#">Create project</a>
