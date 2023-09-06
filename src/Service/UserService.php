@@ -6,13 +6,15 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Model\SignupModel;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
 {
     public function __construct(
+        private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly UserRepository $userRepo
+        private readonly UserRepository $userRepo,
     )
     {
     }
@@ -36,5 +38,16 @@ class UserService
     public function findByProject(?Project $project)
     {
         return $this->userRepo->findByProject($project);
+    }
+
+    public function setSelectedProject(User $user, Project $project): void
+    {
+        if ($user->getSelectedProject() === $project) {
+            return;
+        }
+
+        $user->setSelectedProject($project);
+
+        $this->em->flush();
     }
 }

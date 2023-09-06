@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Entity\User;
+use App\Service\ProjectService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,8 +36,10 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/{key}', name: 'show',methods: ['GET'])]
-    public function show(?Project $project): Response
+    public function show(?Project $project, UserService $userService): Response
     {
+        $userService->setSelectedProject($this->getUser(), $project);
+
         return $this->render('project/show.html.twig', [
             'project' => $project
         ]);
