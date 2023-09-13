@@ -2,14 +2,16 @@
     <nav class="bg-body-tertiary navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a href="{{ path('home_index') }}" class="fw-bold text-primary navbar-brand">TaskSphere</a>
-            <button aria-controls="navbar" type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed">
+            <button aria-controls="navbar" class="navbar-toggler collapsed" data-bs-target="#navbar" data-bs-toggle="collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="me-auto navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
-                    </li>
+                    {% if app.user.selectedProject is not null %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Projects
@@ -27,25 +29,39 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Teams
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" data-bs-target="#modalAddPeople" data-bs-toggle="modal" href="#">Invite people</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>
-                    </li>
+                    {% if app.user.selectedProject is not null %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Teams
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" data-bs-target="#modalAddPeople" data-bs-toggle="modal" href="#">Invite people</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>
+                        </li>
+                    {% endif %}
                 </ul>
+                <div class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ app.user }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ path('security_logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex"></div>
         </div>
     </nav>
 </div>

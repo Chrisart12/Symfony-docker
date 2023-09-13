@@ -38,6 +38,10 @@ class ProjectController extends AbstractController
     #[Route('/{key}', name: 'show',methods: ['GET'])]
     public function show(?Project $project, UserService $userService): Response
     {
+        if (null === $project) {
+            return $this->redirectToRoute('project_index');
+        }
+
         $userService->setSelectedProject($this->getUser(), $project);
 
         return $this->render('project/show.html.twig', [
