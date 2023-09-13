@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
+        <li class="breadcrumb-item">
+            <a class="link-body-emphasis" href="#">
+                <i class="fas fa fa-home"></i>
+            </a>
+        </li>
+        {% for breadcrumb in breadcrumbs %}
+            <li class="breadcrumb-item">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="#">
+                    {{ breadcrumb }}
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+</nav>
