@@ -10,12 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserService
+readonly class UserService
 {
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly UserRepository $userRepo,
+        private EntityManagerInterface      $em,
+        private UserPasswordHasherInterface $passwordHasher,
+        private UserRepository              $userRepo,
     )
     {
     }

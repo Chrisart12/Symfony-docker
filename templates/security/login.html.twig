@@ -5,11 +5,11 @@
         <title>Login - TaskSphere</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('login') }}
+            {{ encore_entry_link_tags('security') }}
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('login') }}
+            {{ encore_entry_script_tags('security') }}
         {% endblock %}
     </head>
     <body class="text-center">
@@ -17,11 +17,11 @@
             <form action="{{ path('security_login') }}" method="post">
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <input autocomplete="username" type="email" class="form-control" id="inputEmail" name="_username" placeholder="name@example.com" value="{{ last_username }}">
                     <label for="inputEmail">Email address</label>
                 </div>
-                <div class="form-floating">
+                <div class="form-floating mb-3">
                     <input autocomplete="current-password" type="password" class="form-control" id="inputPassword" name="_password" placeholder="Password">
                     <label for="inputPassword">Password</label>
                 </div>

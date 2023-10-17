@@ -18,11 +18,11 @@ class SignupType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-field mb-4'
+                    'placeholder' => 'Email address'
                 ],
-                'label' => 'Your email',
+                'label' => 'Email address',
                 'label_attr' => [
-                    'class' => 'form-label'
+                    'placeholder' => 'Email address'
                 ],
             ])
             ->add('password', RepeatedType::class, [
@@ -30,26 +30,20 @@ class SignupType extends AbstractType
                 'required' => true,
                 'first_options' => [
                     'attr' => [
-                        'class' => 'form-field mb-4'
+                        'placeholder' => 'Password',
                     ],
                     'label' => 'Password',
-                    'label_attr' => [
-                        'class' => 'form-label'
-                    ],
                 ],
                 'second_options' => [
                     'attr' => [
-                        'class' => 'form-field mb-4'
+                        'placeholder' => 'Confirm password',
                     ],
                     'label' => 'Confirm password',
-                    'label_attr' => [
-                        'class' => 'form-label'
-                    ],
                 ]
             ])
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn'
+                'class' => 'btn btn-lg btn-primary w-100',
             ],
             'label' => 'Create an account',
         ]);

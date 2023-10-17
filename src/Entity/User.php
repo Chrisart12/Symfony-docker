@@ -55,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne]
     private ?Project $selectedProject = null;
 
-
     public function __construct(string $email)
     {
         $this->email = $email;

@@ -5,7 +5,10 @@
 {% set selectedProject = app.user.selectedProject %}
 
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-3">
+
+        {% include 'breadcrumb.html.twig' with { breadcrumbs: ['Issues'] } %}
+
         {% if selectedProject.issues|length == 0 %}
             <div class="row">
                 <div class="col">
