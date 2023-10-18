@@ -3,14 +3,18 @@
 namespace App\Form\Model;
 
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProfileModel
 {
-    public string $email;
+    #[Assert\Email]
+    public ?string $email;
 
-    public string $firstName;
+    #[Assert\NotBlank]
+    public ?string $firstName;
 
-    public string $lastName;
+    #[Assert\NotBlank]
+    public ?string $lastName;
 
     public function __construct(User $user)
     {
