@@ -7,12 +7,8 @@
         {% include 'breadcrumb.html.twig' with { breadcrumbs: ['Profile'] } %}
 
         <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-
-                    </div>
-                </div>
+            <div class="col-xl-6 offset-xl-3">
+                {{ component('ProfileForm') }}
             </div>
         </div>
     </div>

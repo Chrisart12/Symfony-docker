@@ -42,7 +42,6 @@ class IssueForm extends AbstractController
     public function save(EntityManagerInterface $em): void
     {
         $this->validate();
-
         $this->submitForm();
 
         /** @var IssueEntity $issue */
