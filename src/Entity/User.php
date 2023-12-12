@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne]
     private ?Project $selectedProject = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $locale = null;
+
     public function __construct(string $email)
     {
         $this->email = $email;
@@ -294,5 +297,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this->firstName.' '.$this->lastName;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): static
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }
