@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Enum\IssueStatusEnum;
-use App\Enum\IssueTypeEnum;
+use App\Enum\IssueStatus;
+use App\Enum\IssueType;
 use App\Repository\IssueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,11 +27,11 @@ class Issue
 
     #[ORM\Column]
     #[Groups(['user:read', 'issue:read', 'issue:write'])]
-    private ?IssueTypeEnum $type = IssueTypeEnum::BUG;
+    private ?IssueType $type = IssueType::BUG;
 
     #[ORM\Column]
     #[Groups(['issue:read', 'issue:write'])]
-    private ?IssueStatusEnum $status = IssueStatusEnum::NEW;
+    private ?IssueStatus $status = IssueStatus::NEW;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'issue:read', 'issue:write'])]
@@ -92,24 +92,24 @@ class Issue
         return $this;
     }
 
-    public function getType(): ?IssueTypeEnum
+    public function getType(): ?IssueType
     {
         return $this->type;
     }
 
-    public function setType(?IssueTypeEnum $type): self
+    public function setType(?IssueType $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getStatus(): ?IssueStatusEnum
+    public function getStatus(): ?IssueStatus
     {
         return $this->status;
     }
 
-    public function setStatus(?IssueStatusEnum $status): self
+    public function setStatus(?IssueStatus $status): self
     {
         $this->status = $status;
 
@@ -123,7 +123,7 @@ class Issue
 
     public function setStatusMarking(string $statusMarking): self
     {
-        $this->status = IssueStatusEnum::fromWorkflowLabel($statusMarking);
+        $this->status = IssueStatus::fromWorkflowLabel($statusMarking);
 
         return $this;
     }

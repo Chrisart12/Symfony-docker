@@ -16,8 +16,7 @@ readonly class UserService
         private EntityManagerInterface      $em,
         private UserPasswordHasherInterface $passwordHasher,
         private UserRepository              $userRepo,
-    )
-    {
+    ) {
     }
 
     public function add(SignupModel $signupModel): User

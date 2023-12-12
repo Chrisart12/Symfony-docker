@@ -4,8 +4,8 @@ namespace App\Service;
 
 use App\Entity\Issue;
 use App\Entity\User;
-use App\Enum\IssueStatusEnum;
-use App\Enum\IssueTypeEnum;
+use App\Enum\IssueStatus;
+use App\Enum\IssueType;
 use App\Repository\IssueRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Workflow\WorkflowInterface;
@@ -48,7 +48,7 @@ class IssueService
                 continue;
             }
 
-            if ($status = IssueStatusEnum::fromWorkflowLabel($tos[0])) {
+            if ($status = IssueStatus::fromWorkflowLabel($tos[0])) {
                 $statuses[] = [
                     'label' => $status->label(),
                     'value' => $status->value,
@@ -71,7 +71,7 @@ class IssueService
         $issuesCollection = $user
             ->getSelectedProject()
             ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::IN_DEVELOPMENT || $issue->getStatus() === IssueStatusEnum::IN_REVIEW);
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::IN_DEVELOPMENT || $issue->getStatus() === IssueStatus::IN_REVIEW);
 
         foreach ($issuesCollection as $issue) {
             $issues[] = [
@@ -93,7 +93,7 @@ class IssueService
         $issuesCollection = $user
             ->getSelectedProject()
             ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::NEW);
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::NEW);
 
         foreach ($issuesCollection as $issue) {
             $issues[] = [
@@ -115,7 +115,7 @@ class IssueService
         $issuesCollection = $user
             ->getSelectedProject()
             ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatusEnum::RESOLVED);
+            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::RESOLVED);
 
         foreach ($issuesCollection as $issue) {
             $issues[] = [
@@ -131,7 +131,7 @@ class IssueService
     {
         $statuses = [];
 
-        foreach (IssueStatusEnum::cases() as $status) {
+        foreach (IssueStatus::cases() as $status) {
             $statuses[] = [
                 'label' => $status->label(),
                 'value' => $status->value,
@@ -146,7 +146,7 @@ class IssueService
         $types = [];
 
 
-        foreach (IssueTypeEnum::cases() as $type) {
+        foreach (IssueType::cases() as $type) {
             $types[] = [
                 'label' => $type->label(),
                 'value' => $type->value,

@@ -17,21 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     #[Route('/', name: 'index',methods: ['GET'])]
-    public function index(): Response
+    public function index(ProjectService $projectService): Response
     {
-        $projects = [];
-
-        foreach ($this->getUser()->getProjects() as $project) {
-            $projects[] = [
-                'id' => $project->getId(),
-                'name' => $project->getName(),
-                'key' => $project->getKey(),
-                'lead' => (string) $project->getLead(),
-            ];
-        }
-
         return $this->render('project/index.html.twig', [
-            'projects' => $projects
+            'projects' => $projectService->getProjectsByUser($this->getUser())
         ]);
     }
 

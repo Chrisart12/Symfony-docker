@@ -3,7 +3,7 @@
 namespace App\Twig\Components;
 
 use App\Entity\Issue as IssueEntity;
-use App\Enum\IssueStatusEnum;
+use App\Enum\IssueStatus;
 use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,7 +27,7 @@ class SelectIssueStatus
     public array $statuses = [];
 
     #[LiveProp(writable: true)]
-    public IssueStatusEnum $status;
+    public IssueStatus $status;
 
     #[LiveAction]
     public function updateStatus(EntityManagerInterface $em, IssueService $issueService): void

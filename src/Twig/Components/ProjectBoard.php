@@ -2,7 +2,7 @@
 
 namespace App\Twig\Components;
 
-use App\Enum\IssueStatusEnum;
+use App\Enum\IssueStatus;
 use App\Service\IssueService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -38,10 +38,10 @@ class ProjectBoard
 
     #[LiveAction]
     public function updateIssueStatus(
-        #[LiveArg] string $id,
-        #[LiveArg] IssueStatusEnum $status,
+        #[LiveArg] string      $id,
+        #[LiveArg] IssueStatus $status,
         EntityManagerInterface $em,
-        IssueService $issueService
+        IssueService           $issueService
     ): void
     {
         $issue = $issueService->findOneById($id);

@@ -5,8 +5,8 @@ namespace App\Form\Type;
 use App\Entity\Issue;
 use App\Entity\Project;
 use App\Entity\User;
-use App\Enum\IssueStatusEnum;
-use App\Enum\IssueTypeEnum;
+use App\Enum\IssueStatus;
+use App\Enum\IssueType;
 use App\Service\UserService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -35,13 +35,13 @@ class IssueType extends AbstractType
                 'class' => Project::class,
             ])
             ->add('type', EnumType::class, [
-                'choice_label' => fn (IssueTypeEnum $type) => $type->label(),
-                'class' => IssueTypeEnum::class,
+                'choice_label' => fn (IssueType $type) => $type->label(),
+                'class' => IssueType::class,
                 'label' => 'Issue Type'
             ])
             ->add('status', EnumType::class, [
-                'choice_label' => fn (IssueStatusEnum $status) => $status->label(),
-                'class' => IssueStatusEnum::class
+                'choice_label' => fn (IssueStatus $status) => $status->label(),
+                'class' => IssueStatus::class
             ])
             ->add('summary', TextType::class)
             ->add('assignee', EntityType::class, [

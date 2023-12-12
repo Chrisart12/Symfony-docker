@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Repository\ProjectRepository;
 
 class ProjectService
@@ -15,6 +16,22 @@ class ProjectService
     public function findOneById(int $id): ?Project
     {
         return $this->projectRepo->find($id);
+    }
+
+    public function getProjectsByUser(User $user): array
+    {
+        $projects = [];
+
+        foreach ($user->getProjects() as $project) {
+            $projects[] = [
+                'id' => $project->getId(),
+                'name' => $project->getName(),
+                'key' => $project->getKey(),
+                'lead' => (string) $project->getLead(),
+            ];
+        }
+
+        return $projects;
     }
 
     public function getIssuesByProject(?Project $project): array

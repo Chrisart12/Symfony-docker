@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum IssueStatusEnum: int
+enum IssueStatus: int
 {
     case NEW = 1;
     case READY = 2;
@@ -10,7 +10,7 @@ enum IssueStatusEnum: int
     case IN_REVIEW = 4;
     case RESOLVED = 5;
 
-    public static function fromWorkflowLabel(string $workflowLabel): IssueStatusEnum
+    public static function fromWorkflowLabel(string $workflowLabel): IssueStatus
     {
         return match ($workflowLabel) {
             'new' => self::NEW,

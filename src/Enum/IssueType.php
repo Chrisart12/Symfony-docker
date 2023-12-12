@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum IssueTypeEnum: int
+enum IssueType: int
 {
     case BUG = 1;
     case FEATURE = 2;

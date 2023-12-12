@@ -4,12 +4,12 @@ namespace App\Service;
 
 use Symfony\Component\Routing\RouterInterface;
 
-class SearchService
+readonly class SearchService
 {
     public function __construct(
-        private readonly IssueService $issueService,
-        private readonly UserService $userService,
-        private readonly RouterInterface $router
+        private IssueService    $issueService,
+        private UserService     $userService,
+        private RouterInterface $router
     ) {
     }
 
