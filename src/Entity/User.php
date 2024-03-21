@@ -16,19 +16,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['issue:read', 'project:people:read', 'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['issue:read', 'issue:write', 'project:read', 'user:read'])]
     private ?string $email;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['issue:read', 'project:people:read', 'project:read', 'user:read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['issue:read', 'project:people:read', 'project:read', 'user:read'])]
     private ?string $lastName = null;
 
     #[ORM\Column]
@@ -38,18 +34,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'assignee', targetEntity: Issue::class)]
-    #[Groups(['user:read'])]
     private Collection $assignedIssues;
 
     #[ORM\OneToMany(mappedBy: 'reporter', targetEntity: Issue::class, orphanRemoval: true)]
-    #[Groups(['user:read'])]
     private Collection $reportedIssues;
 
     #[ORM\OneToMany(mappedBy: 'lead', targetEntity: Project::class)]
     private Collection $leadedProjects;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'people')]
-    #[Groups(['user:read'])]
     private Collection $projects;
 
     #[ORM\ManyToOne]

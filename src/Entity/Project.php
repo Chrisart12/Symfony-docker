@@ -15,18 +15,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Project
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
-    #[Groups(['project:read', 'project:list:create:issue', 'user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['project:list:create:issue', 'project:read', 'user:read'])]
     #[Assert\NotBlank]
     private ?string $name = null;
 
     #[Assert\Length(min: 2, max: 10)]
     #[Assert\NotBlank]
     #[ORM\Column(name: '`key`', length: 10, unique: true)]
-    #[Groups(['project:read', 'user:read'])]
     private ?string $key = null;
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Issue::class, orphanRemoval: true)]
@@ -34,11 +31,9 @@ class Project
 
     #[ORM\ManyToOne(inversedBy: 'leadedProjects')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['project:read'])]
     private ?User $lead = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
-    #[Groups(['project:people:read'])]
     private Collection $people;
 
     public function __construct()

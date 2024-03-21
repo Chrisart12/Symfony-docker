@@ -17,49 +17,39 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Issue
 {
     #[ORM\Id, ORM\Column]
-    #[Groups(['user:read', 'issue:read'])]
     private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'issues')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['issue:write'])]
     private ?Project $project = null;
 
     #[ORM\Column]
-    #[Groups(['user:read', 'issue:read', 'issue:write'])]
     private ?IssueType $type = IssueType::BUG;
 
     #[ORM\Column]
-    #[Groups(['issue:read', 'issue:write'])]
     private ?IssueStatus $status = IssueStatus::NEW;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'issue:read', 'issue:write'])]
     #[Assert\Length(min: 3, max: 255)]
     #[Assert\NotBlank]
     private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['issue:read', 'issue:write'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['issue:read', 'issue:write'])]
     private ?int $storyPointEstimate = null;
 
     #[ORM\ManyToOne(inversedBy: 'assignedIssues')]
-    #[Groups(['issue:read', 'issue:write'])]
     #[Assert\NotNull]
     private ?User $assignee = null;
 
     #[ORM\ManyToOne(inversedBy: 'reportedIssues')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['issue:read', 'issue:write'])]
     #[Assert\NotNull]
     private ?User $reporter = null;
 
     #[ORM\OneToMany(mappedBy: 'issue', targetEntity: Attachment::class, orphanRemoval: true)]
-    #[Groups(['issue:read'])]
     private Collection $attachments;
 
     public function __construct()
