@@ -5,9 +5,10 @@
             <div class="card-body">
                 <div class="list-group">
                     {% for issue in issues %}
-                        <button
-                                class="list-group-item list-group-item-action {% if selectedIssue.id == issue.id %}active{% endif %}"
-                                {{ live_action('setSelectedIssue', { id: issue.id }) }}
+                        <button class="list-group-item list-group-item-action {% if selectedIssue.id == issue.id %}active{% endif %}"
+                                data-action="live#action"
+                                data-live-action-param="setSelectedIssue"
+                                data-live-id-param="{{ issue.id }}"
                         >
                             <span class="fw-bold">{{ issue.id }}</span>
                             <br>
