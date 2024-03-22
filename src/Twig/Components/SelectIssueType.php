@@ -20,14 +20,14 @@ class SelectIssueType
     use DefaultActionTrait;
     use ValidatableComponentTrait;
 
-    #[LiveProp()]
+    #[LiveProp(updateFromParent: true)]
     #[Assert\Valid]
     public IssueEntity $issue;
 
-    #[LiveProp()]
+    #[LiveProp]
     public array $types = [];
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, updateFromParent: true)]
     public IssueType $type;
 
     #[LiveAction]

@@ -34,6 +34,10 @@ class IssueNavigator
     #[LiveAction]
     public function setSelectedIssue(#[LiveArg] string $id, IssueService $issueService): void
     {
+        if ($id === $this->selectedIssue->getId()) {
+            return;
+        }
+
         $issue = $issueService->findOneById($id);
 
         $this->selectedIssue = $issue;

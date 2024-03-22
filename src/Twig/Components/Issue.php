@@ -33,10 +33,10 @@ class Issue
     #[Assert\Valid]
     public IssueEntity $issue;
 
-    #[LiveProp]
+    #[LiveProp()]
     public bool $isEditingDescription = false;
 
-    #[LiveProp]
+    #[LiveProp()]
     public bool $isEditingSummary = false;
 
     #[LiveAction]
@@ -72,13 +72,13 @@ class Issue
     }
 
     #[LiveAction]
-    public function deleteAttachment(#[LiveArg] int $attachmentId, EntityManagerInterface $em): void
+    public function deleteAttachment(#[LiveArg] int $id, EntityManagerInterface $em): void
     {
         $attachmentToDelete = null;
         $updatedAttachments = [];
 
         foreach ($this->attachments as $attachment) {
-            if ($attachment->getId() === $attachmentId) {
+            if ($attachment->getId() === $id) {
                 $attachmentToDelete = $attachment;
             } else {
                 $updatedAttachments[] = $attachment;

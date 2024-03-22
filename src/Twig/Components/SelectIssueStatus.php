@@ -19,14 +19,14 @@ class SelectIssueStatus
     use DefaultActionTrait;
     use ValidatableComponentTrait;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, updateFromParent: true)]
     #[Assert\Valid]
     public IssueEntity $issue;
 
-    #[LiveProp]
+    #[LiveProp(updateFromParent: true)]
     public array $statuses = [];
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, updateFromParent: true)]
     public IssueStatus $status;
 
     #[LiveAction]

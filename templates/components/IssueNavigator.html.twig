@@ -24,7 +24,7 @@
         {{ component('Issue', {
             attachments: selectedIssue.attachments.toArray,
             issue: selectedIssue,
-            'data-live-id': 'issue-' ~ selectedIssue.id
+            id: 'issue_' ~ selectedIssue.id
         }) }}
     </div>
 
@@ -35,7 +35,7 @@
                     issue: selectedIssue,
                     types: types,
                     type: selectedIssue.type,
-                    'data-live-id': 'select-issue-type-' ~ selectedIssue.id
+                    id: 'selectIssueType_' ~ selectedIssue.id
                 }) }}
             </div>
             <div class="col-md-6 col-sm-12">
@@ -43,7 +43,7 @@
                     issue: selectedIssue,
                     statuses: issue_service.enableStatuses(selectedIssue.id),
                     status: selectedIssue.status,
-                    'data-live-id': 'select-issue-status-' ~ selectedIssue.id
+                    id: 'selectIssueStatus_' ~ selectedIssue.id
                 }) }}
             </div>
         </div>
@@ -69,7 +69,7 @@
                                         assignee: selectedIssue.assignee,
                                         issue: selectedIssue,
                                         people: people,
-                                        'data-live-id': 'select-assignee-' ~ selectedIssue.id
+                                        id: 'selectAssignee_' ~ selectedIssue.id
                                     }) }}
                                 </td>
                             </tr>
@@ -80,7 +80,7 @@
                                 <td>
                                     {{ component('InputStoryPointEstimate', {
                                         issue: selectedIssue,
-                                        'data-live-id': 'input-story-point-estimate' ~ selectedIssue.id
+                                        id: 'inputStoryPointEstimate_' ~ selectedIssue.id
                                     }) }}
                                 </td>
                             </tr>
@@ -93,7 +93,7 @@
                                         issue: selectedIssue,
                                         people: people,
                                         reporter: selectedIssue.reporter,
-                                        'data-live-id': 'select-reporter' ~ selectedIssue.id
+                                        id: 'selectReporter_' ~ selectedIssue.id
                                     }) }}
                                 </td>
                             </tr>

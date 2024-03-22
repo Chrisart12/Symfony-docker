@@ -61,7 +61,13 @@
 							<div class="col-sm-4">
 								<div class="card-attachment cursor-pointer h-100 card">
 
-									<button class="btn btn-sm btn-outline-danger button-delete-attachment text-dark z-3" href="#" {{ live_action('deleteAttachment', { attachmentId: attachment.id } ) }} title="Supprimer">
+									<button class="btn btn-sm btn-outline-danger button-delete-attachment text-dark z-3"
+											href="#"
+											data-action="live#action"
+											data-live-action-param="deleteAttachment"
+											data-live-id-param="{{ attachment.id }}"
+											title="Supprimer"
+									>
 										<i class="fas fa-trash"></i>
 									</button>
 
