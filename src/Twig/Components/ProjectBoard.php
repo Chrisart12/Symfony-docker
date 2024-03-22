@@ -59,7 +59,7 @@ class ProjectBoard
 
     private function getIssues(): void
     {
-        $this->nonStartedIssues = $this->issueService->getNonStartedIssues();
+        $this->nonStartedIssues = $this->issueService->getReadyIssues();
         $this->inProgressIssues = $this->issueService->getInProgressIssues();
         $this->resolvedIssues = $this->issueService->getResolvedIssues();
     }

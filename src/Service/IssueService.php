@@ -63,59 +63,27 @@ class IssueService
 
     public function getInProgressIssues(): array
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
-
-        $issues = [];
-
-        $issuesCollection = $user
-            ->getSelectedProject()
-            ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::IN_DEVELOPMENT || $issue->getStatus() === IssueStatus::IN_REVIEW);
-
-        foreach ($issuesCollection as $issue) {
-            $issues[] = [
-                'id' => $issue->getId(),
-                'summary' => $issue->getSummary(),
-            ];
-        }
-
-        return $issues;
+        return $this->getIssuesByStatus([IssueStatus::IN_DEVELOPMENT, IssueStatus::IN_REVIEW]);
     }
 
-    public function getNonStartedIssues(): array
+    public function getReadyIssues(): array
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
-
-        $issues = [];
-
-        $issuesCollection = $user
-            ->getSelectedProject()
-            ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::NEW);
-
-        foreach ($issuesCollection as $issue) {
-            $issues[] = [
-                'id' => $issue->getId(),
-                'summary' => $issue->getSummary(),
-            ];
-        }
-
-        return $issues;
+        return $this->getIssuesByStatus([IssueStatus::READY]);
     }
 
     public function getResolvedIssues(): array
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
+        return $this->getIssuesByStatus([IssueStatus::RESOLVED]);
+    }
 
+    private function getIssuesByStatus(array $statuses): array
+    {
+        $user = $this->security->getUser();
         $issues = [];
 
-        $issuesCollection = $user
-            ->getSelectedProject()
+        $issuesCollection = $user->getSelectedProject()
             ->getIssues()
-            ->filter(fn (Issue $issue) => $issue->getStatus() === IssueStatus::RESOLVED);
+            ->filter(fn(Issue $issue) => in_array($issue->getStatus(), $statuses));
 
         foreach ($issuesCollection as $issue) {
             $issues[] = [
