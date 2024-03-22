@@ -1,7 +1,7 @@
 import {Controller} from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
 
-export class ProjectBoardController extends Controller {
+export default class ProjectBoardController extends Controller {
     async initialize() {
         this.component = await getComponent(this.element);
 

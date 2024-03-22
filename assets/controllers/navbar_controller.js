@@ -1,7 +1,7 @@
 import {Controller} from '@hotwired/stimulus';
 import {Modal} from 'bootstrap';
 
-export class NavbarController extends Controller {
+export default class NavbarController extends Controller {
     /** @type {Modal|null} **/
     modal = null;
 
@@ -10,7 +10,7 @@ export class NavbarController extends Controller {
     }
 
     initialize() {
-        this.element.querySelector('#anchorCreateIssue').addEventListener('click', async(e) => {
+        this.element.querySelector('#anchorCreateIssue')?.addEventListener('click', async(e) => {
             e.preventDefault();
 
             const response = await fetch('/issues/create');

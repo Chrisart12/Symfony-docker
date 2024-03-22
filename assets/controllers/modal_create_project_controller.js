@@ -1,7 +1,7 @@
 import {Controller} from '@hotwired/stimulus';
 import {Modal} from 'bootstrap';
 
-export class ModalCreateProjectController extends Controller {
+export default class ModalCreateProjectController extends Controller {
     /** @type {Modal|null} **/
     modal = null;
 

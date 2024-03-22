@@ -4,7 +4,7 @@ import { getComponent } from '@symfony/ux-live-component';
 
 import TomSelect from 'tom-select';
 
-export class ModalAddPeopleController extends Controller {
+export default class ModalAddPeopleController extends Controller {
     /** @type {Modal|null} **/
     modal = null;
 

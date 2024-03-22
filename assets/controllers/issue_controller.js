@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
 
-export class IssueController extends Controller {
+class IssueController extends Controller {
     /** @type {HTMLButtonElement} */
     buttonActivateEditingDescription = document.querySelector('#buttonActivateEditingDescription');
 
@@ -40,3 +40,5 @@ export class IssueController extends Controller {
         });
     }
 }
+
+export { IssueController as default };
