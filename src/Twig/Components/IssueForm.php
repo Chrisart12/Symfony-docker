@@ -3,10 +3,12 @@
 namespace App\Twig\Components;
 
 use App\Entity\Issue as IssueEntity;
+use App\Entity\User;
 use App\Form\Type\IssueType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -29,8 +31,12 @@ class IssueForm extends AbstractController
     protected function instantiateForm(): FormInterface
     {
         $issue = new IssueEntity();
-        $issue->setProject($this->getUser()->getSelectedProject());
-        $issue->setReporter($this->getUser());
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $issue->setProject($user->getSelectedProject());
+        $issue->setReporter($user);
 
         $this->initialFormData = $issue;
 
@@ -39,7 +45,7 @@ class IssueForm extends AbstractController
 
 
     #[LiveAction]
-    public function save(EntityManagerInterface $em): void
+    public function save(EntityManagerInterface $em): Response
     {
         $this->validate();
         $this->submitForm();
@@ -57,5 +63,7 @@ class IssueForm extends AbstractController
                 'summary' => $issue->getSummary()
             ]
         ]);
+
+        return $this->redirectToRoute('issue_show', ['id' => $issue->getId()]);
     }
 }

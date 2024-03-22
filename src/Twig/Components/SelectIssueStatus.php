@@ -13,7 +13,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 
-#[AsLiveComponent(template: 'components/select_issue_status.html.twig')]
+#[AsLiveComponent]
 class SelectIssueStatus
 {
     use DefaultActionTrait;
