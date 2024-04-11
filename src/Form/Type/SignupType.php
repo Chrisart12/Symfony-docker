@@ -18,11 +18,11 @@ class SignupType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'placeholder' => 'Email address'
+                    'placeholder' => 'Adresse e-mail'
                 ],
-                'label' => 'Email address',
+                'label' => 'Adresse e-mail',
                 'label_attr' => [
-                    'placeholder' => 'Email address'
+                    'placeholder' => 'Adresse e-mail'
                 ],
             ])
             ->add('password', RepeatedType::class, [
@@ -30,22 +30,22 @@ class SignupType extends AbstractType
                 'required' => true,
                 'first_options' => [
                     'attr' => [
-                        'placeholder' => 'Password',
+                        'placeholder' => 'Mot de passe',
                     ],
-                    'label' => 'Password',
+                    'label' => 'Mot de passe',
                 ],
                 'second_options' => [
                     'attr' => [
-                        'placeholder' => 'Confirm password',
+                        'placeholder' => 'Confirmation du mot de passe',
                     ],
-                    'label' => 'Confirm password',
+                    'label' => 'Confirmation du mot de passe',
                 ]
             ])
         ->add('submit', SubmitType::class, [
             'attr' => [
                 'class' => 'btn btn-lg btn-primary w-100',
             ],
-            'label' => 'Create an account',
+            'label' => "S'inscrire",
         ]);
     }
 
