@@ -37,12 +37,4 @@ class ProjectController extends AbstractController
             'project' => $project
         ]);
     }
-
-    #[Route('/{key}/settings', name: 'settings',methods: ['GET'])]
-    public function settings(?Project $project): Response
-    {
-        return $this->render('project/settings.html.twig', [
-            'project' => $project
-        ]);
-    }
 }

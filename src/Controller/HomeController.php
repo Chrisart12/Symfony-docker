@@ -11,6 +11,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home_index')]
     public function index(): Response
     {
-        return $this->redirectToRoute('home_your_work');
+        return $this->redirectToRoute('project_index');
     }
 }
