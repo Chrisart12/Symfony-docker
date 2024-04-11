@@ -35,9 +35,18 @@ readonly class UserService
         return $this->userRepo->findByQuery($query);
     }
 
-    public function findByProject(?Project $project)
+    public function findByProject(?Project $project): array
     {
-        return $this->userRepo->findByProject($project);
+        $people = [];
+
+        foreach ($project->getPeople() as $person) {
+            $people[] = [
+                'value' => $person->getId(),
+                'label' => (string) $person,
+            ];
+        }
+
+        return $people;
     }
 
     public function getUsersByProjectQueryBuilder(Project $project): QueryBuilder

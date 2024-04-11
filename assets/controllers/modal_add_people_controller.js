@@ -1,8 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
 import { Modal } from 'bootstrap';
 import { getComponent } from '@symfony/ux-live-component';
-
 import TomSelect from 'tom-select';
+import 'tom-select/dist/css/tom-select.bootstrap5.css';
 
 export default class ModalAddPeopleController extends Controller {
     /** @type {Modal|null} **/

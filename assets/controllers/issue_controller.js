@@ -3,9 +3,6 @@ import { getComponent } from '@symfony/ux-live-component';
 
 class IssueController extends Controller {
     /** @type {HTMLButtonElement} */
-    buttonActivateEditingDescription = document.querySelector('#buttonActivateEditingDescription');
-
-    /** @type {HTMLButtonElement} */
     buttonAttach = document.querySelector('#buttonAttach');
 
     /** @type {HTMLInputElement} */

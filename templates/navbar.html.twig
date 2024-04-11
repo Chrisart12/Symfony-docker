@@ -7,11 +7,6 @@
             </button>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="me-auto navbar-nav">
-                    {% if app.user.selectedProject is not null %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('home_your_work') }}">Your work</a>
-                        </li>
-                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Projects
