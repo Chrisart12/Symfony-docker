@@ -3,7 +3,7 @@
         <div  class="card">
             <div class="card-header fw-bold text-center">READY</div>
             <div class="card-body">
-                <div class="list-group issue-container pb-4" data-status="1">
+                <div class="list-group issue-container pb-4" data-status="2">
                     {% for issue in nonStartedIssues %}
                         <button class="list-group-item list-group-item-action issue-item" draggable="true" id="{{ issue.id }}">
                             <span class="fw-bold">{{ issue.id }}</span>

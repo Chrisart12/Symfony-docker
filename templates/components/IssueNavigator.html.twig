@@ -1,107 +1,115 @@
 <div class="row" {{ attributes }}>
-    <div class="col-md-3 col-sm-12 mb-sm-3 mt-sm-0">
-        <div class="card">
-            <div class="card-header">Backlog</div>
-            <div class="card-body">
-                <div class="list-group">
-                    {% for issue in issues %}
-                        <button class="list-group-item list-group-item-action {% if selectedIssue.id == issue.id %}active{% endif %}"
-                                data-action="live#action"
-                                data-live-action-param="setSelectedIssue"
-                                data-live-id-param="{{ issue.id }}"
-                        >
-                            <span class="fw-bold">{{ issue.id }}</span>
-                            <br>
-                            <span class="small">{{ issue.summary }}</span>
-                        </button>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
+    {% if selectedIssue is null %}
+    {% else %}
 
-    <div class="col-md-6 col-sm-12">
-        {{ component('Issue', {
-            attachments: selectedIssue.attachments.toArray,
-            issue: selectedIssue,
-            id: 'issue_' ~ selectedIssue.id
-        }) }}
-    </div>
+        {% block breadcrumb %}
+            {% include 'breadcrumb.html.twig' with { breadcrumbs: ['Issues', selectedIssue.id] } %}
+        {% endblock %}
 
-    <div class="col-md-3 col-sm-12">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                {{ component('SelectIssueType', {
-                    issue: selectedIssue,
-                    types: types,
-                    type: selectedIssue.type,
-                    id: 'selectIssueType_' ~ selectedIssue.id
-                }) }}
-            </div>
-            <div class="col-md-6 col-sm-12">
-                {{ component('SelectIssueStatus', {
-                    issue: selectedIssue,
-                    statuses: issue_service.enableStatuses(selectedIssue.id),
-                    status: selectedIssue.status,
-                    id: 'selectIssueStatus_' ~ selectedIssue.id
-                }) }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">Details</div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody class="align-middle">
-                            <tr>
-                                <td class="fw-bold">
-                                    <small>Assignee</small>
-                                </td>
-                                <td>
-                                    {{ component('SelectAssignee', {
-                                        assignee: selectedIssue.assignee,
-                                        issue: selectedIssue,
-                                        people: people,
-                                        id: 'selectAssignee_' ~ selectedIssue.id
-                                    }) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">
-                                    <small>Story point estimate</small>
-                                </td>
-                                <td>
-                                    {{ component('InputStoryPointEstimate', {
-                                        issue: selectedIssue,
-                                        id: 'inputStoryPointEstimate_' ~ selectedIssue.id
-                                    }) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">
-                                    <small>Reporter</small>
-                                </td>
-                                <td>
-                                    {{ component('SelectReporter', {
-                                        issue: selectedIssue,
-                                        people: people,
-                                        reporter: selectedIssue.reporter,
-                                        id: 'selectReporter_' ~ selectedIssue.id
-                                    }) }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="col-md-3 col-sm-12 mb-sm-3 mt-sm-0">
+            <div class="card">
+                <div class="card-header">Backlog</div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for issue in issues %}
+                            <button class="list-group-item list-group-item-action {% if selectedIssue.id == issue.id %}active{% endif %}"
+                                    data-action="live#action"
+                                    data-live-action-param="setSelectedIssue"
+                                    data-live-id-param="{{ issue.id }}"
+                            >
+                                <span class="fw-bold">{{ issue.id }}</span>
+                                <br>
+                                <span class="small">{{ issue.summary }}</span>
+                            </button>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="col-md-6 col-sm-12">
+            {{ component('Issue', {
+                attachments: selectedIssue.attachments.toArray,
+                issue: selectedIssue,
+                key: 'issue_' ~ selectedIssue.id
+            }) }}
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    {{ component('SelectIssueType', {
+                        issue: selectedIssue,
+                        types: types,
+                        type: selectedIssue.type,
+                        key: 'selectIssueType_' ~ selectedIssue.id
+                    }) }}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    {{ component('SelectIssueStatus', {
+                        issue: selectedIssue,
+                        statuses: issue_service.enableStatuses(selectedIssue.id),
+                        status: selectedIssue.status,
+                        key: 'selectIssueStatus_' ~ selectedIssue.id
+                    }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">Details</div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                <tr>
+                                    <td class="fw-bold">
+                                        <small>Assignee</small>
+                                    </td>
+                                    <td>
+                                        {{ component('SelectAssignee', {
+                                            assignee: selectedIssue.assignee,
+                                            issue: selectedIssue,
+                                            people: people,
+                                            key: 'selectAssignee_' ~ selectedIssue.id
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <small>Story point estimate</small>
+                                    </td>
+                                    <td>
+                                        {{ component('InputStoryPointEstimate', {
+                                            issue: selectedIssue,
+                                            key: 'inputStoryPointEstimate_' ~ selectedIssue.id
+                                        }) }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">
+                                        <small>Reporter</small>
+                                    </td>
+                                    <td>
+                                        {{ component('SelectReporter', {
+                                            issue: selectedIssue,
+                                            people: people,
+                                            reporter: selectedIssue.reporter,
+                                            key: 'selectReporter_' ~ selectedIssue.id
+                                        }) }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>

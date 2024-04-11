@@ -7,13 +7,13 @@
 				{% if isEditingSummary %}
 					<div class="input-group">
 						<input aria-label="Issue Summary" type="text" class="form-control" data-model="issue.summary">
-						<button class="btn btn-outline-primary" {{ live_action('saveSummary') }} type="button">
+						<button class="btn btn-outline-primary" {{ live_action('saveSummary') }}>
 							<i class="fas fa-save"></i>&nbsp;Save
 						</button>
 					</div>
 				{% else %}
 					<div class="issue-summary">
-						<span class="h5">{{ issue.summary }}</span>&nbsp;
+						<a class="h5 text-primary" href="{{ path('issue_show', { 'id': issue.id }) }}" target="_blank">{{ issue.summary }}</a>&nbsp;
 						<button class="btn btn-sm btn-outline-primary" {{ live_action('activateEditingSummary') }}>
 							<i class="fas fa-edit"></i>
 						</button>
@@ -59,29 +59,35 @@
 					<div class="flex-row flex-nowrap mb-3 row">
 						{% for attachment in attachments %}
 							<div class="col-sm-4">
-								<div class="card-attachment cursor-pointer h-100 card">
+								<a href="{{ asset(attachment.path) }}" target="_blank">
+									<div class="card-attachment cursor-pointer h-100 card">
+										<button class="btn btn-sm btn-outline-danger button-delete-attachment text-dark z-3"
+												href="#"
+												data-action="live#action"
+												data-live-action-param="deleteAttachment"
+												data-live-id-param="{{ attachment.id }}"
+												title="Supprimer"
+										>
+											<i class="fas fa-trash"></i>
+										</button>
 
-									<button class="btn btn-sm btn-outline-danger button-delete-attachment text-dark z-3"
-											href="#"
-											data-action="live#action"
-											data-live-action-param="deleteAttachment"
-											data-live-id-param="{{ attachment.id }}"
-											title="Supprimer"
-									>
-										<i class="fas fa-trash"></i>
-									</button>
+										{% if asset(attachment.path)|is_image %}
+											<img alt="{{ attachment.originalName }}"
+												 class="card-img-top issue-image object-fit-cover"
+												 height="96"
+												 src="{{ attachment.path }}"
+												 width="96"
+											>
+										{% endif %}
 
-									{% if asset(attachment.path)|is_image %}
-										<img alt="{{ attachment.originalName }}" class="card-img-top issue-image object-fit-cover" height="96" src="{{ attachment.path }}" width="96">
-									{% endif %}
-
-									<div class="text-center p-2 card-body">
-										<small>{{ attachment.originalName }}</small>
+										<div class="text-center p-2 card-body">
+											<small>{{ attachment.originalName }}</small>
+										</div>
+										<div class="text-center card-footer">
+											<small>{{ attachment.createdAt|date('d/m/Y') }}</small>
+										</div>
 									</div>
-									<div class="text-center card-footer">
-										<small>{{ attachment.createdAt|date('d/m/Y') }}</small>
-									</div>
-								</div>
+								</a>
 							</div>
 						{% endfor %}
 					</div>

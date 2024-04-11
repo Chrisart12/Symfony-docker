@@ -22,7 +22,7 @@ class IssueNavigator
     #[LiveProp]
     public array $people;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, url: true)]
     public ?IssueEntity $selectedIssue = null;
 
     #[LiveProp]

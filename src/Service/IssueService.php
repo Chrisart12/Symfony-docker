@@ -16,8 +16,7 @@ class IssueService
         private readonly IssueRepository $issueRepo,
         private readonly Security $security,
         private readonly WorkflowInterface $issueStatusesStateMachine
-    )
-    {
+    ) {
     }
 
     public function findOneById(string $id): ?Issue

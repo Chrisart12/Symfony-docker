@@ -45,4 +45,8 @@ return [
         'version' => '2.3.1',
         'type' => 'css',
     ],
+    '@fortawesome/fontawesome-free/css/all.css' => [
+        'version' => '6.5.2',
+        'type' => 'css',
+    ],
 ];
