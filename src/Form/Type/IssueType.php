@@ -33,28 +33,34 @@ class IssueType extends AbstractType
         $builder
             ->add('project', EntityType::class, [
                 'class' => Project::class,
+                'label' => 'Projet'
             ])
             ->add('type', EnumType::class, [
                 'choice_label' => fn (IssueTypeEnum $type) => $type->label(),
                 'class' => IssueTypeEnum::class,
-                'label' => 'Issue Type'
+                'label' => 'Type'
             ])
             ->add('status', EnumType::class, [
                 'choice_label' => fn (IssueStatus $status) => $status->label(),
-                'class' => IssueStatus::class
+                'class' => IssueStatus::class,
+                'label' => 'Statut'
             ])
-            ->add('summary', TextType::class)
+            ->add('summary', TextType::class, [
+                'label' => 'Résumé'
+            ])
             ->add('assignee', EntityType::class, [
                 'class' => User::class,
-                'placeholder' => 'Choose an assignee',
+                'label' => 'Assigné',
+                'placeholder' => 'Choisir un membre',
                 'query_builder' => $usersByProjectQueryBuilder
             ])
             ->add('reporter', EntityType::class, [
                 'class' => User::class,
+                'label' => 'Rapporteur',
                 'query_builder' => $usersByProjectQueryBuilder
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Create'
+                'label' => 'Créer'
             ])
         ;
     }

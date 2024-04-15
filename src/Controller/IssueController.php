@@ -50,7 +50,7 @@ class IssueController extends AbstractController
             return $this->json([]);
         }
 
-        return $this->render('issue/create.html.twig', [
+        return $this->render('modals/modal_create_issue/modal_content.html.twig', [
             'issue' => new Issue()
         ]);
     }

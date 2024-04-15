@@ -1,4 +1,4 @@
-<div {{ stimulus_controller('navbar') }}>
+<div>
     <nav class="bg-body-tertiary navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a href="{{ path('home_index') }}" class="fw-bold text-primary navbar-brand">TaskSphere</a>
@@ -18,9 +18,9 @@
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                             {% endif %}
-                            <li><a class="dropdown-item" href="{{ path('project_index') }}">View all projects</a></li>
+                            <li><a class="dropdown-item" href="{{ path('project_index') }}">Voir tous les projets</a></li>
                             <li>
-                                <a class="dropdown-item" data-bs-target="#modalCreateProject" data-bs-toggle="modal" href="#">Create project</a>
+                                <a class="dropdown-item" data-bs-target="#modalCreateProject" data-bs-toggle="modal" href="#">Créer un projet</a>
                             </li>
                         </ul>
                     </li>
@@ -31,27 +31,34 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" data-bs-target="#modalAddPeople" data-bs-toggle="modal" href="#">Invite people</a>
+                                    <a class="dropdown-item" data-bs-target="#modalAddPeople" data-bs-toggle="modal" href="#">Inviter des membres</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('issue_index') }}">Issues</a>
+                            <a class="nav-link" href="{{ path('issue_index') }}">Tickets</a>
                         </li>
                         <li class="nav-item">
-                            <a id="anchorCreateIssue" class="nav-link" href="#">Create</a>
+                            <button class="nav-link"
+                                    data-bs-target="#modalCreateIssue"
+                                    data-bs-toggle="modal"
+                                    hx-get="{{ path('issue_create') }}"
+                                    hx-target="#modalCreateIssue"
+                            >
+                                Créer
+                            </button>
                         </li>
                     {% endif %}
                 </ul>
                 <div class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ app.user }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('app_user_profile') }}">Profile</a></li>
-                            <li><a class="dropdown-item" href="{{ path('security_logout') }}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_user_profile') }}">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('security_logout') }}">Se déconnecter</a></li>
                         </ul>
                     </div>
                 </div>

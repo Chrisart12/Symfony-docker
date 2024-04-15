@@ -11,9 +11,16 @@
             <div class="row">
                 <div class="col">
                     <div class="mt-5 text-center">
-                        <h5 class="fw-bold">You currently have no issues</h5>
-                        <p>Let's create your first issue in TaskSphere</p>
-                        <button class="btn btn-primary">Create issue</button>
+                        <h5 class="fw-bold">Vous n'avez actuellement aucun ticket</h5>
+                        <p>Créez votre premier ticket dans TaskSphere</p>
+                        <button class="btn btn-primary"
+                                data-bs-target="#modalCreateIssue"
+                                data-bs-toggle="modal"
+                                hx-get="{{ path('issue_create') }}"
+                                hx-target="#modalCreateIssue"
+                        >
+                            Créer un ticket
+                        </button>
                     </div>
                 </div>
             </div>

@@ -14,10 +14,14 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('key', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('key', TextType::class, [
+                'label' => 'Clé'
+            ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Create'
+                'label' => 'Créer'
             ])
         ;
     }
