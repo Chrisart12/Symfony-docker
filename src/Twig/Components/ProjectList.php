@@ -42,6 +42,7 @@ class ProjectList
         }
 
         unset($this->projects[$projectToDelete]);
+
         $projectService->remove($project);
     }
 }

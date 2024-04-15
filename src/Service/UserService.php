@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Issue;
 use App\Entity\Project;
 use App\Entity\User;
+use App\Enum\IssueStatus;
 use App\Form\Model\SignupModel;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,6 +37,11 @@ readonly class UserService
         return $this->userRepo->findByQuery($query);
     }
 
+    public function findOneById(int $id): ?User
+    {
+        return $this->userRepo->find($id);
+    }
+
     public function findByProject(?Project $project): array
     {
         $people = [];
@@ -42,7 +49,7 @@ readonly class UserService
         foreach ($project->getPeople() as $person) {
             $people[] = [
                 'value' => $person->getId(),
-                'label' => (string) $person,
+                'label' => (string)$person,
             ];
         }
 
@@ -61,6 +68,40 @@ readonly class UserService
         }
 
         $user->setSelectedProject($project);
+
+        $this->em->flush();
+    }
+
+    public function getTeamList(Project $project): array
+    {
+        $users = $this->userRepo->findUsersByProject($project);
+        $issues = $project->getIssues();
+
+        $teamList = [];
+
+        foreach ($users as $user) {
+            $numberOfAssignedIssues = $issues
+                ->filter(fn(Issue $issue) => $issue->getAssignee() === $user && IssueStatus::IN_DEVELOPMENT === $issue->getStatus())
+                ->count();
+
+            $numberOfReportedIssues = $issues
+                ->filter(fn(Issue $issue) => $issue->getReporter() === $user)
+                ->count();
+
+            $teamList[$user->getId()] = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'numberOfAssignedIssues' => $numberOfAssignedIssues,
+                'numberOfReportedIssues' => $numberOfReportedIssues,
+            ];
+        }
+
+        return $teamList;
+    }
+
+    public function removeUserFromProject(User $user, Project $project): void
+    {
+        $project->removePerson($user);
 
         $this->em->flush();
     }

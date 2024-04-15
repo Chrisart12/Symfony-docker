@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TeamController extends AbstractController
 {
-    #[Route('/teams', name: 'team_index')]
+    #[Route('/team', name: 'team_index')]
     public function index(): Response
     {
         return $this->render('team/index.html.twig', [
-            'people' => $this->getUser()->getSelectedProject()->getPeople()
+            'project' => $this->getUser()->getSelectedProject()
         ]);
     }
 }

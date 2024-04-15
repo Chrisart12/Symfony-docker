@@ -75,4 +75,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->where(':projectId MEMBER OF u.projects')
             ->setParameter('projectId', $project->getId());
     }
+
+    public function findUsersByProject(Project $project): array
+    {
+        return $this
+            ->getUsersByProjectQueryBuilder($project)
+            ->getQuery()
+            ->getResult();
+    }
 }

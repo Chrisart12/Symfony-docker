@@ -1,0 +1,34 @@
+<div {{ attributes}}>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="w-50">Nom</th>
+            <th class="w-25">Tickets en cours</th>
+            <th class="w-25">Tickets reportés</th>
+            <th class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+                <td>{{ person.email }}</td>
+                <td>{{ person.numberOfAssignedIssues }}</td>
+                <td>{{ person.numberOfReportedIssues }}</td>
+                <td class="hstack gap-3 text-center">
+                    <a class="btn btn-sm btn-primary" title="Voir" href="#">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <button class="btn btn-sm btn-danger"
+                            data-action="live#action:prevent"
+                            data-live-action-param="removePerson"
+                            data-live-id-param="{{ person.id }}"
+                            title="Supprimer"
+                    >
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

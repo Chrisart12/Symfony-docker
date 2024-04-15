@@ -1,7 +1,7 @@
 <div {{ attributes.defaults(stimulus_controller('project-board')) }} class="row">
     <div class="col-md-4 col-sm-12 ">
         <div  class="card">
-            <div class="card-header fw-bold text-center">READY</div>
+            <div class="card-header fw-bold text-center text-uppercase">Prêt</div>
             <div class="card-body">
                 <div class="list-group issue-container pb-4" data-status="2">
                     {% for issue in nonStartedIssues %}
@@ -17,7 +17,7 @@
     </div>
     <div class="col-md-4 col-sm-12">
         <div  class="card">
-            <div class="card-header fw-bold text-center">IN DEVELOPMENT</div>
+            <div class="card-header fw-bold text-center text-uppercase">En développement</div>
             <div class="card-body">
                 <div class="list-group issue-container pb-4" data-status="3">
                     {% for issue in inProgressIssues %}
@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-4 col-sm-12">
         <div  class="card">
-            <div class="card-header fw-bold text-center">RESOLVED</div>
+            <div class="card-header fw-bold text-center text-uppercase">Résolu</div>
             <div class="card-body">
                 <div class="list-group issue-container pb-4" data-status="5">
                     {% for issue in resolvedIssues %}

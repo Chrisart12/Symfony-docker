@@ -3,5 +3,15 @@
 {% block title %}Teams{% endblock %}
 
 {% block body %}
+    <div class="container mt-5">
+        {% include 'breadcrumb.html.twig' with { breadcrumbs: [project, 'Équipe'] } %}
 
+        <div class="row">
+            <div class="col">
+                {{ component('TeamList', {
+                    'project': project
+                }) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
