@@ -17,13 +17,13 @@ class ProjectBoard
 {
     use DefaultActionTrait;
 
-    #[LiveProp]
+    #[LiveProp(writable: true)]
     public array $readyIssues = [];
 
-    #[LiveProp]
+    #[LiveProp(writable: true)]
     public array $inProgressIssues = [];
 
-    #[LiveProp]
+    #[LiveProp(writable: true)]
     public array $resolvedIssues = [];
 
     public function __construct(
@@ -53,7 +53,8 @@ class ProjectBoard
         $this->getIssues();
     }
 
-    private function getIssues(): void
+    #[LiveAction]
+    public function getIssues(): void
     {
         $this->readyIssues = $this->issueService->getReadyIssues();
         $this->inProgressIssues = $this->issueService->getInProgressIssues();
