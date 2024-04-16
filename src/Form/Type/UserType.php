@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
-use App\Form\Model\ProfileModel;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -12,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProfileType extends AbstractType
+class UserType extends AbstractType
 {
     public function __construct(
         private readonly Security $security
@@ -26,10 +25,10 @@ class ProfileType extends AbstractType
 
         $disabled = false;
 
-        /** @var ProfileModel $user */
+        /** @var User $user */
         $user = $options['data'];
 
-        if ($user->id !== $connectedUser->getId()) {
+        if ($user->getId() !== $connectedUser->getId()) {
             $disabled = true;
         }
 
@@ -57,7 +56,7 @@ class ProfileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProfileModel::class,
+            'data_class' => User::class,
         ]);
     }
 }
