@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\Type\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +11,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
-    #[Route('/users/profile', name: 'app_user_profile')]
+    #[Route('/users/profile/{id?}', name: 'app_user_profile')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function profile(): Response
+    public function profile(?User $user): Response
     {
-        return $this->render('user/profile.html.twig');
+        return $this->render('user/profile.html.twig', [
+            'user' => $user
+        ]);
     }
 }

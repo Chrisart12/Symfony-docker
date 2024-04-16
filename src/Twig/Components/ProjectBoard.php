@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -17,7 +18,7 @@ class ProjectBoard
     use DefaultActionTrait;
 
     #[LiveProp]
-    public array $nonStartedIssues = [];
+    public array $readyIssues = [];
 
     #[LiveProp]
     public array $inProgressIssues = [];
@@ -26,9 +27,9 @@ class ProjectBoard
     public array $resolvedIssues = [];
 
     public function __construct(
+        private readonly EntityManagerInterface $em,
         private readonly IssueService $issueService
-    )
-    {
+    ) {
     }
 
     public function mount(): void
@@ -37,14 +38,9 @@ class ProjectBoard
     }
 
     #[LiveAction]
-    public function updateIssueStatus(
-        #[LiveArg] string      $id,
-        #[LiveArg] IssueStatus $status,
-        EntityManagerInterface $em,
-        IssueService           $issueService
-    ): void
+    public function updateIssueStatus(#[LiveArg] string $id, #[LiveArg] IssueStatus $status): void
     {
-        $issue = $issueService->findOneById($id);
+        $issue = $this->issueService->findOneById($id);
 
         if (!$issue) {
             return;
@@ -52,14 +48,14 @@ class ProjectBoard
 
         $issue->setStatus($status);
 
-        $em->flush();
+        $this->em->flush();
 
         $this->getIssues();
     }
 
     private function getIssues(): void
     {
-        $this->nonStartedIssues = $this->issueService->getReadyIssues();
+        $this->readyIssues = $this->issueService->getReadyIssues();
         $this->inProgressIssues = $this->issueService->getInProgressIssues();
         $this->resolvedIssues = $this->issueService->getResolvedIssues();
     }

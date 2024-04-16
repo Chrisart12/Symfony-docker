@@ -1,50 +1,28 @@
 <div {{ attributes.defaults(stimulus_controller('project-board')) }} class="row">
     <div class="col-md-4 col-sm-12 ">
-        <div  class="card">
-            <div class="card-header fw-bold text-center text-uppercase">Prêt</div>
-            <div class="card-body">
-                <div class="list-group issue-container pb-4" data-status="2">
-                    {% for issue in nonStartedIssues %}
-                        <button class="list-group-item list-group-item-action issue-item" draggable="true" id="{{ issue.id }}">
-                            <span class="fw-bold">{{ issue.id }}</span>
-                            <br>
-                            <span class="small">{{ issue.summary }}</span>
-                        </button>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        {{ _self.card('Prêt', '2', readyIssues) }}
     </div>
-    <div class="col-md-4 col-sm-12">
-        <div  class="card">
-            <div class="card-header fw-bold text-center text-uppercase">En développement</div>
-            <div class="card-body">
-                <div class="list-group issue-container pb-4" data-status="3">
-                    {% for issue in inProgressIssues %}
-                        <button class="list-group-item list-group-item-action issue-item" draggable="true" id="{{ issue.id }}">
-                            <span class="fw-bold">{{ issue.id }}</span>
-                            <br>
-                            <span class="small">{{ issue.summary }}</span>
-                        </button>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+    <div class="col-md-4 col-sm-12 ">
+        {{ _self.card('En développement', '3', inProgressIssues) }}
     </div>
-    <div class="col-md-4 col-sm-12">
-        <div  class="card">
-            <div class="card-header fw-bold text-center text-uppercase">Résolu</div>
-            <div class="card-body">
-                <div class="list-group issue-container pb-4" data-status="5">
-                    {% for issue in resolvedIssues %}
-                        <button class="list-group-item list-group-item-action issue-item" draggable="true" id="{{ issue.id }}">
-                            <span class="fw-bold">{{ issue.id }}</span>
-                            <br>
-                            <span class="small">{{ issue.summary }}</span>
-                        </button>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+    <div class="col-md-4 col-sm-12 ">
+        {{ _self.card('Résolu', '5', resolvedIssues) }}
     </div>
 </div>
+
+{% macro card(title, statusId, issues) %}
+    <div class="card">
+        <div class="card-header fw-bold text-center text-uppercase">{{ title }}</div>
+        <div class="card-body">
+            <div class="list-group issue-container pb-4" data-status="{{ statusId }}">
+                {% for issue in issues %}
+                    <button class="list-group-item list-group-item-action issue-item" draggable="true" id="{{ issue.id }}">
+                        <a class="fw-bold text-decoration-none" href="{{ path('issue_show', { 'id': issue.id }) }}" target="_blank">{{ issue.id }}</a>
+                        <br>
+                        <span class="small">{{ issue.summary }}</span>
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}

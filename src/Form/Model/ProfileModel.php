@@ -7,6 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ProfileModel
 {
+    public int $id;
+
     #[Assert\Email]
     public ?string $email;
 
@@ -18,6 +20,7 @@ class ProfileModel
 
     public function __construct(User $user)
     {
+        $this->id = $user->getId();
         $this->email = $user->getEmail();
         $this->firstName = $user->getFirstName();
         $this->lastName = $user->getLastName();

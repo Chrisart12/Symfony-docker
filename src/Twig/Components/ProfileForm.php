@@ -26,9 +26,13 @@ class ProfileForm extends AbstractController
     use DefaultActionTrait;
     use ValidatableComponentTrait;
 
+    public ?User $user = null;
+
     protected function instantiateForm(): FormInterface
     {
-        return $this->createForm(ProfileType::class, new ProfileModel($this->getUser()));
+        $user =  $this->user ?: $this->getUser();
+        
+        return $this->createForm(ProfileType::class, new ProfileModel($user));
     }
 
     #[LiveAction]

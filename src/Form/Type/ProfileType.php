@@ -2,7 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\User;
 use App\Form\Model\ProfileModel;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,21 +14,44 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProfileType extends AbstractType
 {
+    public function __construct(
+        private readonly Security $security
+    ){
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var User $connectedUser */
+        $connectedUser = $this->security->getUser();
+
+        $disabled = false;
+
+        /** @var ProfileModel $user */
+        $user = $options['data'];
+
+        if ($user->id !== $connectedUser->getId()) {
+            $disabled = true;
+        }
+
         $builder
             ->add('email', EmailType::class, [
+                'disabled' => $disabled,
                 'label' => 'Adresse e-mail'
             ])
             ->add('firstName', TextType::class, [
+                'disabled' => $disabled,
                 'label' => 'Prénom'
             ])
             ->add('lastName', TextType::class, [
+                'disabled' => $disabled,
                 'label' => 'Nom'
-            ])
-            ->add('submit', SubmitType::class, [
+            ]);
+
+        if (!$disabled) {
+            $builder->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer'
             ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

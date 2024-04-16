@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-3">
-        {% include 'breadcrumb.html.twig' with { breadcrumbs: ['Projets', project.name] } %}
+        {% include 'breadcrumb.html.twig' with { breadcrumbs: ['Projets', project.name, 'Tableau de bord'] } %}
 
 
         {{ component('ProjectBoard') }}
