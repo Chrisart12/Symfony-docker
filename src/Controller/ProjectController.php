@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/projects', name: 'project_')]
 class ProjectController extends AbstractController
 {
-    #[Route('/', name: 'index',methods: ['GET'])]
+    #[Route('/', name: 'index',methods: ['GET', 'POST'])]
     public function index(ProjectService $projectService): Response
     {
         return $this->render('project/index.html.twig', [

@@ -1,0 +1,17 @@
+{
+    order php_server before file_server
+
+    frankenphp {
+
+    }
+}
+
+{$SERVER_NAME:localhost} {
+    root * /app/public
+
+    encode zstd br gzip
+
+    header ?Permissions-Policy "browsing-topics=()"
+
+    php_server
+}

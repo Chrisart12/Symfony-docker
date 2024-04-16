@@ -28,4 +28,5 @@ yarn-error.log
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-docker-compose.override.yml
+compose.override.yaml
+docker-compose.override.yaml

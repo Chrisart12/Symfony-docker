@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  php:
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql://root:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?charset=utf8&serverVersion=8.0.31
+      SERVER_NAME: ${SERVER_NAME:-localhost}
+      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|php$$
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+    image: tasksphere:latest
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      # HTTP
+      - target: 80
+        published: "80"
+        protocol: tcp
+      # HTTPS
+      - target: 443
+        published: "443"
+        protocol: tcp
+      # HTTP/3
+      - target: 443
+        published: "443"
+        protocol: udp
+
+volumes:
+  caddy_data:
+  caddy_config:
+  db_data:
