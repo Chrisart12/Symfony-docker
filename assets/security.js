@@ -1,2 +1,2 @@
 import './bootstrap.js';
-import './styles/security.scss';
+import './styles/security.css';

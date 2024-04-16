@@ -55,7 +55,7 @@ class IssueService
             }
         }
 
-        usort($statuses, fn ($a, $b) => $a['value'] > $b['value']);
+        usort($statuses, fn ($a, $b) => $a['value'] > $b['value'] ? 1 : -1);
 
         return $statuses;
     }
