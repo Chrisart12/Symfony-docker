@@ -15,7 +15,7 @@
                 <td>{{ person.numberOfAssignedIssues }}</td>
                 <td>{{ person.numberOfReportedIssues }}</td>
                 <td class="hstack gap-3 text-center">
-                    <a class="btn btn-sm btn-primary" title="Voir" href="#">
+                    <a class="btn btn-sm btn-primary" title="Voir" href="{{ path('app_user_profile', { 'id': person.id }) }}">
                         <i class="fa fa-eye"></i>
                     </a>
                     <button class="btn btn-sm btn-danger"
