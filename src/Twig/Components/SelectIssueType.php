@@ -14,7 +14,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 
-#[AsLiveComponent(template: 'components/select_issue_type.html.twig')]
+#[AsLiveComponent]
 class SelectIssueType
 {
     use DefaultActionTrait;

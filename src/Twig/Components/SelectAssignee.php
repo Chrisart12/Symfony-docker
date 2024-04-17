@@ -12,7 +12,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 
-#[AsLiveComponent(template: 'components/select_assignee.html.twig')]
+#[AsLiveComponent]
 class SelectAssignee
 {
     use DefaultActionTrait;

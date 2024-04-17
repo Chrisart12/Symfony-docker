@@ -11,7 +11,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 
-#[AsLiveComponent(template: 'components/input_story_point_estimate.html.twig')]
+#[AsLiveComponent]
 class InputStoryPointEstimate
 {
     use DefaultActionTrait;
