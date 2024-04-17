@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %} - TaskSphere</title>
+        <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
         {% block javascripts %}
@@ -12,14 +12,6 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'navbar.html.twig' %}
-        {% block breadcrumb %}{% endblock %}
         {% block body %}{% endblock %}
-
-        <div id="modals">
-            {% include 'modals/_modal_add_people.html.twig' %}
-            {% include 'modals/modal_create_issue/index.html.twig' %}
-            {% include 'modals/_modal_create_project.html.twig' %}
-        </div>
     </body>
 </html>

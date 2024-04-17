@@ -1,6 +1,4 @@
 parameters:
-    absolute_attachments_directory: '/uploads/attachments'
-    attachments_directory: '%kernel.project_dir%/public/uploads/attachments'
 
 services:
     _defaults:

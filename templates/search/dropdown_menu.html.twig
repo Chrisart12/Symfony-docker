@@ -1,9 +1,0 @@
-{% set issues = results.issues %}
-
-{% if results.issues|length > 0 %}
-    {% for issue in results.issues %}
-        <a class="dropdown-item" href="{{ issue.value }}">{{ issue.label }}</a>
-    {% endfor %}
-{% else %}
-    <a class="dropdown-item" href="#">Aucun résultat</a>
-{% endif %}
