@@ -8,18 +8,19 @@ readonly class SearchService
 {
     public function __construct(
         private IssueService    $issueService,
-        private UserService     $userService,
         private RouterInterface $router
     ) {
     }
 
     public function search(string $query): array
     {
+        if ('' === $query) {
+            return [];
+        }
+
         $issueOptions = [];
-        $userOptions = [];
 
         $issues = $this->issueService->findByQuery($query);
-        $users = $this->userService->findByQuery($query);
 
         foreach ($issues as $issue) {
             $issueOptions[] = [
@@ -30,22 +31,8 @@ readonly class SearchService
             ];
         }
 
-        foreach ($users as $user) {
-            $userOptions[] = [
-                'label' => "{$user['firstName']} {$user['lastName']}",
-                'value' => $user['id'],
-            ];
-        }
-
         return [
-            [
-                'label' => 'Issues',
-                'options' => $issueOptions,
-            ],
-            [
-                'label' => 'Users',
-                'options' => $userOptions,
-            ]
+            'issues' => $issueOptions,
         ];
     }
 }

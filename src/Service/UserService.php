@@ -32,11 +32,6 @@ readonly class UserService
         return $user;
     }
 
-    public function findByQuery(string $query): array
-    {
-        return $this->userRepo->findByQuery($query);
-    }
-
     public function findOneById(int $id): ?User
     {
         return $this->userRepo->find($id);

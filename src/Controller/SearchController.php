@@ -17,6 +17,8 @@ class SearchController extends AbstractController
     {
         $query = $request->query->get('query');
 
-        return $this->json($searchService->search($query));
+        return $this->render('search/dropdown_menu.html.twig', [
+            'results' => $searchService->search($query),
+        ]);
     }
 }

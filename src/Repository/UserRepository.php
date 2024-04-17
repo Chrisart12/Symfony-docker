@@ -50,23 +50,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    public function findByQuery(string $query): array
-    {
-        $qb = $this
-            ->createQueryBuilder('u');
-
-        $qb
-            ->select('u.id', 'u.firstName', 'u.lastName')
-            ->where($qb->expr()->like('u.email', ':query'))
-            ->orWhere($qb->expr()->like('u.firstName', ':query'))
-            ->orWhere($qb->expr()->like('u.lastName', ':query'))
-            ->setParameter('query', '%' . $query . '%');
-
-        return $qb
-            ->getQuery()
-            ->getArrayResult();
-    }
-
     public function getUsersByProjectQueryBuilder(Project $project): QueryBuilder
     {
         return $this
