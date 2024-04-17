@@ -1,0 +1,14 @@
+services:
+  db:
+    ports:
+      - "3306:3306"
+  php:
+    build:
+      context: .
+      target: frankenphp_dev
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./:/app
+      - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frankenphp/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
