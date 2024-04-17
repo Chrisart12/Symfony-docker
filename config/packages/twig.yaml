@@ -2,7 +2,6 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
     globals:
-        issue_service: '@App\Service\IssueService'
 
 when@test:
     twig:
