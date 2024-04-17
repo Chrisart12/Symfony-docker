@@ -51,8 +51,6 @@ class ProjectForm extends AbstractController
         $em->persist($project);
         $em->flush();
 
-        $this->dispatchBrowserEvent('project:modal:close');
-
         return $this->redirectToRoute('project_show', [
             'key' => $project->getKey(),
         ]);
